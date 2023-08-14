@@ -22,5 +22,20 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: "Inter-Regular",
   },
+
+  optionscontainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    minHeight: 50,
+    paddingHorizontal: 10,
+    borderBottomWidth: 0.5,
+    borderColor: "#B3B3B3",
+  },
+  optiontext: {
+    flex: 1,
+    fontSize: 12,
+    fontFamily: "Inter-Regular",
+  },
 });
 export default styles;

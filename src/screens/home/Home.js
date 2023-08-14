@@ -27,7 +27,10 @@ import HomePartCards from "./components/homepartscards/HomePartCards";
 import Advert from "./components/advert/Advert";
 import Headings from "./components/headings/Headings";
 import CategoriesCards from "./components/categories_cards/CategoriesCards";
+import useHome from "./useHome";
+import Loading from "../../components/loading/Loading";
 const Home = ({ navigation }) => {
+  const [data, isLoading] = useHome();
   return (
     <>
       <ExpoStatusBar style="light" />
@@ -55,64 +58,67 @@ const Home = ({ navigation }) => {
             </View>
           </View>
         </View>
+        {isLoading ? (
+          <Loading text={"wdwdwd"} />
+        ) : (
+          <ScrollView>
+            <Pressable
+              style={styles.textBoxView}
+              onPress={() => navigation.navigate("search")}
+            >
+              <AntDesign name="search1" size={20} color="white" />
+              <Text style={styles.textBoxText}>Search For Your Car Parts</Text>
+            </Pressable>
+            <Advert image={mainimage} />
 
-        <ScrollView>
-          <Pressable
-            style={styles.textBoxView}
-            onPress={() => navigation.navigate("search")}
-          >
-            <AntDesign name="search1" size={20} color="white" />
-            <Text style={styles.textBoxText}>Search For Your Car Parts</Text>
-          </Pressable>
-          <Advert image={mainimage} />
+            <Headings
+              image={newstar}
+              text={"New Arrival"}
+              subText={"Most select items"}
+            />
+            <FlatList
+              style={styles.flatlist}
+              data={data}
+              horizontal
+              renderItem={({ item }) => (
+                <HomePartCards
+                  image={cardoor}
+                  text={item.productName + " " + item.model}
+                  price={item.price}
+                  subtext={"Model: " + item.model}
+                />
+              )}
+              keyExtractor={(item) => item.id}
+              showsHorizontalScrollIndicator={false}
+            />
 
-          <Headings
-            image={newstar}
-            text={"New Arrival"}
-            subText={"Most select items"}
-          />
-          <FlatList
-            style={styles.flatlist}
-            data={fakeData}
-            horizontal
-            renderItem={({ item }) => (
-              <HomePartCards
-                image={cardoor}
-                text={item.text}
-                price={item.price}
-                subtext={item.info}
+            <Headings
+              image={star}
+              text={"Categories"}
+              subText={"Most select items"}
+            />
+
+            <View style={styles.CategoriesContainer}>
+              <CategoriesCards
+                image={headlight}
+                text={"item.text"}
+                subText={"item.subtext"}
               />
-            )}
-            keyExtractor={(item) => item.id}
-            showsHorizontalScrollIndicator={false}
-          />
-
-          <Headings
-            image={star}
-            text={"Categories"}
-            subText={"Most select items"}
-          />
-
-          <View style={styles.CategoriesContainer}>
-            <CategoriesCards
-              image={headlight}
-              text={"item.text"}
-              subText={"item.subtext"}
-            />
-            <CategoriesCards
-              image={engine}
-              text={"item.text"}
-              subText={"item.subtext"}
-            />
-          </View>
-          <View style={styles.CategoriesContainer}>
-            <CategoriesCards
-              image={headlight}
-              text={"item.text"}
-              subText={"item.subtext"}
-            />
-          </View>
-        </ScrollView>
+              <CategoriesCards
+                image={engine}
+                text={"item.text"}
+                subText={"item.subtext"}
+              />
+            </View>
+            <View style={styles.CategoriesContainer}>
+              <CategoriesCards
+                image={headlight}
+                text={"item.text"}
+                subText={"item.subtext"}
+              />
+            </View>
+          </ScrollView>
+        )}
       </SafeAreaView>
     </>
   );
