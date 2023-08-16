@@ -1,33 +1,36 @@
 const intitalState = {
+  modelShow: false,
+  modelOptions: [],
+  modelIsLoading: false,
+  modelIsDisabled: false,
+  modelTitle: "",
+  modelOptionsKey: "",
+  modelselectedDropDownKey: "",
+  modelNextDropDownKey: "",
+  isSearching: false,
   disableAllDropdown: false,
+  productsData: [],
+
   makeDropDownBox: {
     selectedValue: "",
     selectedValueId: "",
-    options: [],
-    isLoading: true,
-    isDisabled: true,
+    isDisabled: false,
   },
 
   modelDropDownBox: {
     selectedValue: "",
     selectedValueId: "",
-    options: [],
-    isLoading: false,
     isDisabled: true,
   },
   yearDropDownBox: {
     selectedValue: "",
     selectedValueId: "",
-    options: [],
-    isLoading: false,
     isDisabled: true,
   },
 
   categoriesDropDownBox: {
     selectedValue: "",
     selectedValueId: "",
-    options: [],
-    isLoading: false,
     isDisabled: false,
   },
 };

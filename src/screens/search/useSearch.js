@@ -4,149 +4,156 @@ import { ACTIONS } from "./helper/reducerActions";
 import timeOutWrapper from "../../timeOutWrapper";
 import { dbGetSubCategory } from "../../services/categoriesFetch";
 import intitalState from "./helper/intitalState";
+import ShowToast from "../../helper/ShowToast";
+import {
+  dbGetProducts,
+  dbSearchForProductWithCategory,
+  dbSearchForProducts,
+} from "../../services/prouductFetch";
 
 const useSearch = () => {
   const reducer = (state, action) => {
     switch (action.type) {
       case "add_options": {
-        const dropDownBox = action.payload.dropDownBox;
-        const options = action.payload.options;
+        const modelOptions = action.payload.modelOptions;
         return {
           ...state,
+          modelOptions: modelOptions,
+          modelIsLoading: false,
+        };
+      }
+
+      case "is_searching": {
+        const trueOrFalse = action.payload;
+        return {
+          ...state,
+          isSearching: trueOrFalse,
+          disableAllDropdown: trueOrFalse,
+        };
+      }
+
+      case "add_products_data": {
+        const data = action.payload;
+        return {
+          ...state,
+          isSearching: false,
           disableAllDropdown: false,
-          [dropDownBox]: {
-            ...state[dropDownBox],
-            options: options,
-            isLoading: false,
-            isDisabled: false,
-          },
+          productsData: data,
         };
       }
-      case "show_options": {
-        const dropDownBox = action.payload.dropDownBox;
-        const show = action.payload.show;
+
+      case "show_model": {
+        const modelShow = action.payload.modelShow;
+        const modelTitle = action.payload.modelTitle;
+        const modelOptionsKey = action.payload.modelOptionsKey;
+        const modelSelectedDropDownKey =
+          action.payload.modelSelectedDropDownKey;
+        const modelNextDropDownKey = action.payload.modelNextDropDownKey;
         return {
           ...state,
-          [dropDownBox]: {
-            ...state[dropDownBox],
-            show: show,
-          },
+          modelShow: modelShow,
+          modelTitle: modelTitle,
+          modelIsLoading: true,
+          modelOptionsKey: modelOptionsKey,
+          modelSelectedDropDownKey: modelSelectedDropDownKey,
+          modelNextDropDownKey: modelNextDropDownKey,
         };
       }
+
       case "selected_value": {
-        const dropDownBox = action.payload.dropDownBox;
         const selectedValue = action.payload.selectedValue;
-        const selectedValueId = action.payload?.selectedValueId;
-        const nextDropDown = action.payload?.nextDropDown;
+        const selectedValueId = action.payload.selectedValueId;
+        const dropDownBoxKey = action.payload.dropDownBoxKey;
+        const nextDropDownKey = action.payload.nextDropDownKey;
 
         const newState = {
           ...state,
-          disableAllDropdown: true,
-          [dropDownBox]: {
-            ...state[dropDownBox],
+          modelShow: false,
+          [dropDownBoxKey]: {
+            ...state[dropDownBoxKey],
             selectedValue: selectedValue,
             selectedValueId: selectedValueId,
-            show: false,
-          },
-
-          [nextDropDown]: {
-            ...state[nextDropDown],
-            isDisabled: true,
-            isLoading: true,
-            show: false,
-            selectedValue: "",
-            selectedValueId: "",
           },
         };
 
-        if (dropDownBox === "makeDropDownBox") {
+        if (dropDownBoxKey == "makeDropDownBox") {
           return {
             ...newState,
-            yearDropDownBox: {
-              ...state.yearDropDownBox,
+            [nextDropDownKey]: {
+              ...state[nextDropDownKey],
+              isDisabled: false,
               selectedValue: "",
               selectedValueId: "",
+            },
+            yearDropDownBox: {
+              ...state.yearDropDownBox,
               isDisabled: true,
+              selectedValue: "",
+              selectedValueId: "",
             },
           };
         }
-        if (!nextDropDown) {
+
+        if (nextDropDownKey) {
           return {
-            ...state,
-            disableAllDropdown: true,
-            [dropDownBox]: {
-              ...state[dropDownBox],
-              selectedValue: selectedValue,
-              selectedValueId: selectedValueId,
-              show: false,
+            ...newState,
+            [nextDropDownKey]: {
+              ...state[nextDropDownKey],
+              isDisabled: false,
+              selectedValue: "",
+              selectedValueId: "",
             },
           };
         }
 
         return newState;
       }
-      case "disable_all_dropdown": {
-        return {
-          ...state,
-          disableAllDropdown: action.payload,
-        };
-      }
-
-      case "close_all": {
-        return {
-          ...state,
-          makeDropDownBox: {
-            ...state.makeDropDownBox,
-            show: false,
-          },
-          modelDropDownBox: {
-            ...state.modelDropDownBox,
-            show: false,
-          },
-          yearDropDownBox: {
-            ...state.yearDropDownBox,
-            show: false,
-          },
-          categoriesDropDownBox: {
-            ...state.categoriesDropDownBox,
-            show: false,
-          },
-        };
-      }
     }
   };
 
   const [state, dispatch] = useReducer(reducer, intitalState);
 
-  const [] = useState();
+  const searchFunc = async () => {
+    const makeId = state.makeDropDownBox.selectedValueId;
+    const modelId = state.modelDropDownBox.selectedValueId;
+    const yearId = state.yearDropDownBox.selectedValueId;
+    const categoryId = state.categoriesDropDownBox.selectedValueId;
 
-  useEffect(() => {
-    const getMake = async () => {
-      try {
-        const makeOptions = await timeOutWrapper(() => dbGetMake());
-        const categoryOptions = await timeOutWrapper(() => dbGetSubCategory());
-        dispatch({
-          type: ACTIONS.ADD_OPTIONS,
-          payload: { dropDownBox: "makeDropDownBox", options: makeOptions },
-        });
-
-        dispatch({
-          type: ACTIONS.ADD_OPTIONS,
-          payload: {
-            dropDownBox: "categoriesDropDownBox",
-            options: categoryOptions,
-          },
-        });
-      } catch (error) {
-        console.log(error);
+    if (!testValue(makeId)) {
+      return ShowToast("customWarnToast", "Make", "Please select make");
+    } else if (!testValue(modelId)) {
+      return ShowToast("customWarnToast", "Model", "Please select model");
+    } else if (!testValue(yearId)) {
+      return ShowToast("customWarnToast", "Year", "Please select year");
+    }
+    try {
+      dispatch({ type: ACTIONS.IS_SEARCHING, payload: true });
+      let responce;
+      if (!testValue(categoryId)) {
+        responce = await dbSearchForProducts(makeId, modelId, yearId);
+        console.log(responce);
+      } else {
+        responce = await dbSearchForProductWithCategory(
+          makeId,
+          modelId,
+          yearId,
+          categoryId
+        );
+        console.log(responce);
       }
-    };
 
-    getMake();
-  }, []);
+      dispatch({ type: ACTIONS.ADD_PRODUCTS_DATA, payload: responce });
+    } catch (error) {
+      ShowToast("customErrorToast", "Error", error.message);
+      dispatch({ type: ACTIONS.IS_SEARCHING, payload: false });
+    }
+  };
 
+  const testValue = (valueId) => {
+    return valueId === "" ? false : true;
+  };
   //console.log(state.makeDropDownBox);
-  return [state, dispatch];
+  return [state, dispatch, searchFunc];
 };
 
 export default useSearch;

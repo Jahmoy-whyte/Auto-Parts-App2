@@ -5,16 +5,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 import BottomTabs from "./src/screens/bottomTabs/BottomTabs";
 import Home from "./src/screens/home/Home";
-import Search from "./src/screens/search/Search";
-
-const Test = () => {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to startw working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-};
+import SearchScreen from "./src/screens/search/SearchScreen";
+import Toast from "react-native-toast-message";
+import toastConfig from "./src/helper/toastConfig";
 
 const Stack = createNativeStackNavigator();
 const App = () => {
@@ -37,9 +30,10 @@ const App = () => {
           }}
         >
           <Stack.Screen name="Home" component={BottomTabs} />
-          <Stack.Screen name="search" component={Search} />
+          <Stack.Screen name="search" component={SearchScreen} />
         </Stack.Navigator>
       </NavigationContainer>
+      <Toast config={toastConfig} />
     </>
   );
 };

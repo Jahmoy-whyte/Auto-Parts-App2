@@ -1,90 +1,65 @@
 import { ACTIONS } from "./reducerActions";
 import { dbGetModelBasedOnMakeId } from "../../../services/modelFetch";
 import { dbGetYearsBasedOnModelId } from "../../../services/yearFetch";
+import { dbGetSubCategory } from "../../../services/categoriesFetch";
 import timeOutWrapper from "../../../timeOutWrapper";
+import { dbGetMake } from "../../../services/makeFetch";
+import ShowToast from "../../../helper/ShowToast";
 
-// Make dropdown box
-export const makeSelect = async (makeId, makeName, dispatch) => {
-  if (makeId == 0) return;
+// Get Make Options
+export const getMakeOptions = async (state, dispatch) => {
   try {
-    dispatch({
-      type: ACTIONS.SELECTED_VALUE,
-      payload: {
-        selectedValue: makeName,
-        selectedValueId: makeId,
-        dropDownBox: "makeDropDownBox",
-        nextDropDown: "modelDropDownBox",
-      },
-    });
-
-    const responce = await timeOutWrapper(() =>
-      dbGetModelBasedOnMakeId(makeId)
-    );
-
+    const responce = await timeOutWrapper(() => dbGetMake());
     dispatch({
       type: ACTIONS.ADD_OPTIONS,
-      payload: { dropDownBox: "modelDropDownBox", options: responce },
+      payload: { modelOptions: responce },
     });
   } catch (error) {
     console.log(error);
+    ShowToast("customErrorToast", "Error", error.message);
   }
 };
-// model dropdown box
-export const modelSelect = async (modelId, modelName, dispatch) => {
+
+// Get mdel Options
+export const getModelOptions = async (state, dispatch) => {
   try {
-    dispatch({
-      type: ACTIONS.SELECTED_VALUE,
-      payload: {
-        selectedValue: modelName,
-        selectedValueId: modelId,
-        dropDownBox: "modelDropDownBox",
-        nextDropDown: "yearDropDownBox",
-      },
-    });
-
     const responce = await timeOutWrapper(() =>
-      dbGetYearsBasedOnModelId(modelId)
+      dbGetModelBasedOnMakeId(state.makeDropDownBox.selectedValueId)
     );
-
     dispatch({
       type: ACTIONS.ADD_OPTIONS,
-      payload: { dropDownBox: "yearDropDownBox", options: responce },
+      payload: { modelOptions: responce },
     });
   } catch (error) {
     console.log(error);
+    ShowToast("customErrorToast", "Error", error.message);
   }
 };
 
-// year dropdown box
-export const yearSelect = async (yearId, year, dispatch) => {
-  dispatch({
-    type: ACTIONS.SELECTED_VALUE,
-    payload: {
-      selectedValue: year,
-      selectedValueId: yearId,
-      dropDownBox: "yearDropDownBox",
-      nextDropDown: null,
-    },
-  });
-  dispatch({
-    type: ACTIONS.DISABLE_ALL_DROPDOWN,
-    payload: false,
-  });
+export const getYearOptions = async (state, dispatch) => {
+  try {
+    const responce = await timeOutWrapper(() =>
+      dbGetYearsBasedOnModelId(state.modelDropDownBox.selectedValueId)
+    );
+    dispatch({
+      type: ACTIONS.ADD_OPTIONS,
+      payload: { modelOptions: responce },
+    });
+  } catch (error) {
+    console.log(error);
+    ShowToast("customErrorToast", "Error", error.message);
+  }
 };
 
-// Make dropdown box
-export const categorySelect = async (categoryId, categoryName, dispatch) => {
-  dispatch({
-    type: ACTIONS.SELECTED_VALUE,
-    payload: {
-      selectedValue: categoryName,
-      selectedValueId: categoryId,
-      dropDownBox: "categoriesDropDownBox",
-      nextDropDown: null,
-    },
-  });
-  dispatch({
-    type: ACTIONS.DISABLE_ALL_DROPDOWN,
-    payload: false,
-  });
+export const getSubCategoryOptions = async (state, dispatch) => {
+  try {
+    const responce = await timeOutWrapper(() => dbGetSubCategory());
+    dispatch({
+      type: ACTIONS.ADD_OPTIONS,
+      payload: { modelOptions: responce },
+    });
+  } catch (error) {
+    console.log(error);
+    ShowToast("customErrorToast", "Error", error.message);
+  }
 };

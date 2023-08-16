@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { dbGetProducts } from "../../services/prouductFetch";
+import { dbGetNewArrival } from "../../services/prouductFetch";
 const useHome = () => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const responce = await dbGetProducts();
+        const responce = await dbGetNewArrival();
         console.log(responce);
         setData(responce);
         setIsLoading(false);

@@ -17,8 +17,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: "Inter-Regular",
   },
-  we: {},
-  we: {},
-  we: {},
+  separate: {
+    marginTop: 10,
+    marginHorizontal: 15,
+    borderRadius: 10,
+    overflow: "hidden",
+  },
 });
 export default styles;
