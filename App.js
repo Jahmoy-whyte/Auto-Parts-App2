@@ -8,7 +8,8 @@ import Home from "./src/screens/home/Home";
 import SearchScreen from "./src/screens/search/SearchScreen";
 import Toast from "react-native-toast-message";
 import toastConfig from "./src/helper/toastConfig";
-
+import ProductsScreen from "./src/screens/products/ProductsScreen";
+import UserAuthContextWarpper from "./src/context/UserAuthContextWarpper";
 const Stack = createNativeStackNavigator();
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -21,18 +22,21 @@ const App = () => {
   }
   return (
     <>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            animation: "fade",
-            headerShown: false,
-            gestureEnabled: false,
-          }}
-        >
-          <Stack.Screen name="Home" component={BottomTabs} />
-          <Stack.Screen name="search" component={SearchScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <UserAuthContextWarpper>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              animation: "fade",
+              headerShown: false,
+              gestureEnabled: false,
+            }}
+          >
+            <Stack.Screen name="Home" component={BottomTabs} />
+            <Stack.Screen name="search" component={SearchScreen} />
+            <Stack.Screen name="product" component={ProductsScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </UserAuthContextWarpper>
       <Toast config={toastConfig} />
     </>
   );

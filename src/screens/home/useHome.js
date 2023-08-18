@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { dbGetNewArrival } from "../../services/prouductFetch";
+//import { UserAuthContext } from "../../context/UserAuthContextWarpper";
 const useHome = () => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);

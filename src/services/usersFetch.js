@@ -1,0 +1,29 @@
+import { BASE_URL } from "./helper/baseUrl";
+import checkResponce from "./helper/checkResponce";
+
+export const dbGetUserInfo = async () => {
+  const responce = await fetch(`${BASE_URL}/users`);
+  return await checkResponce(responce);
+};
+
+export const dbUserLogin = async (email, password) => {
+  const responce = await fetch(`${BASE_URL}/users/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  });
+  return await checkResponce(responce);
+};
+
+export const dbUserSignUp = async (email, password) => {
+  const responce = await fetch(`${BASE_URL}/users/signup`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  });
+  return await checkResponce(responce);
+};

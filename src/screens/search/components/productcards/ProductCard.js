@@ -2,10 +2,10 @@ import { useEffect, useState, memo } from "react";
 import { Text, TouchableOpacity, Image, View } from "react-native";
 import styles from "./styles";
 
-const ProductCard = ({ title, price, description, image, func }) => {
+const ProductCard = ({ title, price, description, image, func, productId }) => {
   console.log("ProductCard ===================");
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => func(productId)}>
       <View style={styles.textview}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.price}>

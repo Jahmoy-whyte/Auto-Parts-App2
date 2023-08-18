@@ -1,4 +1,4 @@
-import { useEffect, useState, useReducer } from "react";
+import { useEffect, useState, useReducer, useCallback } from "react";
 import { dbGetMake } from "../../services/makeFetch";
 import { ACTIONS } from "./helper/reducerActions";
 import timeOutWrapper from "../../timeOutWrapper";
@@ -10,6 +10,7 @@ import {
   dbSearchForProductWithCategory,
   dbSearchForProducts,
 } from "../../services/prouductFetch";
+import { useNavigation } from "@react-navigation/native";
 
 const useSearch = () => {
   const reducer = (state, action) => {
@@ -111,6 +112,7 @@ const useSearch = () => {
     }
   };
 
+  const nav = useNavigation();
   const [state, dispatch] = useReducer(reducer, intitalState);
 
   const searchFunc = async () => {
@@ -152,8 +154,14 @@ const useSearch = () => {
   const testValue = (valueId) => {
     return valueId === "" ? false : true;
   };
-  //console.log(state.makeDropDownBox);
-  return [state, dispatch, searchFunc];
+
+  const navigateToProduct = useCallback((productId) => {
+    nav.navigate("product", {
+      productId: productId,
+    });
+  }, []);
+
+  return [state, dispatch, searchFunc, navigateToProduct];
 };
 
 export default useSearch;

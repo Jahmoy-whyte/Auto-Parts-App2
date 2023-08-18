@@ -28,7 +28,7 @@ import ShowToast from "../../helper/ShowToast";
 import ProductCard from "./components/productcards/ProductCard";
 
 const SearchScreen = () => {
-  const [state, dispatch, searchFunc] = useSearch();
+  const [state, dispatch, searchFunc, navigateToProduct] = useSearch();
   console.log("render");
 
   const Top = () => {
@@ -107,6 +107,8 @@ const SearchScreen = () => {
                 image={item.image}
                 description={item.description}
                 price={item.price}
+                func={navigateToProduct}
+                productId={item.id}
               />
             );
           }}

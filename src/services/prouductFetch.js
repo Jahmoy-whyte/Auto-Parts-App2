@@ -24,3 +24,8 @@ export const dbSearchForProductWithCategory = async (
   );
   return await checkResponce(responce);
 };
+
+export const dbGetProductById = async (productId) => {
+  const responce = await fetch(`${BASE_URL}/products/${productId}`);
+  return await checkResponce(responce);
+};
