@@ -8,6 +8,7 @@ import {
   FlatList,
   Image,
   Pressable,
+  Button,
 } from "react-native";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import styles from "./styles";
@@ -29,13 +30,31 @@ import Headings from "./components/headings/Headings";
 import CategoriesCards from "./components/categories_cards/CategoriesCards";
 import useHome from "./useHome";
 import Loading from "../../components/loading/Loading";
+import * as SecureStore from "expo-secure-store";
 const Home = ({ navigation }) => {
-  const [data, isLoading] = useHome();
+  const [state, dispatch] = useHome();
   return (
     <>
       <ExpoStatusBar style="light" />
       <View style={GlobalStyles.backDrop}></View>
       <SafeAreaView style={GlobalStyles.container}>
+        <Button
+          title="clear"
+          onPress={async () => {
+            await SecureStore.deleteItemAsync("AccessToken");
+            await SecureStore.deleteItemAsync("RefreshToken");
+          }}
+        />
+
+        <Button
+          title="get token"
+          onPress={async () => {
+            const token = await SecureStore.getItemAsync("AccessToken");
+
+            const token2 = await SecureStore.getItemAsync("RefreshToken");
+            alert(token + "==================REFRESH=============" + token2);
+          }}
+        />
         <View style={styles.headingView}>
           <View style={styles.menuTitleAndCart}>
             <View style={styles.menuAndTitle}>
@@ -58,7 +77,7 @@ const Home = ({ navigation }) => {
             </View>
           </View>
         </View>
-        {isLoading ? (
+        {state.isLoading ? (
           <Loading text={"wdwdwd"} />
         ) : (
           <ScrollView>
@@ -78,7 +97,7 @@ const Home = ({ navigation }) => {
             />
             <FlatList
               style={styles.flatlist}
-              data={data}
+              data={state.newArrival}
               horizontal
               renderItem={({ item }) => (
                 <HomePartCards

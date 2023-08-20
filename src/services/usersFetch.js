@@ -27,3 +27,14 @@ export const dbUserSignUp = async (email, password) => {
   });
   return await checkResponce(responce);
 };
+
+export const dbUserGuestLogin = async () => {
+  const responce = await fetch(`${BASE_URL}/users/login/guest`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  return await checkResponce(responce);
+};

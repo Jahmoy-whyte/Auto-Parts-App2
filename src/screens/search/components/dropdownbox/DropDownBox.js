@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import styles from "./styles";
 import { ACTIONS } from "../../helper/reducerActions";
+import { useAuthContext } from "../../../../context/UserAuthContextWarpper";
 
 const DropDownBox = ({
   text,
@@ -15,7 +16,7 @@ const DropDownBox = ({
   const value = state[dropDownBoxKey].selectedValue;
   const isDisabled = state[dropDownBoxKey].isDisabled;
   const disableAllDropdown = state.disableAllDropdown;
-
+  const { accessToken, setAuthData } = useAuthContext();
   return (
     <TouchableOpacity
       disabled={isDisabled ? true : disableAllDropdown ? true : false}
@@ -30,7 +31,7 @@ const DropDownBox = ({
             modelNextDropDownKey: nextDropDownkey,
           },
         });
-        getOptionsFunc(state, dispatch);
+        getOptionsFunc(state, dispatch, accessToken, setAuthData);
       }}
     >
       <View

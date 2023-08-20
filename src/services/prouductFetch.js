@@ -1,8 +1,13 @@
 import { BASE_URL } from "./helper/baseUrl";
 import checkResponce from "./helper/checkResponce";
 
-export const dbGetNewArrival = async () => {
-  const responce = await fetch(`${BASE_URL}/products`);
+export const dbGetNewArrival = async (accessToken) => {
+  const responce = await fetch(`${BASE_URL}/products`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
   return await checkResponce(responce);
 };
 
