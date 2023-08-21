@@ -11,7 +11,7 @@ const BackButton = ({ text, isLoading, subText }) => {
         onPress={() => nav.goBack()}
         style={styles.btn}
       >
-        <MaterialIcons name="keyboard-arrow-left" size={24} color="black" />
+        <MaterialIcons name="keyboard-arrow-left" size={24} color="#0954B6" />
       </TouchableOpacity>
 
       <View style={styles.textcontainer}>

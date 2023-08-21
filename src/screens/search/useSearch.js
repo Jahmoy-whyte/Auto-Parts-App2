@@ -11,7 +11,7 @@ import {
   dbSearchForProducts,
 } from "../../services/prouductFetch";
 import { useNavigation } from "@react-navigation/native";
-
+import useRefreshToken from "../../hooks/useRefreshToken";
 const useSearch = () => {
   const reducer = (state, action) => {
     switch (action.type) {
@@ -114,6 +114,7 @@ const useSearch = () => {
 
   const nav = useNavigation();
   const [state, dispatch] = useReducer(reducer, intitalState);
+  const tokenAwareFetchWrapper = useRefreshToken();
 
   const searchFunc = async () => {
     const makeId = state.makeDropDownBox.selectedValueId;
@@ -132,10 +133,16 @@ const useSearch = () => {
       dispatch({ type: ACTIONS.IS_SEARCHING, payload: true });
       let responce;
       if (!testValue(categoryId)) {
-        responce = await dbSearchForProducts(makeId, modelId, yearId);
+        responce = await tokenAwareFetchWrapper(
+          dbSearchForProducts,
+          makeId,
+          modelId,
+          yearId
+        );
         console.log(responce);
       } else {
-        responce = await dbSearchForProductWithCategory(
+        responce = await tokenAwareFetchWrapper(
+          dbSearchForProductWithCategory,
           makeId,
           modelId,
           yearId,
@@ -157,11 +164,20 @@ const useSearch = () => {
 
   const navigateToProduct = useCallback((productId) => {
     nav.navigate("product", {
-      productId: productId,
+      navProductId: productId,
+      navActionType: "ADD",
+      navQuantity: 1,
+      navCartId: null,
     });
   }, []);
 
-  return [state, dispatch, searchFunc, navigateToProduct];
+  return [
+    state,
+    dispatch,
+    searchFunc,
+    navigateToProduct,
+    tokenAwareFetchWrapper,
+  ];
 };
 
 export default useSearch;

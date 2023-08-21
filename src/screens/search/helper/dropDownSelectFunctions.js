@@ -5,22 +5,15 @@ import { dbGetSubCategory } from "../../../services/categoriesFetch";
 import timeOutWrapper from "../../../timeOutWrapper";
 import { dbGetMake } from "../../../services/makeFetch";
 import ShowToast from "../../../helper/ShowToast";
-import tokenAwareFetchWrapper from "../../../helper/tokenAwareFetchWrapper";
 
 // Get Make Options
 export const getMakeOptions = async (
   state,
   dispatch,
-  accessToken,
-  setAuthData
+  tokenAwareFetchWrapper
 ) => {
   try {
-    const responce = await tokenAwareFetchWrapper(
-      dbGetMake,
-      accessToken,
-      setAuthData,
-      []
-    );
+    const responce = await tokenAwareFetchWrapper(dbGetMake);
     dispatch({
       type: ACTIONS.ADD_OPTIONS,
       payload: { modelOptions: responce },
@@ -35,15 +28,12 @@ export const getMakeOptions = async (
 export const getModelOptions = async (
   state,
   dispatch,
-  accessToken,
-  setAuthData
+  tokenAwareFetchWrapper
 ) => {
   try {
     const responce = await tokenAwareFetchWrapper(
       dbGetModelBasedOnMakeId,
-      accessToken,
-      setAuthData,
-      [state.makeDropDownBox.selectedValueId]
+      state.makeDropDownBox.selectedValueId
     );
 
     dispatch({
@@ -59,13 +49,14 @@ export const getModelOptions = async (
 export const getYearOptions = async (
   state,
   dispatch,
-  accessToken,
-  setAuthData
+  tokenAwareFetchWrapper
 ) => {
   try {
-    const responce = await timeOutWrapper(() =>
-      dbGetYearsBasedOnModelId(state.modelDropDownBox.selectedValueId)
+    const responce = await tokenAwareFetchWrapper(
+      dbGetYearsBasedOnModelId,
+      state.modelDropDownBox.selectedValueId
     );
+
     dispatch({
       type: ACTIONS.ADD_OPTIONS,
       payload: { modelOptions: responce },
@@ -79,11 +70,10 @@ export const getYearOptions = async (
 export const getSubCategoryOptions = async (
   state,
   dispatch,
-  accessToken,
-  setAuthData
+  tokenAwareFetchWrapper
 ) => {
   try {
-    const responce = await timeOutWrapper(() => dbGetSubCategory());
+    const responce = await tokenAwareFetchWrapper(dbGetSubCategory);
     dispatch({
       type: ACTIONS.ADD_OPTIONS,
       payload: { modelOptions: responce },

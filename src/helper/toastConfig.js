@@ -1,6 +1,7 @@
 import {
   CustomErrorToast,
   CustomWarnToast,
+  CustomSuccessToast,
 } from "../components/customtoast/AllCustomToast";
 
 const toastConfig = {
@@ -9,6 +10,9 @@ const toastConfig = {
   ),
   customWarnToast: ({ text1, text2 }) => (
     <CustomWarnToast text={text1} subtext={text2} />
+  ),
+  customSuccessToast: ({ text1, text2 }) => (
+    <CustomSuccessToast text={text1} subtext={text2} />
   ),
 };
 

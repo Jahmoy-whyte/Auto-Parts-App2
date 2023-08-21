@@ -24,6 +24,18 @@ export const CustomWarnToast = ({ text, subtext }) => {
   );
 };
 
+export const CustomSuccessToast = ({ text, subtext }) => {
+  return (
+    <View style={[styles.container, { backgroundColor: "lightgreen" }]}>
+      <AntDesign name="closecircleo" size={24} color="black" />
+      <View style={styles.textcontainer}>
+        <Text style={styles.text1}>{text}</Text>
+        {subtext ? <Text style={styles.text2}>{subtext}</Text> : null}
+      </View>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     minHeight: 60,

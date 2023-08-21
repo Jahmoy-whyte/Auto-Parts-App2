@@ -1,10 +1,11 @@
 import { useEffect, useState, useContext, useReducer } from "react";
 import { dbGetNewArrival } from "../../services/prouductFetch";
-//import { UserAuthContext } from "../../context/UserAuthContextWarpper";
+
 import ShowToast from "../../helper/ShowToast";
 import { ACTIONS } from "./helper/reducerActions";
-import tokenAwareFetchWrapper from "../../helper/tokenAwareFetchWrapper";
-import { useAuthContext } from "../../context/UserAuthContextWarpper";
+import useRefreshToken from "../../hooks/useRefreshToken";
+import { useUserInfoContext } from "../../context/UserInfoContextWarpper";
+import { dbGetUserInfo } from "../../services/usersFetch";
 const useHome = () => {
   // console.log(authData);ww
   const initialState = {
@@ -31,20 +32,17 @@ const useHome = () => {
     }
   };
 
-  const { accessToken, setAuthData } = useAuthContext();
-
+  const tokenAwareFetchWrapper = useRefreshToken();
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  const { setUserInfo, userInfo } = useUserInfoContext();
+  //efef
   useEffect(() => {
-    const getProducts = async () => {
+    const onStart = async () => {
       try {
-        const responce = await tokenAwareFetchWrapper(
-          dbGetNewArrival,
-          accessToken,
-          setAuthData,
-          []
-        );
-
+        const responce = await tokenAwareFetchWrapper(dbGetNewArrival);
+        const userInfo = await tokenAwareFetchWrapper(dbGetUserInfo);
+        console.log(userInfo);
+        setUserInfo((prev) => ({ ...prev, userInfo: userInfo }));
         dispatch({ type: ACTIONS.NEW_ARRIVAL, payload: responce });
       } catch (error) {
         dispatch({ type: ACTIONS.ON_ERROR });
@@ -52,10 +50,24 @@ const useHome = () => {
         console.log(error);
       }
     };
-    getProducts();
+    onStart();
   }, []);
 
-  return [state, dispatch];
+  const getProducts = async () => {
+    try {
+      const responce = await tokenAwareFetchWrapper(dbGetNewArrival);
+      const userInfo = await tokenAwareFetchWrapper(dbGetUserInfo);
+      console.log(userInfo);
+      setUserInfo((prev) => ({ ...prev, userInfo: userInfo }));
+      dispatch({ type: ACTIONS.NEW_ARRIVAL, payload: responce });
+    } catch (error) {
+      dispatch({ type: ACTIONS.ON_ERROR });
+      ShowToast("customErrorToast", "Error", error.message);
+      console.log(error);
+    }
+  };
+
+  return [state, dispatch, userInfo, getProducts];
 };
 
 export default useHome;

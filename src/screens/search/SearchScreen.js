@@ -28,7 +28,13 @@ import ShowToast from "../../helper/ShowToast";
 import ProductCard from "./components/productcards/ProductCard";
 
 const SearchScreen = () => {
-  const [state, dispatch, searchFunc, navigateToProduct] = useSearch();
+  const [
+    state,
+    dispatch,
+    searchFunc,
+    navigateToProduct,
+    tokenAwareFetchWrapper,
+  ] = useSearch();
   console.log("render");
 
   const Top = () => {
@@ -43,6 +49,7 @@ const SearchScreen = () => {
             nextDropDownkey={"modelDropDownBox"}
             text={"Select Make"}
             modelOptionsKey={"make"}
+            tokenAwareFetchWrapper={tokenAwareFetchWrapper}
           />
 
           <DropDownBox
@@ -53,6 +60,7 @@ const SearchScreen = () => {
             nextDropDownkey={"yearDropDownBox"}
             text={"Select Model"}
             modelOptionsKey={"model"}
+            tokenAwareFetchWrapper={tokenAwareFetchWrapper}
           />
 
           <DropDownBox
@@ -63,6 +71,7 @@ const SearchScreen = () => {
             nextDropDownkey={null}
             text={"Select Year"}
             modelOptionsKey={"year"}
+            tokenAwareFetchWrapper={tokenAwareFetchWrapper}
           />
         </View>
 
@@ -75,6 +84,7 @@ const SearchScreen = () => {
             nextDropDownkey={null}
             text={"Select Category"}
             modelOptionsKey={"category"}
+            tokenAwareFetchWrapper={tokenAwareFetchWrapper}
           />
         </View>
 

@@ -19,10 +19,17 @@ import styles from "./styles";
 import CustomButton from "../../components/button/CustomButton";
 import useProducts from "./useProducts";
 import Loading from "../../components/loading/Loading";
+import { ACTIONS } from "./helper/reducerActions";
+import formattedCost from "../../helper/formattedCost";
 
 const ProductsScreen = ({ route }) => {
-  const { productId } = route.params;
-  const [state, dispatch, nav] = useProducts(productId);
+  const { navProductId, navActionType, navQuantity, navCartId } = route.params;
+  const [state, dispatch, nav, addToCart, updateCartItem] = useProducts(
+    navProductId,
+    navActionType,
+    navQuantity,
+    navCartId
+  );
 
   const Card = ({ title, text }) => {
     return (
@@ -44,6 +51,8 @@ const ProductsScreen = ({ route }) => {
   const year = data?.year;
   const productName = data?.productName + " " + model;
   const makeModelYear = make + " | " + model + " | " + year;
+  const quantityPrice = formattedCost(state.quantityPrice);
+  const price = formattedCost(data?.price);
 
   return (
     <>
@@ -87,19 +96,35 @@ const ProductsScreen = ({ route }) => {
 
               <View style={styles.quantitycontainer}>
                 <View style={styles.quantity}>
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.quantitybtn}
+                    onPress={() =>
+                      dispatch({ type: ACTIONS.QUANTITY, payload: "minus" })
+                    }
+                  >
                     <Fontisto name="minus-a" size={20} color="white" />
                   </TouchableOpacity>
 
-                  <Text style={styles.quantitytext}>1</Text>
-                  <TouchableOpacity>
+                  <Text style={styles.quantitytext}>{state.quantity}</Text>
+                  <TouchableOpacity
+                    style={styles.quantitybtn}
+                    onPress={() =>
+                      dispatch({ type: ACTIONS.QUANTITY, payload: "plus" })
+                    }
+                  >
                     <FontAwesome5 name="plus" size={18} color="white" />
                   </TouchableOpacity>
                 </View>
-                <Text style={styles.price}>${state.productData?.price} </Text>
+                <Text style={styles.price}>{price} </Text>
               </View>
 
-              <CustomButton text={"Add . $850"} />
+              <CustomButton
+                FUNC={navActionType == "ADD" ? addToCart : updateCartItem}
+                isLoading={state.btnIsLoading}
+                text={`${
+                  navActionType == "ADD" ? "Add" : "Update"
+                } . ${quantityPrice}`}
+              />
             </View>
             <View style={styles.bottomcontainer}>
               <View style={styles.descriptioncontainer}>

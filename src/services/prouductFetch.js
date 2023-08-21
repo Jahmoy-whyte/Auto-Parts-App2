@@ -11,26 +11,46 @@ export const dbGetNewArrival = async (accessToken) => {
   return await checkResponce(responce);
 };
 
-export const dbSearchForProducts = async (makeId, modelId, yearId) => {
+export const dbSearchForProducts = async (
+  accessToken,
+  makeId,
+  modelId,
+  yearId
+) => {
   const responce = await fetch(
-    `${BASE_URL}/products/${makeId}/${modelId}/${yearId}`
+    `${BASE_URL}/products/${makeId}/${modelId}/${yearId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
   );
   return await checkResponce(responce);
 };
 
 export const dbSearchForProductWithCategory = async (
+  accessToken,
   makeId,
   modelId,
   yearId,
   subCategoryId
 ) => {
   const responce = await fetch(
-    `${BASE_URL}/products/${makeId}/${modelId}/${yearId}/${subCategoryId}`
+    `${BASE_URL}/products/${makeId}/${modelId}/${yearId}/${subCategoryId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
   );
   return await checkResponce(responce);
 };
 
-export const dbGetProductById = async (productId) => {
-  const responce = await fetch(`${BASE_URL}/products/${productId}`);
+export const dbGetProductById = async (accessToken, productId) => {
+  const responce = await fetch(`${BASE_URL}/products/${productId}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
   return await checkResponce(responce);
 };

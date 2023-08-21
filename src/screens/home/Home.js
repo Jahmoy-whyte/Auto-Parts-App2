@@ -9,6 +9,7 @@ import {
   Image,
   Pressable,
   Button,
+  TouchableOpacity,
 } from "react-native";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import styles from "./styles";
@@ -31,14 +32,9 @@ import CategoriesCards from "./components/categories_cards/CategoriesCards";
 import useHome from "./useHome";
 import Loading from "../../components/loading/Loading";
 import * as SecureStore from "expo-secure-store";
-const Home = ({ navigation }) => {
-  const [state, dispatch] = useHome();
-  return (
-    <>
-      <ExpoStatusBar style="light" />
-      <View style={GlobalStyles.backDrop}></View>
-      <SafeAreaView style={GlobalStyles.container}>
-        <Button
+import { Touchable } from "react-native";
+/*
+ <Button
           title="clear"
           onPress={async () => {
             await SecureStore.deleteItemAsync("AccessToken");
@@ -55,13 +51,37 @@ const Home = ({ navigation }) => {
             alert(token + "==================REFRESH=============" + token2);
           }}
         />
+
+        <Button title="test" onPress={() => getProducts()} />
+
+*/
+const Home = ({ navigation }) => {
+  const [state, dispatch, userInfo, getProducts] = useHome();
+  return (
+    <>
+      <ExpoStatusBar style="light" />
+      <View style={GlobalStyles.backDrop}></View>
+      <SafeAreaView style={GlobalStyles.container}>
         <View style={styles.headingView}>
           <View style={styles.menuTitleAndCart}>
             <View style={styles.menuAndTitle}>
               <Entypo name="menu" size={24} color="white" />
               <Text style={GlobalStyles.xl20White}>Auto Parts</Text>
             </View>
-            <Feather name="shopping-cart" size={18} color="white" />
+            <TouchableOpacity
+              style={styles.cartcontainer}
+              onPress={() => navigation.navigate("cart")}
+            >
+              {userInfo?.cart?.length > 0 ? (
+                <View style={styles.cartbadge}>
+                  <Text style={styles.cartbadgetext}>
+                    {userInfo?.cart?.length}
+                  </Text>
+                </View>
+              ) : null}
+
+              <Feather name="shopping-cart" size={18} color="white" />
+            </TouchableOpacity>
           </View>
 
           <View style={styles.lcontainer}>

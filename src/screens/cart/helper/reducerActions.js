@@ -1,9 +1,6 @@
 export const ACTIONS = {
-  GET_PRODUCT_DATA: "get_product_data",
-  QUANTITY: "quantity",
-  BTN_IS_LOADING: "btn_is_loading",
-  ADDED: "added",
-  CALCULATE_QUANTITY_PRICE: "calculate_quantity_price",
+  CART_ITEMS: "cart_items",
+  IS_LOADING: "is_loading",
 };
 
 const test = {

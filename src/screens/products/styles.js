@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-    marginTop: 25,
-    marginBottom: 25,
+    marginTop: 15,
+    marginBottom: 20,
   },
   quantity: {
     flexDirection: "row",
@@ -68,6 +68,11 @@ const styles = StyleSheet.create({
     width: 125,
     paddingHorizontal: 10,
     justifyContent: "space-between",
+  },
+  quantitybtn: {
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
   quantitytext: {
     color: "white",
@@ -101,7 +106,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     minHeight: 60,
     paddingHorizontal: 15,
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
     borderBottomColor: "#B3B3B3",
   },
   texttitle: {
