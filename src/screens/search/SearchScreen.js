@@ -35,7 +35,7 @@ const SearchScreen = () => {
     navigateToProduct,
     tokenAwareFetchWrapper,
   ] = useSearch();
-  console.log("render");
+  console.log("======= render SearchScreen");
 
   const Top = () => {
     return (

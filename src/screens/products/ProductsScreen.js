@@ -23,6 +23,7 @@ import { ACTIONS } from "./helper/reducerActions";
 import formattedCost from "../../helper/formattedCost";
 
 const ProductsScreen = ({ route }) => {
+  console.log("======================== product screen");
   const { navProductId, navActionType, navQuantity, navCartId } = route.params;
   const [state, dispatch, nav, addToCart, updateCartItem] = useProducts(
     navProductId,

@@ -35,14 +35,16 @@ const useHome = () => {
   const tokenAwareFetchWrapper = useRefreshToken();
   const [state, dispatch] = useReducer(reducer, initialState);
   const { setUserInfo, userInfo } = useUserInfoContext();
+
+  // const userInfo = {};
   //efef
   useEffect(() => {
     const onStart = async () => {
       try {
         const responce = await tokenAwareFetchWrapper(dbGetNewArrival);
-        const userInfo = await tokenAwareFetchWrapper(dbGetUserInfo);
-        console.log(userInfo);
-        setUserInfo((prev) => ({ ...prev, userInfo: userInfo }));
+        //  const userInfo = await tokenAwareFetchWrapper(dbGetUserInfo);
+        //console.log(userInfo);
+        //setUserInfo(userInfo);
         dispatch({ type: ACTIONS.NEW_ARRIVAL, payload: responce });
       } catch (error) {
         dispatch({ type: ACTIONS.ON_ERROR });

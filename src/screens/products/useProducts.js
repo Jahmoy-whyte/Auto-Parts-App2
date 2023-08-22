@@ -5,6 +5,7 @@ import ShowToast from "../../helper/ShowToast";
 import { useNavigation } from "@react-navigation/native";
 import useRefreshToken from "../../hooks/useRefreshToken";
 import { dbAddToCart } from "../../services/cartFetch";
+import { useUserInfoContext } from "../../context/UserInfoContextWarpper";
 const useProducts = (navProductId, navActionType, navQuantity, navCartId) => {
   const intitalState = {
     isLoading: true,
@@ -64,6 +65,14 @@ const useProducts = (navProductId, navActionType, navQuantity, navCartId) => {
 
   const [state, dispatch] = useReducer(reducer, intitalState);
   const nav = useNavigation();
+
+  const { setUserInfo, userInfo } = useUserInfoContext();
+
+  const test = async (cartId, productId, quantity) => {
+    setUserInfo((prev) => ({
+      ...prev,
+    }));
+  };
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -85,6 +94,8 @@ const useProducts = (navProductId, navActionType, navQuantity, navCartId) => {
   }, []);
 
   const addToCart = async () => {
+    test("testid", navProductId, state.quantity);
+    return;
     try {
       dispatch({ type: ACTIONS.BTN_IS_LOADING, payload: true });
       const responce = await tokenAwareFetchWrapper(

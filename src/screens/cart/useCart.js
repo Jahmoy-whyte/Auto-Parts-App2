@@ -54,7 +54,16 @@ const useCart = () => {
     });
   };
 
-  return [state, dispatch, userInfo, updateItem];
+  const deleteCartItem = (productId, quantity, cartId) => {
+    nav.navigate("product", {
+      navProductId: productId,
+      navActionType: "UPDATE",
+      navQuantity: quantity,
+      navCartId: cartId,
+    });
+  };
+
+  return [state, dispatch, userInfo, updateItem, deleteCartItem];
 };
 
 export default useCart;

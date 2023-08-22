@@ -21,3 +21,27 @@ export const dbAddToCart = async (accessToken, productId, quantity) => {
   });
   return await checkResponce(responce);
 };
+
+export const dbUpdateCartItem = async (accessToken, cartId, quantity) => {
+  const responce = await fetch(`${BASE_URL}/cart`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ cartId, quantity }),
+  });
+  return await checkResponce(responce);
+};
+
+export const dbDeleteCartItem = async (accessToken, cartId) => {
+  const responce = await fetch(`${BASE_URL}/cart`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ cartId }),
+  });
+  return await checkResponce(responce);
+};

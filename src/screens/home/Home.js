@@ -57,6 +57,7 @@ import { Touchable } from "react-native";
 */
 const Home = ({ navigation }) => {
   const [state, dispatch, userInfo, getProducts] = useHome();
+  console.log("======= render home");
   return (
     <>
       <ExpoStatusBar style="light" />

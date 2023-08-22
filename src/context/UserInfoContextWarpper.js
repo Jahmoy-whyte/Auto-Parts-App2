@@ -9,15 +9,15 @@ const UserInfoContextWarpper = ({ children }) => {
   });
 
   return (
-    <UserInfoContext.Provider value={{ ...userInfo, setUserInfo }}>
+    <UserInfoContext.Provider value={{ userInfo, setUserInfo }}>
       {children}
     </UserInfoContext.Provider>
   );
 };
 
 export const useUserInfoContext = () => {
-  const user = useContext(UserInfoContext);
-  return { ...user };
+  const { userInfo, setUserInfo } = useContext(UserInfoContext);
+  return { userInfo, setUserInfo };
 };
 
 export default UserInfoContextWarpper;

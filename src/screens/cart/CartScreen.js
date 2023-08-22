@@ -19,7 +19,8 @@ import useCart from "./useCart";
 import CartCard from "./components/productcards/CartCard";
 import Loading from "../../components/loading/Loading";
 const CartScreen = () => {
-  const [state, dispatch, userInfo, updateItem] = useCart();
+  const [state, dispatch, userInfo, updateItem, deleteItem] = useCart();
+  console.log("======================= cart screen");
   return (
     <>
       <ExpoStatusBar style="light" />
@@ -35,6 +36,7 @@ const CartScreen = () => {
             renderItem={({ item }) => (
               <CartCard
                 updateItem={updateItem}
+                deleteItem={deleteItem}
                 cartId={item.id}
                 productId={item.productId}
                 title={item.productName}

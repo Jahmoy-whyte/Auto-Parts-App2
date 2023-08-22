@@ -12,6 +12,7 @@ const CartCard = ({
   func,
   productId,
   updateItem,
+  deleteItem,
 }) => {
   const formattedPrice = formattedCost(price);
   return (
@@ -33,7 +34,7 @@ const CartCard = ({
         >
           <AntDesign name="edit" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => deleteItem(cartId)}>
           <AntDesign name="delete" size={24} color="#F47A00" />
         </TouchableOpacity>
       </View>
