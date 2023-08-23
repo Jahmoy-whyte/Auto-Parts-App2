@@ -4,8 +4,8 @@ import { ACTIONS } from "./helper/reducerActions";
 import ShowToast from "../../helper/ShowToast";
 import { useNavigation } from "@react-navigation/native";
 import useRefreshToken from "../../hooks/useRefreshToken";
-import { dbAddToCart } from "../../services/cartFetch";
-import { useUserInfoContext } from "../../context/UserInfoContextWarpper";
+import { dbAddToCart, dbUpdateCartItem } from "../../services/cartFetch";
+import useModifyUserInfoState from "../../hooks/useModifyUserInfoState";
 const useProducts = (navProductId, navActionType, navQuantity, navCartId) => {
   const intitalState = {
     isLoading: true,
@@ -65,14 +65,9 @@ const useProducts = (navProductId, navActionType, navQuantity, navCartId) => {
 
   const [state, dispatch] = useReducer(reducer, intitalState);
   const nav = useNavigation();
+  const { addItemInCartState, updateItemInCartState } =
+    useModifyUserInfoState();
 
-  const { setUserInfo, userInfo } = useUserInfoContext();
-
-  const test = async (cartId, productId, quantity) => {
-    setUserInfo((prev) => ({
-      ...prev,
-    }));
-  };
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -94,15 +89,14 @@ const useProducts = (navProductId, navActionType, navQuantity, navCartId) => {
   }, []);
 
   const addToCart = async () => {
-    test("testid", navProductId, state.quantity);
-    return;
     try {
       dispatch({ type: ACTIONS.BTN_IS_LOADING, payload: true });
-      const responce = await tokenAwareFetchWrapper(
+      const insertId = await tokenAwareFetchWrapper(
         dbAddToCart,
         navProductId,
         state.quantity
       );
+      addItemInCartState(insertId, navProductId, state.quantity);
       dispatch({ type: ACTIONS.ADDED });
       ShowToast("customSuccessToast", "Cart", "Item is now in cart");
     } catch (error) {
@@ -116,12 +110,17 @@ const useProducts = (navProductId, navActionType, navQuantity, navCartId) => {
     try {
       dispatch({ type: ACTIONS.BTN_IS_LOADING, payload: true });
       const responce = await tokenAwareFetchWrapper(
-        dbAddToCart,
-        navProductId,
+        dbUpdateCartItem,
+        navCartId,
         state.quantity
       );
-      dispatch({ type: ACTIONS.ADDED });
-      ShowToast("customSuccessToast", "Cart", "Item is now in cart");
+      updateItemInCartState(navCartId, state.quantity);
+      ShowToast(
+        "customSuccessToast",
+        "Cart",
+        `${state.productData?.productName} updated successfully`
+      );
+      nav.goBack();
     } catch (error) {
       console.log(error);
       ShowToast("customErrorToast", "Cart Error", error.message);

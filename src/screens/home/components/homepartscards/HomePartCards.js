@@ -1,6 +1,7 @@
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import styles from "./styles";
 import formattedCost from "../../../../helper/formattedCost";
+import { memo } from "react";
 const HomePartCards = ({ image, text, subtext, price }) => {
   return (
     <TouchableOpacity style={styles.container}>
@@ -23,4 +24,4 @@ const HomePartCards = ({ image, text, subtext, price }) => {
   );
 };
 
-export default HomePartCards;
+export default memo(HomePartCards);

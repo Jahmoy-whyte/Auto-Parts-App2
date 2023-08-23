@@ -13,6 +13,9 @@ const checkResponce = async (responce) => {
       case 404:
         data = await responce.json();
         throw new Error(data.message);
+      case 409:
+        data = await responce.json();
+        throw new Error(data.message);
       default:
         throw new Error("Error occurred please try again");
     }

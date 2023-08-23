@@ -13,6 +13,7 @@ import ProductsScreen from "./src/screens/products/ProductsScreen";
 import UserAuthContextWarpper from "./src/context/UserAuthContextWarpper";
 
 import UserInfoContextWarpper from "./src/context/UserInfoContextWarpper";
+import SignUpScreen from "./src/screens/signup/SignUpScreen";
 const Stack = createNativeStackNavigator();
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -36,10 +37,11 @@ const App = () => {
                   gestureEnabled: false,
                 }}
               >
-                <Stack.Screen name="Home" component={BottomTabs} />
+                <Stack.Screen name="home" component={BottomTabs} />
                 <Stack.Screen name="search" component={SearchScreen} />
                 <Stack.Screen name="product" component={ProductsScreen} />
                 <Stack.Screen name="cart" component={CartScreen} />
+                <Stack.Screen name="signup" component={SignUpScreen} />
               </Stack.Navigator>
             </NavigationContainer>
           </UserInfoContextWarpper>

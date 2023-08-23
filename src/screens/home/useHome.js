@@ -42,9 +42,9 @@ const useHome = () => {
     const onStart = async () => {
       try {
         const responce = await tokenAwareFetchWrapper(dbGetNewArrival);
-        //  const userInfo = await tokenAwareFetchWrapper(dbGetUserInfo);
-        //console.log(userInfo);
-        //setUserInfo(userInfo);
+        const userInfo = await tokenAwareFetchWrapper(dbGetUserInfo);
+        console.log(userInfo);
+        setUserInfo(userInfo);
         dispatch({ type: ACTIONS.NEW_ARRIVAL, payload: responce });
       } catch (error) {
         dispatch({ type: ACTIONS.ON_ERROR });

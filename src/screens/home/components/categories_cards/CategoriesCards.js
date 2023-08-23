@@ -5,7 +5,7 @@ import {
   View,
   useWindowDimensions,
 } from "react-native";
-
+import { memo } from "react";
 import styles from "./styles";
 const CategoriesCards = ({ image, text, subText, func }) => {
   const { height, width } = useWindowDimensions();
@@ -20,4 +20,4 @@ const CategoriesCards = ({ image, text, subText, func }) => {
   );
 };
 
-export default CategoriesCards;
+export default memo(CategoriesCards);

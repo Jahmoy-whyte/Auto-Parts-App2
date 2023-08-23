@@ -16,19 +16,37 @@ const UserAuthContextWarpper = ({ children }) => {
   });
 
   const login = async (email, password) => {
-    // get auth Token
-    const Token = await dbUserLogin(email, password);
-    // get store auth Token
-    return;
-    await SecureStore.setItemAsync("AccessToken", authToken);
-    await SecureStore.setItemAsync("AccessToken", authToken);
-    // set is Auth to true
-    setData((prev) => ({ ...prev, isAuth: true, authToken: authToken }));
+    try {
+      // get auth Token
+      const { accessToken, refreshToken } = await dbUserLogin(email, password);
+      // get store auth Token
+      await SecureStore.setItemAsync("AccessToken", accessToken);
+      await SecureStore.setItemAsync("AccessToken", refreshToken);
+      // set is Auth to true
+      setData((prev) => ({ ...prev, isAuth: true, accessToken: accessToken }));
+    } catch (error) {
+      ShowToast("customErrorToast", "Error", error.message);
+    }
   };
 
   const signUp = async (email, password) => {
     const msg = await dbUserSignUp(email, password);
     return msg;
+  };
+
+  const loginAsGuest = async () => {
+    //  if token does not exist get refresh and access token from guest login
+    const tokens = await dbUserGuestLogin();
+    //  then store both locally
+    await SecureStore.setItemAsync("AccessToken", tokens.accessToken);
+    await SecureStore.setItemAsync("RefreshToken", tokens.refreshToken);
+    //  after store stop loading and set isAuth true and store auth token
+    setAuthData((prev) => ({
+      ...prev,
+      isLoading: false,
+      isAuth: true,
+      accessToken: tokens.accessToken,
+    }));
   };
 
   useEffect(() => {
@@ -46,18 +64,7 @@ const UserAuthContextWarpper = ({ children }) => {
             accessToken: accessToken,
           }));
         } else {
-          //  if token does not exist get refresh and access token from guest login
-          const tokens = await dbUserGuestLogin();
-          //  then store both locally
-          await SecureStore.setItemAsync("AccessToken", tokens.accessToken);
-          await SecureStore.setItemAsync("RefreshToken", tokens.refreshToken);
-          //  after store stop loading and set isAuth true and store auth token
-          setAuthData((prev) => ({
-            ...prev,
-            isLoading: false,
-            isAuth: true,
-            accessToken: tokens.accessToken,
-          }));
+          await loginAsGuest();
         }
       } catch (error) {
         setAuthData((prev) => ({
@@ -82,7 +89,7 @@ const UserAuthContextWarpper = ({ children }) => {
 
   return (
     <UserAuthContext.Provider
-      value={{ ...authData, setAuthData, login, signUp }}
+      value={{ ...authData, setAuthData, login, signUp, loginAsGuest }}
     >
       {children}
     </UserAuthContext.Provider>
@@ -90,8 +97,24 @@ const UserAuthContextWarpper = ({ children }) => {
 };
 
 export const useAuthContext = () => {
-  const auth = useContext(UserAuthContext);
-  return { ...auth };
+  const {
+    isLoading,
+    isAuth,
+    accessToken,
+    setAuthData,
+    login,
+    signUp,
+    loginAsGuest,
+  } = useContext(UserAuthContext);
+  return {
+    isLoading,
+    isAuth,
+    accessToken,
+    setAuthData,
+    login,
+    signUp,
+    loginAsGuest,
+  };
 };
 
 export const saveAccessTokenToStorage = async (accessToken) => {
@@ -101,6 +124,11 @@ export const saveAccessTokenToStorage = async (accessToken) => {
 export const getRefreshTokenFromStorage = async () => {
   const refreshToken = await SecureStore.getItemAsync("RefreshToken");
   return refreshToken;
+};
+
+export const deleteTokensFromStorage = async () => {
+  await SecureStore.deleteItemAsync("AccessToken");
+  await SecureStore.deleteItemAsync("RefreshToken");
 };
 
 export default UserAuthContextWarpper;

@@ -4,7 +4,6 @@ export const UserInfoContext = createContext(null);
 const UserInfoContextWarpper = ({ children }) => {
   const [userInfo, setUserInfo] = useState({
     isLoading: true,
-    user: null,
     cart: [],
   });
 

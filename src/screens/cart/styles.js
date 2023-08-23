@@ -102,5 +102,37 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: "Inter-Regular",
   },
+
+  checkoutview: {
+    flexDirection: "row",
+    borderRadius: 6,
+    borderWidth: 0.5,
+    marginHorizontal: 10,
+    marginVertical: 10,
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+    height: 80,
+    borderColor: "#B3B3B3",
+  },
+  checkouttitle: {
+    fontSize: 14,
+    fontFamily: "Inter-Bold",
+  },
+  checkoutbtn: {
+    backgroundColor: "#F47A00",
+    minHeight: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 6,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+  },
+  checkouttextview: {
+    flex: 1,
+  },
+
+  wdw: {},
+  wdw: {},
 });
 export default styles;

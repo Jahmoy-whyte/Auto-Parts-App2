@@ -4,7 +4,7 @@ import styles from "./styles";
 import { AntDesign } from "@expo/vector-icons";
 import formattedCost from "../../../../helper/formattedCost";
 const CartCard = ({
-  cartId,
+  id,
   title,
   price,
   quantity,
@@ -14,7 +14,8 @@ const CartCard = ({
   updateItem,
   deleteItem,
 }) => {
-  const formattedPrice = formattedCost(price);
+  const formattedPrice = formattedCost(price * quantity);
+  console.log("======================================= card cart");
   return (
     <View style={styles.container} onPress={() => func(productId)}>
       <View style={styles.imagecontainer}>
@@ -29,12 +30,10 @@ const CartCard = ({
         <Text style={styles.description}>Quantity: {quantity}</Text>
       </View>
       <View style={styles.actionbtncontainer}>
-        <TouchableOpacity
-          onPress={() => updateItem(productId, quantity, cartId)}
-        >
+        <TouchableOpacity onPress={() => updateItem(productId, quantity, id)}>
           <AntDesign name="edit" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => deleteItem(cartId)}>
+        <TouchableOpacity onPress={() => deleteItem(id)}>
           <AntDesign name="delete" size={24} color="#F47A00" />
         </TouchableOpacity>
       </View>
@@ -42,4 +41,4 @@ const CartCard = ({
   );
 };
 
-export default CartCard;
+export default memo(CartCard);

@@ -32,9 +32,20 @@ import CategoriesCards from "./components/categories_cards/CategoriesCards";
 import useHome from "./useHome";
 import Loading from "../../components/loading/Loading";
 import * as SecureStore from "expo-secure-store";
-import { Touchable } from "react-native";
+
 /*
- <Button
+
+
+*/
+const Home = ({ navigation }) => {
+  const [state, dispatch, userInfo, getProducts] = useHome();
+  console.log("======= render home");
+  return (
+    <>
+      <ExpoStatusBar style="light" />
+      <View style={GlobalStyles.backDrop}></View>
+      <SafeAreaView style={GlobalStyles.container}>
+        <Button
           title="clear"
           onPress={async () => {
             await SecureStore.deleteItemAsync("AccessToken");
@@ -46,23 +57,12 @@ import { Touchable } from "react-native";
           title="get token"
           onPress={async () => {
             const token = await SecureStore.getItemAsync("AccessToken");
-
             const token2 = await SecureStore.getItemAsync("RefreshToken");
             alert(token + "==================REFRESH=============" + token2);
           }}
         />
 
         <Button title="test" onPress={() => getProducts()} />
-
-*/
-const Home = ({ navigation }) => {
-  const [state, dispatch, userInfo, getProducts] = useHome();
-  console.log("======= render home");
-  return (
-    <>
-      <ExpoStatusBar style="light" />
-      <View style={GlobalStyles.backDrop}></View>
-      <SafeAreaView style={GlobalStyles.container}>
         <View style={styles.headingView}>
           <View style={styles.menuTitleAndCart}>
             <View style={styles.menuAndTitle}>
@@ -114,6 +114,27 @@ const Home = ({ navigation }) => {
             <Headings
               image={newstar}
               text={"New Arrival"}
+              subText={"Most select items"}
+            />
+            <FlatList
+              style={styles.flatlist}
+              data={state.newArrival}
+              horizontal
+              renderItem={({ item }) => (
+                <HomePartCards
+                  image={cardoor}
+                  text={item.productName + " " + item.model}
+                  price={item.price}
+                  subtext={"Model: " + item.model}
+                />
+              )}
+              keyExtractor={(item) => item.id}
+              showsHorizontalScrollIndicator={false}
+            />
+
+            <Headings
+              image={star}
+              text={"Categories"}
               subText={"Most select items"}
             />
             <FlatList

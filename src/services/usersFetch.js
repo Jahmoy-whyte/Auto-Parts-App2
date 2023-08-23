@@ -43,3 +43,15 @@ export const dbUserGuestLogin = async () => {
 
   return await checkResponce(responce);
 };
+
+export const dbUpdateGuestToUser = async (accessToken, email, password) => {
+  const responce = await fetch(`${BASE_URL}/users/guest/signup`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  });
+  return await checkResponce(responce);
+};
