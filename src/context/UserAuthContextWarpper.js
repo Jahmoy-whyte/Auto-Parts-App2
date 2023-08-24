@@ -7,7 +7,7 @@ import {
 } from "../services/usersFetch";
 import ShowToast from "../helper/ShowToast";
 import { Text, View } from "react-native";
-export const UserAuthContext = createContext();
+export const UserAuthContext = createContext(null);
 const UserAuthContextWarpper = ({ children }) => {
   const [authData, setAuthData] = useState({
     isLoading: true,
@@ -16,22 +16,29 @@ const UserAuthContextWarpper = ({ children }) => {
   });
 
   const login = async (email, password) => {
-    try {
-      // get auth Token
-      const { accessToken, refreshToken } = await dbUserLogin(email, password);
-      // get store auth Token
-      await SecureStore.setItemAsync("AccessToken", accessToken);
-      await SecureStore.setItemAsync("AccessToken", refreshToken);
-      // set is Auth to true
-      setData((prev) => ({ ...prev, isAuth: true, accessToken: accessToken }));
-    } catch (error) {
-      ShowToast("customErrorToast", "Error", error.message);
-    }
+    // get auth Token
+    const { accessToken, refreshToken } = await dbUserLogin(email, password);
+    // get store auth Token
+    await SecureStore.setItemAsync("AccessToken", accessToken);
+    await SecureStore.setItemAsync("RefreshToken", refreshToken);
+    // set is Auth to true
+    setAuthData((prev) => ({
+      ...prev,
+      isAuth: true,
+      accessToken: accessToken,
+    }));
   };
 
   const signUp = async (email, password) => {
     const msg = await dbUserSignUp(email, password);
     return msg;
+  };
+
+  const logout = async () => {
+    setAuthData((prev) => ({
+      ...prev,
+      isAuth: false,
+    }));
   };
 
   const loginAsGuest = async () => {
@@ -41,6 +48,7 @@ const UserAuthContextWarpper = ({ children }) => {
     await SecureStore.setItemAsync("AccessToken", tokens.accessToken);
     await SecureStore.setItemAsync("RefreshToken", tokens.refreshToken);
     //  after store stop loading and set isAuth true and store auth token
+
     setAuthData((prev) => ({
       ...prev,
       isLoading: false,
@@ -89,7 +97,7 @@ const UserAuthContextWarpper = ({ children }) => {
 
   return (
     <UserAuthContext.Provider
-      value={{ ...authData, setAuthData, login, signUp, loginAsGuest }}
+      value={{ ...authData, setAuthData, login, signUp, loginAsGuest, logout }}
     >
       {children}
     </UserAuthContext.Provider>
@@ -105,8 +113,10 @@ export const useAuthContext = () => {
     login,
     signUp,
     loginAsGuest,
+    logout,
   } = useContext(UserAuthContext);
   return {
+    logout,
     isLoading,
     isAuth,
     accessToken,

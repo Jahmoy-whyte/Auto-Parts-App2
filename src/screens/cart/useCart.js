@@ -77,10 +77,14 @@ const useCart = () => {
   const checkOut = () => {
     if (userInfo?.cart?.length < 1)
       return ShowToast("customWarnToast", "Cart", "please add item to cart");
-    if (userInfo.userStatus === "guest") {
-      nav.navigate("signup");
+    if (userInfo?.userStatus !== "user") {
+      nav.navigate("signup", {
+        signUpNotOptional: true,
+      });
       return;
     }
+
+    alert("done");
   };
 
   /*

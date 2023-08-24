@@ -22,7 +22,7 @@ const useRefreshToken = () => {
 
   const getAccessToken = async (fetchFunction, ...params) => {
     try {
-      alert("jwt expired");
+      // alert("jwt expired");
       const refreshToken = await getRefreshTokenFromStorage();
       const newAccessToken = await getNewAccessToken(refreshToken);
       setAuthData((prev) => ({
@@ -32,11 +32,17 @@ const useRefreshToken = () => {
       const responce = await fetchFunction(newAccessToken, ...params);
       return responce;
     } catch (error) {
-      if (error.message !== "forbidden(R101)") throw error;
+      if (
+        error.message !== "forbidden(R101)" &&
+        error.message !== "forbidden(R102)"
+      )
+        throw error;
+      setAuthData((prev) => ({
+        ...prev,
+        isAuth: false,
+      }));
 
-      nav.replace("signup", {
-        showBackBtn: false,
-      });
+      throw new Error("Sign Up To Continue");
     }
   };
 

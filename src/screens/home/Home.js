@@ -32,6 +32,7 @@ import CategoriesCards from "./components/categories_cards/CategoriesCards";
 import useHome from "./useHome";
 import Loading from "../../components/loading/Loading";
 import * as SecureStore from "expo-secure-store";
+import { useAuthContext } from "../../context/UserAuthContextWarpper";
 
 /*
 
@@ -40,11 +41,15 @@ import * as SecureStore from "expo-secure-store";
 const Home = ({ navigation }) => {
   const [state, dispatch, userInfo, getProducts] = useHome();
   console.log("======= render home");
+  const { logout } = useAuthContext();
+
   return (
     <>
       <ExpoStatusBar style="light" />
       <View style={GlobalStyles.backDrop}></View>
       <SafeAreaView style={GlobalStyles.container}>
+        <Button title="logout" onPress={() => logout()} />
+
         <Button
           title="clear"
           onPress={async () => {

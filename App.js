@@ -14,8 +14,30 @@ import UserAuthContextWarpper from "./src/context/UserAuthContextWarpper";
 
 import UserInfoContextWarpper from "./src/context/UserInfoContextWarpper";
 import SignUpScreen from "./src/screens/signup/SignUpScreen";
-const Stack = createNativeStackNavigator();
+import LoginScreen from "./src/screens/login/LoginScreen";
+import { useAuthContext } from "./src/context/UserAuthContextWarpper";
+import AllNav from "./AllNav";
+
 const App = () => {
+  //  console.log(fgf);w
+
+  return (
+    <>
+      <UserAuthContextWarpper>
+        <UserInfoContextWarpper>
+          <Test />
+        </UserInfoContextWarpper>
+      </UserAuthContextWarpper>
+      <Toast config={toastConfig} />
+    </>
+  );
+};
+
+const Test = () => {
+  const Stack = createNativeStackNavigator();
+  const { isAuth } = useAuthContext();
+  console.log("===============================");
+  console.log(isAuth);
   const [fontsLoaded] = useFonts({
     "Inter-Bold": require("./src/assets/fonts/Inter-Bold.ttf"),
     "Inter-Regular": require("./src/assets/fonts/Inter-Regular.ttf"),
@@ -25,30 +47,31 @@ const App = () => {
     return <View></View>;
   }
   return (
-    <>
-      <UserAuthContextWarpper>
-        <UserAuthContextWarpper>
-          <UserInfoContextWarpper>
-            <NavigationContainer>
-              <Stack.Navigator
-                screenOptions={{
-                  animation: "fade",
-                  headerShown: false,
-                  gestureEnabled: false,
-                }}
-              >
-                <Stack.Screen name="home" component={BottomTabs} />
-                <Stack.Screen name="search" component={SearchScreen} />
-                <Stack.Screen name="product" component={ProductsScreen} />
-                <Stack.Screen name="cart" component={CartScreen} />
-                <Stack.Screen name="signup" component={SignUpScreen} />
-              </Stack.Navigator>
-            </NavigationContainer>
-          </UserInfoContextWarpper>
-        </UserAuthContextWarpper>
-      </UserAuthContextWarpper>
-      <Toast config={toastConfig} />
-    </>
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          animation: "fade",
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      >
+        {!isAuth ? (
+          <Stack.Group>
+            <Stack.Screen name="signup" component={SignUpScreen} />
+            <Stack.Screen name="login" component={LoginScreen} />
+          </Stack.Group>
+        ) : (
+          <Stack.Group>
+            <Stack.Screen name="home" component={BottomTabs} />
+            <Stack.Screen name="search" component={SearchScreen} />
+            <Stack.Screen name="product" component={ProductsScreen} />
+            <Stack.Screen name="cart" component={CartScreen} />
+            <Stack.Screen name="signup1" component={SignUpScreen} />
+            <Stack.Screen name="login1" component={LoginScreen} />
+          </Stack.Group>
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 

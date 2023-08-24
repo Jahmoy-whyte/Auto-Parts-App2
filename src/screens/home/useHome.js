@@ -6,6 +6,7 @@ import { ACTIONS } from "./helper/reducerActions";
 import useRefreshToken from "../../hooks/useRefreshToken";
 import { useUserInfoContext } from "../../context/UserInfoContextWarpper";
 import { dbGetUserInfo } from "../../services/usersFetch";
+import { useAuthContext } from "../../context/UserAuthContextWarpper";
 const useHome = () => {
   // console.log(authData);ww
   const initialState = {
@@ -45,6 +46,7 @@ const useHome = () => {
         const userInfo = await tokenAwareFetchWrapper(dbGetUserInfo);
         console.log(userInfo);
         setUserInfo(userInfo);
+        console.log("this is my info ================================");
         dispatch({ type: ACTIONS.NEW_ARRIVAL, payload: responce });
       } catch (error) {
         dispatch({ type: ACTIONS.ON_ERROR });

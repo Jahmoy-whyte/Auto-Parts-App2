@@ -15,33 +15,25 @@ import BackButton from "../../components/backbutton/BackButton";
 import styles from "./styles";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import CustomButton from "../../components/button/CustomButton";
-import {
-  MaterialCommunityIcons,
-  AntDesign,
-  Feather,
-  Ionicons,
-} from "@expo/vector-icons";
-import Checkbox from "expo-checkbox";
-import useSignUp from "./useSignUp";
+import useLogin from "./useLogin";
+import { Ionicons } from "@expo/vector-icons";
 import { ACTIONS } from "./helper/reducerActions";
+const LoginScreen = () => {
+  console.log("======= render Login");
 
-const SignUpScreen = ({ navigation }) => {
-  const [state, dispatch, submit, nav, continueAsGuest, signUpNotOptional] =
-    useSignUp();
-
-  console.log("======= render signup");
+  const [state, dispatch, submit, nav] = useLogin();
   return (
     <>
       <ExpoStatusBar style="light" />
       <View style={GlobalStyles.backDrop}></View>
 
       <SafeAreaView style={GlobalStyles.container}>
-        {signUpNotOptional ? <BackButton isLoading={state.isLoading} /> : null}
+        <BackButton isLoading={state.isLoading} />
 
         <ScrollView>
           <View style={styles.topcontainer}>
-            <Text style={styles.title}>Sign Up</Text>
-            <Text style={styles.subtitle}>Please Sign Up To Continue</Text>
+            <Text style={styles.title}>Login</Text>
+            <Text style={styles.subtitle}>Please Login To Continue</Text>
           </View>
 
           <View style={styles.textboxcontainer}>
@@ -91,55 +83,25 @@ const SignUpScreen = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
             </View>
-            <View style={styles.checkboxcontainer}>
-              <Checkbox
-                style={styles.checkbox}
-                value={state.checked}
-                onValueChange={() => dispatch({ type: ACTIONS.SET_CHECKED })}
-                color={state.checked ? "#F47A00" : null}
-              />
-              <View style={styles.checkboxtextcontainer}>
-                <Text style={styles.checkboxtext}>
-                  I Have Read And Agreed Our
-                </Text>
-                <TouchableOpacity>
-                  <Text style={styles.checkboxtextbold}> Privacy Policy</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+
             <CustomButton
-              text={"Sign Up"}
+              marginVertical={10}
+              text={"Login"}
               FUNC={submit}
               isLoading={state.isLoading}
             />
-
-            {!signUpNotOptional ? (
-              <>
-                <View style={styles.orcontainer}>
-                  <View style={styles.orlines}></View>
-                  <Text style={styles.ortext}>OR</Text>
-                  <View style={styles.orlines}></View>
-                </View>
-
-                <TouchableOpacity
-                  style={styles.guestbtn}
-                  onPress={continueAsGuest}
-                >
-                  <Text style={styles.guestbtntext}>
-                    {state.guestBtnLoading
-                      ? "Please Wait..."
-                      : "Continue As Guest"}
-                  </Text>
-                </TouchableOpacity>
-              </>
-            ) : null}
           </View>
         </ScrollView>
         <View style={styles.bottomtextcontainer}>
-          <Text style={styles.bottomtext}> Already Have An Account?</Text>
-
-          <TouchableOpacity onPress={() => nav.navigate("login")}>
-            <Text style={styles.bottomtextbold}> Login</Text>
+          <Text style={styles.bottomtext}> Dont Have An Account?</Text>
+          <TouchableOpacity
+            onPress={() =>
+              nav.navigate("signup", {
+                signUpNotOptional: true,
+              })
+            }
+          >
+            <Text style={styles.bottomtextbold}> SignUp</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -147,7 +109,7 @@ const SignUpScreen = ({ navigation }) => {
   );
 };
 
-export default SignUpScreen;
+export default LoginScreen;
 /*
  <View
               style={{
