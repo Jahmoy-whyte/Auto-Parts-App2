@@ -15,13 +15,20 @@ import BackButton from "../../components/backbutton/BackButton";
 import styles from "./styles";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import CustomButton from "../../components/button/CustomButton";
-import useLogin from "./useLogin";
-import { Ionicons } from "@expo/vector-icons";
+import {
+  MaterialCommunityIcons,
+  AntDesign,
+  Feather,
+  Ionicons,
+} from "@expo/vector-icons";
+import Checkbox from "expo-checkbox";
+import useGuestToUserSignUp from "./useGuestToUserSignUp";
 import { ACTIONS } from "./helper/reducerActions";
-const LoginScreen = () => {
-  console.log("======= render Login");
 
-  const [state, dispatch, submit, nav] = useLogin();
+const GuestToUserSignUp = ({ navigation }) => {
+  const [state, dispatch, submit, nav] = useGuestToUserSignUp();
+
+  console.log("======= render signup");
   return (
     <>
       <ExpoStatusBar style="light" />
@@ -32,8 +39,8 @@ const LoginScreen = () => {
 
         <ScrollView>
           <View style={styles.topcontainer}>
-            <Text style={styles.title}>Login</Text>
-            <Text style={styles.subtitle}>Please Login To Continue</Text>
+            <Text style={styles.title}>Sign Up</Text>
+            <Text style={styles.subtitle}>Please Sign Up To Continue</Text>
           </View>
 
           <View style={styles.textboxcontainer}>
@@ -83,42 +90,32 @@ const LoginScreen = () => {
                 </TouchableOpacity>
               </View>
             </View>
-
+            <View style={styles.checkboxcontainer}>
+              <Checkbox
+                style={styles.checkbox}
+                value={state.checked}
+                onValueChange={() => dispatch({ type: ACTIONS.SET_CHECKED })}
+                color={state.checked ? "#F47A00" : null}
+              />
+              <View style={styles.checkboxtextcontainer}>
+                <Text style={styles.checkboxtext}>
+                  I Have Read And Agreed Our
+                </Text>
+                <TouchableOpacity>
+                  <Text style={styles.checkboxtextbold}> Privacy Policy</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
             <CustomButton
-              marginVertical={10}
-              text={"Login"}
+              text={"Sign Up"}
               FUNC={submit}
               isLoading={state.isLoading}
             />
           </View>
         </ScrollView>
-        <View style={styles.bottomtextcontainer}>
-          <Text style={styles.bottomtext}> Dont Have An Account?</Text>
-          <TouchableOpacity onPress={() => nav.navigate("signup")}>
-            <Text style={styles.bottomtextbold}> SignUp</Text>
-          </TouchableOpacity>
-        </View>
       </SafeAreaView>
     </>
   );
 };
 
-export default LoginScreen;
-/*
- <View
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Image
-                resizeMode="center"
-                source={require("../../assets/ts1.png")}
-                style={{
-                  width: 150,
-                  height: 150,
-                  flex: 1,
-                }}
-              />
-            </View>
-*/
+export default GuestToUserSignUp;

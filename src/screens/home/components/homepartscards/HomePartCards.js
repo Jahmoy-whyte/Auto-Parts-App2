@@ -2,9 +2,19 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 import styles from "./styles";
 import formattedCost from "../../../../helper/formattedCost";
 import { memo } from "react";
-const HomePartCards = ({ image, text, subtext, price }) => {
+const HomePartCards = ({
+  image,
+  text,
+  subtext,
+  price,
+  id,
+  navigateToProduct,
+}) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => navigateToProduct(id)}
+    >
       <View style={styles.imagecontainer}>
         <Image source={image} style={styles.img} />
       </View>

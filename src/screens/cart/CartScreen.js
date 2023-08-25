@@ -61,20 +61,22 @@ const CartScreen = () => {
           />
         )}
 
-        <View style={styles.checkoutview}>
-          <View style={styles.checkouttextview}>
-            <Text style={styles.checkouttitle}>SubTotal:</Text>
-            <Text style={GlobalStyles.sml12Black}>
-              {formattedCost(subTotal)}
-            </Text>
+        {userInfo?.cart?.length > 0 ? (
+          <View style={styles.checkoutview}>
+            <View style={styles.checkouttextview}>
+              <Text style={styles.checkouttitle}>SubTotal:</Text>
+              <Text style={GlobalStyles.sml12Black}>
+                {formattedCost(subTotal)}
+              </Text>
+            </View>
+            <TouchableOpacity
+              style={styles.checkoutbtn}
+              onPress={() => checkOut()}
+            >
+              <Text style={GlobalStyles.sml14WhiteBold}>Check Out</Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={styles.checkoutbtn}
-            onPress={() => checkOut()}
-          >
-            <Text style={GlobalStyles.sml14WhiteBold}>Check Out</Text>
-          </TouchableOpacity>
-        </View>
+        ) : null}
       </SafeAreaView>
     </>
   );

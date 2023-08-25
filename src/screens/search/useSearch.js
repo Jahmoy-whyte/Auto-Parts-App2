@@ -12,6 +12,7 @@ import {
 } from "../../services/prouductFetch";
 import { useNavigation } from "@react-navigation/native";
 import useRefreshToken from "../../hooks/useRefreshToken";
+import { useAuthContext } from "../../context/UserAuthContextWarpper";
 const useSearch = () => {
   const reducer = (state, action) => {
     switch (action.type) {
@@ -114,7 +115,7 @@ const useSearch = () => {
 
   const nav = useNavigation();
   const [state, dispatch] = useReducer(reducer, intitalState);
-  const tokenAwareFetchWrapper = useRefreshToken();
+  const { tokenAwareFetchWrapper } = useAuthContext();
 
   const searchFunc = async () => {
     const makeId = state.makeDropDownBox.selectedValueId;

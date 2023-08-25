@@ -1,37 +1,42 @@
-import { useReducer, useState } from "react";
+import { useReducer } from "react";
 import ShowToast from "../../helper/ShowToast";
-import { useAuthContext } from "../../context/UserAuthContextWarpper";
+import useRefreshToken from "../../hooks/useRefreshToken";
+import { dbGetUserInfo, dbUpdateGuestToUser } from "../../services/usersFetch";
+import {
+  deleteTokensFromStorage,
+  useAuthContext,
+} from "../../context/UserAuthContextWarpper";
 import { ACTIONS } from "./helper/reducerActions";
-import { useNavigation, useRoute } from "@react-navigation/native";
-const useLogin = () => {
+import { useNavigation } from "@react-navigation/native";
+import { useUserInfoContext } from "../../context/UserInfoContextWarpper";
+const useGuestToUserSignUp = () => {
   //   data
   const intitalState = {
     email: "",
     password: "",
+    checked: false,
     isLoading: false,
     showPassword: false,
-    guestBtnLoading: false,
   };
 
   const reducer = (state, action) => {
     switch (action.type) {
       case "set_input":
         return { ...state, [action.payload.name]: action.payload.value };
+      case "set_checked":
+        return { ...state, checked: !state.checked };
       case "show_password":
         return { ...state, showPassword: !state.showPassword };
       case "is_loading":
         return { ...state, isLoading: action.payload };
-      case "guest":
-        return { ...state, guestBtnLoading: action.payload };
       default:
         return state;
     }
   };
   const [state, dispatch] = useReducer(reducer, intitalState);
-  const { login } = useAuthContext();
+  const { login, tokenAwareFetchWrapper } = useAuthContext();
+  const { setUserInfo } = useUserInfoContext();
   const nav = useNavigation();
-  // const route = useRoute();
-  // const signUpOptional = route.params?.signUpOptional;
 
   const setIsLoading = (value) => {
     dispatch({ type: ACTIONS.IS_LOADING, payload: value });
@@ -45,8 +50,18 @@ const useLogin = () => {
     try {
       const email = state.email.trim();
       const password = state.password.trim();
+
+      await tokenAwareFetchWrapper(dbUpdateGuestToUser, email, password);
       await login(email, password);
+      const res = await tokenAwareFetchWrapper(dbGetUserInfo);
+      setUserInfo(res);
+      ShowToast(
+        "customSuccessToast",
+        "Success",
+        "Account created successfully"
+      );
       setIsLoading(false);
+      nav.navigate("home");
     } catch (error) {
       setIsLoading(false);
       ShowToast("customErrorToast", error.message);
@@ -62,6 +77,9 @@ const useLogin = () => {
     } else if (state.password === "") {
       bool = true;
       message = "Please your enter password";
+    } else if (!state.checked) {
+      bool = true;
+      message = "Please read and check our privacy policy";
     }
     return { bool, message };
   };
@@ -71,4 +89,4 @@ const useLogin = () => {
   return [state, dispatch, submit, nav];
 };
 
-export default useLogin;
+export default useGuestToUserSignUp;

@@ -1,14 +1,13 @@
-import { useEffect, useReducer, useState } from "react";
+import { useReducer } from "react";
 import ShowToast from "../../helper/ShowToast";
-import useRefreshToken from "../../hooks/useRefreshToken";
-import { dbUpdateGuestToUser } from "../../services/usersFetch";
+
 import {
   deleteTokensFromStorage,
   useAuthContext,
 } from "../../context/UserAuthContextWarpper";
-import { getRefreshTokenFromStorage } from "../../context/UserAuthContextWarpper";
 import { ACTIONS } from "./helper/reducerActions";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+
 const useSignUp = () => {
   //   data
   const intitalState = {
@@ -17,7 +16,6 @@ const useSignUp = () => {
     checked: false,
     isLoading: false,
     showPassword: false,
-    guestBtnLoading: false,
   };
 
   const reducer = (state, action) => {
@@ -30,24 +28,16 @@ const useSignUp = () => {
         return { ...state, showPassword: !state.showPassword };
       case "is_loading":
         return { ...state, isLoading: action.payload };
-      case "guest":
-        return { ...state, guestBtnLoading: action.payload };
       default:
         return state;
     }
   };
   const [state, dispatch] = useReducer(reducer, intitalState);
-  const tokenAwareFetchWrapper = useRefreshToken();
-  const { signUp, login, loginAsGuest } = useAuthContext();
+  const { signUp, login } = useAuthContext();
   const nav = useNavigation();
-  const route = useRoute();
-  const signUpNotOptional = route.params?.signUpNotOptional;
 
   const setIsLoading = (value) => {
     dispatch({ type: ACTIONS.IS_LOADING, payload: value });
-  };
-  const setGuestBtnLoading = (value) => {
-    dispatch({ type: ACTIONS.GUEST, payload: value });
   };
 
   const submit = async () => {
@@ -58,12 +48,9 @@ const useSignUp = () => {
     try {
       const email = state.email.trim();
       const password = state.password.trim();
-      if (!signUpNotOptional) {
-        await signUp(email, password);
-      } else {
-        alert("useing token");
-        await tokenAwareFetchWrapper(dbUpdateGuestToUser, email, password);
-      }
+
+      await signUp(email, password);
+
       ShowToast(
         "customSuccessToast",
         "Success",
@@ -74,17 +61,6 @@ const useSignUp = () => {
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      ShowToast("customErrorToast", error.message);
-    }
-  };
-
-  const continueAsGuest = async () => {
-    try {
-      setGuestBtnLoading(true);
-      await loginAsGuest();
-      setGuestBtnLoading(false);
-    } catch (error) {
-      setGuestBtnLoading(false);
       ShowToast("customErrorToast", error.message);
     }
   };
@@ -107,7 +83,7 @@ const useSignUp = () => {
 
   //const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-  return [state, dispatch, submit, nav, continueAsGuest, signUpNotOptional];
+  return [state, dispatch, submit, nav];
 };
 
 export default useSignUp;

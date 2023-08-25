@@ -1,12 +1,11 @@
-import { useEffect, useState, useContext, useReducer } from "react";
+import { useCallback, useEffect, useReducer } from "react";
 import { dbGetNewArrival } from "../../services/prouductFetch";
-
 import ShowToast from "../../helper/ShowToast";
 import { ACTIONS } from "./helper/reducerActions";
-import useRefreshToken from "../../hooks/useRefreshToken";
 import { useUserInfoContext } from "../../context/UserInfoContextWarpper";
 import { dbGetUserInfo } from "../../services/usersFetch";
 import { useAuthContext } from "../../context/UserAuthContextWarpper";
+import { useNavigation } from "@react-navigation/native";
 const useHome = () => {
   // console.log(authData);ww
   const initialState = {
@@ -33,10 +32,11 @@ const useHome = () => {
     }
   };
 
-  const tokenAwareFetchWrapper = useRefreshToken();
+  // const tokenAwareFetchWrapper = useRefreshToken();
   const [state, dispatch] = useReducer(reducer, initialState);
   const { setUserInfo, userInfo } = useUserInfoContext();
-
+  const { tokenAwareFetchWrapper, logout } = useAuthContext();
+  const nav = useNavigation();
   // const userInfo = {};
   //efef
   useEffect(() => {
@@ -57,6 +57,15 @@ const useHome = () => {
     onStart();
   }, []);
 
+  const navigateToProduct = useCallback((productId) => {
+    nav.navigate("product", {
+      navProductId: productId,
+      navActionType: "ADD",
+      navQuantity: 1,
+      navCartId: null,
+    });
+  }, []);
+
   const getProducts = async () => {
     try {
       const responce = await tokenAwareFetchWrapper(dbGetNewArrival);
@@ -71,7 +80,7 @@ const useHome = () => {
     }
   };
 
-  return [state, dispatch, userInfo, getProducts];
+  return [state, dispatch, userInfo, getProducts, logout, navigateToProduct];
 };
 
 export default useHome;

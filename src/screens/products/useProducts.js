@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import useRefreshToken from "../../hooks/useRefreshToken";
 import { dbAddToCart, dbUpdateCartItem } from "../../services/cartFetch";
 import useModifyUserInfoState from "../../hooks/useModifyUserInfoState";
+import { useAuthContext } from "../../context/UserAuthContextWarpper";
 const useProducts = (navProductId, navActionType, navQuantity, navCartId) => {
   const intitalState = {
     isLoading: true,
@@ -61,8 +62,8 @@ const useProducts = (navProductId, navActionType, navQuantity, navCartId) => {
         };
     }
   };
-  const tokenAwareFetchWrapper = useRefreshToken();
 
+  const { tokenAwareFetchWrapper } = useAuthContext();
   const [state, dispatch] = useReducer(reducer, intitalState);
   const nav = useNavigation();
   const { addItemInCartState, updateItemInCartState } =

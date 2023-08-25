@@ -26,8 +26,7 @@ import useSignUp from "./useSignUp";
 import { ACTIONS } from "./helper/reducerActions";
 
 const SignUpScreen = ({ navigation }) => {
-  const [state, dispatch, submit, nav, continueAsGuest, signUpNotOptional] =
-    useSignUp();
+  const [state, dispatch, submit, nav] = useSignUp();
 
   console.log("======= render signup");
   return (
@@ -36,7 +35,7 @@ const SignUpScreen = ({ navigation }) => {
       <View style={GlobalStyles.backDrop}></View>
 
       <SafeAreaView style={GlobalStyles.container}>
-        {signUpNotOptional ? <BackButton isLoading={state.isLoading} /> : null}
+        <BackButton isLoading={state.isLoading} />
 
         <ScrollView>
           <View style={styles.topcontainer}>
@@ -112,27 +111,6 @@ const SignUpScreen = ({ navigation }) => {
               FUNC={submit}
               isLoading={state.isLoading}
             />
-
-            {!signUpNotOptional ? (
-              <>
-                <View style={styles.orcontainer}>
-                  <View style={styles.orlines}></View>
-                  <Text style={styles.ortext}>OR</Text>
-                  <View style={styles.orlines}></View>
-                </View>
-
-                <TouchableOpacity
-                  style={styles.guestbtn}
-                  onPress={continueAsGuest}
-                >
-                  <Text style={styles.guestbtntext}>
-                    {state.guestBtnLoading
-                      ? "Please Wait..."
-                      : "Continue As Guest"}
-                  </Text>
-                </TouchableOpacity>
-              </>
-            ) : null}
           </View>
         </ScrollView>
         <View style={styles.bottomtextcontainer}>

@@ -4,9 +4,11 @@ import {
   dbUserLogin,
   dbUserSignUp,
   dbUserGuestLogin,
+  dbLogoutUser,
 } from "../services/usersFetch";
 import ShowToast from "../helper/ShowToast";
 import { Text, View } from "react-native";
+import { getNewAccessToken } from "../services/refreshTokenFetch";
 export const UserAuthContext = createContext(null);
 const UserAuthContextWarpper = ({ children }) => {
   const [authData, setAuthData] = useState({
@@ -35,10 +37,15 @@ const UserAuthContextWarpper = ({ children }) => {
   };
 
   const logout = async () => {
-    setAuthData((prev) => ({
-      ...prev,
-      isAuth: false,
-    }));
+    try {
+      await tokenAwareFetchWrapper(dbLogoutUser);
+      setAuthData((prev) => ({
+        ...prev,
+        isAuth: false,
+      }));
+    } catch (error) {
+      console.log("logout error");
+    }
   };
 
   const loginAsGuest = async () => {
@@ -57,6 +64,43 @@ const UserAuthContextWarpper = ({ children }) => {
     }));
   };
 
+  const tokenAwareFetchWrapper = async (fetchFunction, ...params) => {
+    const accessToken = authData.accessToken;
+    try {
+      const responce = await fetchFunction(accessToken, ...params);
+      return responce;
+    } catch (error) {
+      if (error.message !== "jwt expired") throw error;
+      return await getAccessToken(fetchFunction, ...params);
+    }
+  };
+
+  const getAccessToken = async (fetchFunction, ...params) => {
+    try {
+      alert("jwt expired");
+      const refreshToken = await getRefreshTokenFromStorage();
+      const newAccessToken = await getNewAccessToken(refreshToken);
+      setAuthData((prev) => ({
+        ...prev,
+        accessToken: newAccessToken,
+      }));
+      const responce = await fetchFunction(newAccessToken, ...params);
+      return responce;
+    } catch (error) {
+      if (
+        error.message !== "forbidden(R101)" &&
+        error.message !== "forbidden(R102)"
+      )
+        throw error;
+      setAuthData((prev) => ({
+        ...prev,
+        isAuth: false,
+      }));
+
+      throw new Error("Sign Up To Continue");
+    }
+  };
+
   useEffect(() => {
     const getUserAuthToken = async () => {
       try {
@@ -72,7 +116,12 @@ const UserAuthContextWarpper = ({ children }) => {
             accessToken: accessToken,
           }));
         } else {
-          await loginAsGuest();
+          //  await loginAsGuest();
+          setAuthData((prev) => ({
+            ...prev,
+
+            isLoading: false,
+          }));
         }
       } catch (error) {
         setAuthData((prev) => ({
@@ -97,7 +146,15 @@ const UserAuthContextWarpper = ({ children }) => {
 
   return (
     <UserAuthContext.Provider
-      value={{ ...authData, setAuthData, login, signUp, loginAsGuest, logout }}
+      value={{
+        ...authData,
+        setAuthData,
+        login,
+        signUp,
+        loginAsGuest,
+        logout,
+        tokenAwareFetchWrapper,
+      }}
     >
       {children}
     </UserAuthContext.Provider>
@@ -114,8 +171,10 @@ export const useAuthContext = () => {
     signUp,
     loginAsGuest,
     logout,
+    tokenAwareFetchWrapper,
   } = useContext(UserAuthContext);
   return {
+    tokenAwareFetchWrapper,
     logout,
     isLoading,
     isAuth,

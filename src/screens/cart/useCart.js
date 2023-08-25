@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
-import { useUserInfoContext } from "../../context/UserInfoContextWarpper";
 import ShowToast from "../../helper/ShowToast";
 import { ACTIONS } from "./helper/reducerActions";
-import useRefreshToken from "../../hooks/useRefreshToken";
 import { dbDeleteCartItem, dbGetUserCart } from "../../services/cartFetch";
 import { useNavigation } from "@react-navigation/native";
 import useModifyCartState from "../../hooks/useModifyUserInfoState";
+import { useAuthContext } from "../../context/UserAuthContextWarpper";
 
 const useCart = () => {
   // const [] = useState();
@@ -26,7 +25,7 @@ const useCart = () => {
         return { ...state };
     }
   };
-  const tokenAwareFetchWrapper = useRefreshToken();
+  const { tokenAwareFetchWrapper } = useAuthContext();
   const { setUserInfo, userInfo, deleteItemInCartState, setItemInCartState } =
     useModifyCartState();
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -71,20 +70,18 @@ const useCart = () => {
       (prev, item) => prev + item.price * item.quantity,
       0
     );
-    return total;
+    return total ? total : 0;
   }, [userInfo]);
 
   const checkOut = () => {
     if (userInfo?.cart?.length < 1)
       return ShowToast("customWarnToast", "Cart", "please add item to cart");
     if (userInfo?.userStatus !== "user") {
-      nav.navigate("signup", {
-        signUpNotOptional: true,
-      });
+      nav.navigate("guestToUserSignUp");
       return;
     }
 
-    alert("done");
+    nav.navigate("checkout");
   };
 
   /*

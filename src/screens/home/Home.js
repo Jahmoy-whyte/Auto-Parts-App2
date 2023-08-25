@@ -32,16 +32,15 @@ import CategoriesCards from "./components/categories_cards/CategoriesCards";
 import useHome from "./useHome";
 import Loading from "../../components/loading/Loading";
 import * as SecureStore from "expo-secure-store";
-import { useAuthContext } from "../../context/UserAuthContextWarpper";
 
 /*
 
 
 */
 const Home = ({ navigation }) => {
-  const [state, dispatch, userInfo, getProducts] = useHome();
+  const [state, dispatch, userInfo, getProducts, logout, navigateToProduct] =
+    useHome();
   console.log("======= render home");
-  const { logout } = useAuthContext();
 
   return (
     <>
@@ -127,6 +126,8 @@ const Home = ({ navigation }) => {
               horizontal
               renderItem={({ item }) => (
                 <HomePartCards
+                  id={item.id}
+                  navigateToProduct={navigateToProduct}
                   image={cardoor}
                   text={item.productName + " " + item.model}
                   price={item.price}
@@ -148,6 +149,8 @@ const Home = ({ navigation }) => {
               horizontal
               renderItem={({ item }) => (
                 <HomePartCards
+                  id={item.id}
+                  navigateToProduct={navigateToProduct}
                   image={cardoor}
                   text={item.productName + " " + item.model}
                   price={item.price}

@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign } from "@expo/vector-icons";
 import Home from "../home/Home";
+import AccountTab from "../account/AccountTab";
 import { View } from "react-native";
 const Tab = createBottomTabNavigator();
 
@@ -28,15 +29,15 @@ const BottomTabs = () => {
             ),
           }}
         />
+
         <Tab.Screen
-          name="Notifications"
-          component={Home}
+          name="Account"
+          component={AccountTab}
           options={{
-            tabBarLabel: "Updates",
+            tabBarLabel: "Account",
             tabBarIcon: ({ color, size }) => (
-              <AntDesign name="home" size={size} color={color} />
+              <AntDesign name="user" size={size} color={color} />
             ),
-            tabBarBadge: 3,
           }}
         />
       </Tab.Navigator>

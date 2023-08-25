@@ -17,7 +17,9 @@ import SignUpScreen from "./src/screens/signup/SignUpScreen";
 import LoginScreen from "./src/screens/login/LoginScreen";
 import { useAuthContext } from "./src/context/UserAuthContextWarpper";
 import AllNav from "./AllNav";
-
+import LandingScreen from "./src/screens/landing/LandingScreen";
+import GuestToUserSignUp from "./src/screens/guestToUserSignUp/GuestToUserSignUp";
+import CheckOutScreen from "./src/screens/checkout/CheckOutScreen";
 const App = () => {
   //  console.log(fgf);w
 
@@ -36,8 +38,8 @@ const App = () => {
 const Test = () => {
   const Stack = createNativeStackNavigator();
   const { isAuth } = useAuthContext();
-  console.log("===============================");
-  console.log(isAuth);
+  // console.log("===============================");
+  // console.log(isAuth);
   const [fontsLoaded] = useFonts({
     "Inter-Bold": require("./src/assets/fonts/Inter-Bold.ttf"),
     "Inter-Regular": require("./src/assets/fonts/Inter-Regular.ttf"),
@@ -57,6 +59,7 @@ const Test = () => {
       >
         {!isAuth ? (
           <Stack.Group>
+            <Stack.Screen name="landing" component={LandingScreen} />
             <Stack.Screen name="signup" component={SignUpScreen} />
             <Stack.Screen name="login" component={LoginScreen} />
           </Stack.Group>
@@ -66,8 +69,11 @@ const Test = () => {
             <Stack.Screen name="search" component={SearchScreen} />
             <Stack.Screen name="product" component={ProductsScreen} />
             <Stack.Screen name="cart" component={CartScreen} />
-            <Stack.Screen name="signup1" component={SignUpScreen} />
-            <Stack.Screen name="login1" component={LoginScreen} />
+            <Stack.Screen name="checkout" component={CheckOutScreen} />
+            <Stack.Screen
+              name="guestToUserSignUp"
+              component={GuestToUserSignUp}
+            />
           </Stack.Group>
         )}
       </Stack.Navigator>
