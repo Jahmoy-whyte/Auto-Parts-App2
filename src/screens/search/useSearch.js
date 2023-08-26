@@ -6,6 +6,7 @@ import { dbGetSubCategory } from "../../services/categoriesFetch";
 import intitalState from "./helper/intitalState";
 import ShowToast from "../../helper/ShowToast";
 import {
+  dbGetNewArrival,
   dbGetProducts,
   dbSearchForProductWithCategory,
   dbSearchForProducts,
@@ -116,6 +117,18 @@ const useSearch = () => {
   const nav = useNavigation();
   const [state, dispatch] = useReducer(reducer, intitalState);
   const { tokenAwareFetchWrapper } = useAuthContext();
+
+  useEffect(() => {
+    const getInitialData = async () => {
+      try {
+        const responce = await tokenAwareFetchWrapper(dbGetNewArrival);
+        dispatch({ type: ACTIONS.ADD_PRODUCTS_DATA, payload: responce });
+      } catch (error) {
+        ShowToast("customWarnToast", "Error", error.message);
+      }
+    };
+    getInitialData();
+  }, []);
 
   const searchFunc = async () => {
     const makeId = state.makeDropDownBox.selectedValueId;

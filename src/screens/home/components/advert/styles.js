@@ -8,11 +8,12 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     backgroundColor: "#EBEBEB",
+    overflow: "hidden",
 
     height: 190,
 
     marginHorizontal: 15,
-    borderRadius: 6,
+    borderRadius: 10,
   },
 
   infoContainer: {

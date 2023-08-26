@@ -66,3 +66,15 @@ export const dbLogoutUser = async (accessToken) => {
   });
   return await checkResponce(responce);
 };
+
+export const dbUpdateUser = async (accessToken, firstName, lastName, phone) => {
+  const responce = await fetch(`${BASE_URL}/users`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ firstName, lastName, phone }),
+  });
+  return await checkResponce(responce);
+};

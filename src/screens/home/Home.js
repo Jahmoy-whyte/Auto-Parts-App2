@@ -35,19 +35,7 @@ import * as SecureStore from "expo-secure-store";
 
 /*
 
-
-*/
-const Home = ({ navigation }) => {
-  const [state, dispatch, userInfo, getProducts, logout, navigateToProduct] =
-    useHome();
-  console.log("======= render home");
-
-  return (
-    <>
-      <ExpoStatusBar style="light" />
-      <View style={GlobalStyles.backDrop}></View>
-      <SafeAreaView style={GlobalStyles.container}>
-        <Button title="logout" onPress={() => logout()} />
+ <Button title="logout" onPress={() => logout()} />
 
         <Button
           title="clear"
@@ -67,6 +55,17 @@ const Home = ({ navigation }) => {
         />
 
         <Button title="test" onPress={() => getProducts()} />
+*/
+const Home = ({ navigation }) => {
+  const [state, dispatch, userInfo, getProducts, logout, navigateToProduct] =
+    useHome();
+  console.log("======= render home");
+
+  return (
+    <>
+      <ExpoStatusBar style="light" />
+      <View style={GlobalStyles.backDrop}></View>
+      <SafeAreaView style={GlobalStyles.container}>
         <View style={styles.headingView}>
           <View style={styles.menuTitleAndCart}>
             <View style={styles.menuAndTitle}>

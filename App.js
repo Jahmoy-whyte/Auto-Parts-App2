@@ -1,25 +1,26 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 import BottomTabs from "./src/screens/bottomTabs/BottomTabs";
-import Home from "./src/screens/home/Home";
 import CartScreen from "./src/screens/cart/CartScreen";
 import SearchScreen from "./src/screens/search/SearchScreen";
 import Toast from "react-native-toast-message";
 import toastConfig from "./src/helper/toastConfig";
 import ProductsScreen from "./src/screens/products/ProductsScreen";
 import UserAuthContextWarpper from "./src/context/UserAuthContextWarpper";
-
 import UserInfoContextWarpper from "./src/context/UserInfoContextWarpper";
 import SignUpScreen from "./src/screens/signup/SignUpScreen";
 import LoginScreen from "./src/screens/login/LoginScreen";
 import { useAuthContext } from "./src/context/UserAuthContextWarpper";
-import AllNav from "./AllNav";
 import LandingScreen from "./src/screens/landing/LandingScreen";
 import GuestToUserSignUp from "./src/screens/guestToUserSignUp/GuestToUserSignUp";
 import CheckOutScreen from "./src/screens/checkout/CheckOutScreen";
+import AccountSettings from "./src/screens/accountSettings/AccountSettings";
+import LocationLanding from "./src/screens/locationLanding/LocationLanding";
+import SavedAddress from "./src/screens/savedAddress/SavedAddress";
+import EnterLocation from "./src/screens/enterLocation/EnterLocation";
 const App = () => {
   //  console.log(fgf);w
 
@@ -70,6 +71,10 @@ const Test = () => {
             <Stack.Screen name="product" component={ProductsScreen} />
             <Stack.Screen name="cart" component={CartScreen} />
             <Stack.Screen name="checkout" component={CheckOutScreen} />
+            <Stack.Screen name="accountsettings" component={AccountSettings} />
+            <Stack.Screen name="locationlanding" component={LocationLanding} />
+            <Stack.Screen name="enterlocation" component={EnterLocation} />
+            <Stack.Screen name="savedaddress" component={SavedAddress} />
             <Stack.Screen
               name="guestToUserSignUp"
               component={GuestToUserSignUp}
@@ -80,7 +85,5 @@ const Test = () => {
     </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default App;
