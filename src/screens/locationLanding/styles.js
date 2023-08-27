@@ -30,18 +30,6 @@ const styles = StyleSheet.create({
     fontFamily: "Inter-Regular",
     marginTop: 10,
   },
-  backarrow: {
-    position: "absolute",
-
-    borderRadius: 30,
-    borderWidth: 0.5,
-    height: 30,
-    width: 30,
-    justifyContent: "center",
-    alignItems: "center",
-    left: 15,
-    top: 10,
-  },
 
   btncontainer: {
     gap: 10,
@@ -96,5 +84,37 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Inter-Regular",
   },
+
+  textboxcontainer: {
+    marginHorizontal: 15,
+    marginTop: 15,
+    gap: 10,
+  },
+  inputandlabelcontainer: {},
+
+  label: {
+    fontSize: 14,
+    fontFamily: "Inter-Regular",
+  },
+
+  inputcontainer: {
+    borderRadius: 6,
+    borderWidth: 0.5,
+    borderColor: "#B3B3B3",
+    minHeight: 50,
+    fontSize: 14,
+    fontFamily: "Inter-Regular",
+    paddingHorizontal: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    marginTop: 10,
+    marginHorizontal: 15,
+  },
+  input: {
+    flex: 1,
+  },
+
+  SafeAreaView: { flex: 1 },
 });
 export default styles;

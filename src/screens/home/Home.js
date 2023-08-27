@@ -69,8 +69,18 @@ const Home = ({ navigation }) => {
         <View style={styles.headingView}>
           <View style={styles.menuTitleAndCart}>
             <View style={styles.menuAndTitle}>
-              <Entypo name="menu" size={24} color="white" />
-              <Text style={GlobalStyles.xl20White}>Auto Parts</Text>
+              <View style={styles.lcontainer}>
+                <View style={styles.liconcontainer}>
+                  <Ionicons name="location-outline" size={24} color="white" />
+                </View>
+
+                <View style={styles.ltextcontainter}>
+                  <Text style={styles.ltxttitle}>Home</Text>
+                  <Text style={styles.ltextsubtext} numberOfLines={1}>
+                    Spanish Town eb 123
+                  </Text>
+                </View>
+              </View>
             </View>
             <TouchableOpacity
               style={styles.cartcontainer}
@@ -87,31 +97,18 @@ const Home = ({ navigation }) => {
               <Feather name="shopping-cart" size={18} color="white" />
             </TouchableOpacity>
           </View>
-
-          <View style={styles.lcontainer}>
-            <View style={styles.liconcontainer}>
-              <Ionicons name="location-outline" size={24} color="white" />
-            </View>
-
-            <View style={styles.ltextcontainter}>
-              <Text style={styles.ltxttitle}>Location</Text>
-              <Text style={styles.ltextsubtext}>
-                Please add a your location for delivery
-              </Text>
-            </View>
-          </View>
+          <Pressable
+            style={styles.textBoxView}
+            onPress={() => navigation.navigate("search")}
+          >
+            <AntDesign name="search1" size={20} color="white" />
+            <Text style={styles.textBoxText}>Search For Your Car Parts</Text>
+          </Pressable>
         </View>
         {state.isLoading ? (
           <Loading text={"wdwdwd"} />
         ) : (
           <ScrollView>
-            <Pressable
-              style={styles.textBoxView}
-              onPress={() => navigation.navigate("search")}
-            >
-              <AntDesign name="search1" size={20} color="white" />
-              <Text style={styles.textBoxText}>Search For Your Car Parts</Text>
-            </Pressable>
             <Advert image={mainimage} />
 
             <Headings

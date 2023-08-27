@@ -83,7 +83,7 @@ const UserAuthContextWarpper = ({ children }) => {
 
   const getAccessToken = async (fetchFunction, ...params) => {
     try {
-      alert("jwt expired");
+      //  alert("jwt expired");
       const refreshToken = await getRefreshTokenFromStorage();
       const newAccessToken = await getNewAccessToken(refreshToken);
       setAuthData((prev) => ({

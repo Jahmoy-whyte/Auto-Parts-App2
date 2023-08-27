@@ -19,17 +19,11 @@ import styles from "./styles";
 import useSaveAddress from "./useSaveAddress";
 import { useNavigation } from "@react-navigation/native";
 import Loading from "../../components/loading/Loading";
-
+import AddressCard from "./components/addressCard/AddressCard";
 const SavedAddress = () => {
   const nav = useNavigation();
-  const [address, isLoading, deleteAddress] = useSaveAddress();
-  const AddressCard = () => {
-    return (
-      <View>
-        <Text>dwdwdwd</Text>
-      </View>
-    );
-  };
+  const [address, isLoading, deleteAddress, selectAddress] = useSaveAddress();
+
   return (
     <>
       <ExpoStatusBar style="light" />
@@ -58,7 +52,13 @@ const SavedAddress = () => {
             data={address}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => {
-              return <AddressCard />;
+              return (
+                <AddressCard
+                  func={deleteAddress}
+                  info={item}
+                  selectFunc={selectAddress}
+                />
+              );
             }}
           />
         )}

@@ -46,5 +46,18 @@ const styles = StyleSheet.create({
     gap: 10,
     alignItems: "center",
   },
+  option: {
+    backgroundColor: "#F47A00",
+    borderRadius: 6,
+    flexDirection: "row",
+    padding: 5,
+    gap: 5,
+    alignItems: "center",
+  },
+  optiontext: {
+    color: "white",
+    fontSize: 12,
+    fontFamily: "Inter-Regular",
+  },
 });
 export default styles;

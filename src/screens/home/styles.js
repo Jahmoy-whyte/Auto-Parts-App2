@@ -6,33 +6,33 @@ const styles = StyleSheet.create({
     backgroundColor: "#0954B6",
     paddingHorizontal: 15,
 
-    paddingVertical: 20,
+    paddingVertical: 15,
   },
 
   menuTitleAndCart: {
     justifyContent: "space-between",
     flexDirection: "row",
     alignItems: "center",
+    gap: 15,
   },
   menuAndTitle: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
+
     flex: 1,
   },
   textBoxView: {
     minHeight: 50,
     borderRadius: 40,
-    borderWidth: 0,
-    borderColor: "#0954B6",
+    borderWidth: 0.5,
+    borderColor: "white",
     alignItems: "center",
     flexDirection: "row",
     gap: 10,
     paddingHorizontal: 15,
     marginTop: 10,
-    marginBottom: 10,
+
     backgroundColor: "#0954B6",
-    marginHorizontal: 15,
   },
   textBoxText: {
     flex: 1,
@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 5,
-    marginTop: 5,
   },
   liconcontainer: {
     borderColor: "white",
@@ -80,22 +79,19 @@ const styles = StyleSheet.create({
     fontFamily: "Inter-Regular",
   },
   cartcontainer: {
-    width: 30,
-    height: 30,
     position: "relative",
-    alignItems: "flex-end",
-    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row-reverse",
+    gap: 5,
+    backgroundColor: "#F47A00",
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 6,
   },
   cartbadge: {
-    top: -15,
-    right: -5,
-    position: "absolute",
-    backgroundColor: "red",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 15,
-    width: 15,
-    height: 15,
   },
   cartbadgetext: {
     color: "white",

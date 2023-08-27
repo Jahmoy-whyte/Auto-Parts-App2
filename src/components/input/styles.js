@@ -1,17 +1,6 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: 15,
-    marginVertical: 10,
-    gap: 15,
-  },
-
-  btn2text: {
-    fontSize: 14,
-    fontFamily: "Inter-Bold",
-  },
-
   textboxcontainer: {
     marginHorizontal: 15,
     marginTop: 15,
@@ -35,16 +24,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 5,
   },
-  highlight: {
-    color: "#0954B6",
-    fontSize: 14,
-    fontFamily: "Inter-Regular",
-  },
-
-  optioncontainer: {
-    flexDirection: "row",
-    gap: 10,
-    alignItems: "center",
+  input: {
+    flex: 1,
   },
 });
 export default styles;

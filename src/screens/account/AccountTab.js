@@ -68,8 +68,13 @@ const AccountTab = ({ navigation }) => {
             image={payment}
             title={"Payment Method"}
             subtext={"Visa | Debit | Credit"}
+            func={() => navigation.navigate("payment")}
           />
-          <Cards image={bell} title={"Notifications"} />
+          <Cards
+            image={bell}
+            title={"Notifications"}
+            func={() => navigation.navigate("notification")}
+          />
           <Cards image={web} title={"Privacy Policy"} />
           <Cards
             image={logoutImg}
