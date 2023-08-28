@@ -78,3 +78,15 @@ export const dbUpdateUser = async (accessToken, firstName, lastName, phone) => {
   });
   return await checkResponce(responce);
 };
+
+export const dbUpdateSelectedAddress = async (accessToken, addressId) => {
+  const responce = await fetch(`${BASE_URL}/users/selected-address`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ addressId }),
+  });
+  return await checkResponce(responce);
+};

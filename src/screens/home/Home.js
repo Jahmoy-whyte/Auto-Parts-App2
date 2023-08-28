@@ -57,8 +57,16 @@ import * as SecureStore from "expo-secure-store";
         <Button title="test" onPress={() => getProducts()} />
 */
 const Home = ({ navigation }) => {
-  const [state, dispatch, userInfo, getProducts, logout, navigateToProduct] =
-    useHome();
+  const [
+    state,
+    dispatch,
+    userInfo,
+    getProducts,
+    logout,
+    navigateToProduct,
+    place,
+    address,
+  ] = useHome();
   console.log("======= render home");
 
   return (
@@ -69,18 +77,21 @@ const Home = ({ navigation }) => {
         <View style={styles.headingView}>
           <View style={styles.menuTitleAndCart}>
             <View style={styles.menuAndTitle}>
-              <View style={styles.lcontainer}>
+              <TouchableOpacity
+                style={styles.lcontainer}
+                onPress={() => navigation.navigate("savedaddress")}
+              >
                 <View style={styles.liconcontainer}>
                   <Ionicons name="location-outline" size={24} color="white" />
                 </View>
 
                 <View style={styles.ltextcontainter}>
-                  <Text style={styles.ltxttitle}>Home</Text>
+                  <Text style={styles.ltxttitle}>{place}</Text>
                   <Text style={styles.ltextsubtext} numberOfLines={1}>
-                    Spanish Town eb 123
+                    {address}
                   </Text>
                 </View>
-              </View>
+              </TouchableOpacity>
             </View>
             <TouchableOpacity
               style={styles.cartcontainer}
@@ -109,6 +120,19 @@ const Home = ({ navigation }) => {
           <Loading text={"wdwdwd"} />
         ) : (
           <ScrollView>
+            <ScrollView
+              style={styles.test}
+              showsHorizontalScrollIndicator={false}
+              horizontal
+            >
+              <QuickCategories text={"HeadLights"} fill="#EBEBEB" />
+              <QuickCategories text={"Engine"} fill="#EBEBEB" />
+              <QuickCategories text={"Doors"} fill="#EBEBEB" />
+              <QuickCategories text={"Transmission"} fill="#EBEBEB" />
+              <QuickCategories text={"Home wdwdwd"} fill="#EBEBEB" />
+              <QuickCategories text={"Homedwdwd"} fill="#EBEBEB" />
+              <QuickCategories text={"Homew"} fill="#EBEBEB" />
+            </ScrollView>
             <Advert image={mainimage} />
 
             <Headings

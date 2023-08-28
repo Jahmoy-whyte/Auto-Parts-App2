@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 15,
     marginVertical: 10,
-    gap: 15,
+    gap: 5,
   },
   heading: {
     color: "black",
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     gap: 10,
     borderBottomWidth: 0.5,
     borderBottomColor: "#B3B3B3",
-    paddingVertical: 5,
+    paddingVertical: 15,
   },
 
   imageandtextcontainer: {
@@ -31,8 +31,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#509CFF",
     borderRadius: 10,
 
-    width: 90,
-    height: 90,
+    width: 50,
+    height: 50,
     justifyContent: "center",
     alignItems: "center",
   },

@@ -22,7 +22,8 @@ import Loading from "../../components/loading/Loading";
 import AddressCard from "./components/addressCard/AddressCard";
 const SavedAddress = () => {
   const nav = useNavigation();
-  const [address, isLoading, deleteAddress, selectAddress] = useSaveAddress();
+  const [address, isLoading, deleteAddress, selectAddress, selected] =
+    useSaveAddress();
 
   return (
     <>
@@ -56,6 +57,7 @@ const SavedAddress = () => {
                 <AddressCard
                   func={deleteAddress}
                   info={item}
+                  selected={selected}
                   selectFunc={selectAddress}
                 />
               );

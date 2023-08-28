@@ -14,18 +14,19 @@ import {
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import BackButton from "../../components/backbutton/BackButton";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, Ionicons, AntDesign } from "@expo/vector-icons";
 import delivery from "../../assets/images/delivery.png";
 import pickup from "../../assets/images/pickup.png";
 import styles from "./styles";
-const CheckOutScreen = () => {
-  const Options = ({ img, title, subtext }) => {
+const CheckOutScreen = ({ navigation }) => {
+  const Options = ({ children, title, subtext }) => {
     return (
-      <TouchableOpacity style={styles.optionscontainer}>
+      <TouchableOpacity
+        style={styles.optionscontainer}
+        onPress={() => navigation.navigate("paymentscreen")}
+      >
         <View style={styles.imageandtextcontainer}>
-          <View style={styles.backimg}>
-            <Image style={styles.image} source={img} />
-          </View>
+          <View style={styles.backimg}>{children}</View>
 
           <View style={styles.textcontainer}>
             <Text style={styles.title}>{title}</Text>
@@ -43,21 +44,21 @@ const CheckOutScreen = () => {
       <ExpoStatusBar style="light" />
       <View style={GlobalStyles.backDrop}></View>
       <SafeAreaView style={GlobalStyles.container}>
-        <BackButton text={"CheckOut"} subText={`items`} />
+        <BackButton text={"CheckOut"} subText={`Select An Option`} />
         <ScrollView>
           <View style={styles.container}>
-            <Text style={styles.heading}>Select An Option</Text>
-
             <Options
-              img={delivery}
               title={"Delivery"}
               subtext={"Have you parts delivery straight to your door step"}
-            />
+            >
+              <AntDesign name="car" size={24} color="white" />
+            </Options>
             <Options
-              img={pickup}
               title={"Pick Up"}
               subtext={"Head to our nearest location an pick up your parts."}
-            />
+            >
+              <Ionicons name="walk-sharp" size={24} color="white" />
+            </Options>
           </View>
         </ScrollView>
       </SafeAreaView>

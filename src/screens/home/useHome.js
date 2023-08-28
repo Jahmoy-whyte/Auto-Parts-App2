@@ -80,7 +80,25 @@ const useHome = () => {
     }
   };
 
-  return [state, dispatch, userInfo, getProducts, logout, navigateToProduct];
+  const place =
+    userInfo?.placeType && userInfo?.placeType != ""
+      ? userInfo?.placeType
+      : "Location";
+  const address =
+    userInfo?.address && userInfo?.address != ""
+      ? userInfo?.address
+      : "Please add a your location for delivery";
+
+  return [
+    state,
+    dispatch,
+    userInfo,
+    getProducts,
+    logout,
+    navigateToProduct,
+    place,
+    address,
+  ];
 };
 
 export default useHome;

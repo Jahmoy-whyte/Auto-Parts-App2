@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   liconcontainer: {
-    borderColor: "white",
     paddingRight: 5,
   },
   ltextcontainter: {
@@ -97,6 +96,10 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 10,
     fontFamily: "Inter-Regular",
+  },
+  test: {
+    marginLeft: 15,
+    marginTop: 10,
   },
 });
 export default styles;

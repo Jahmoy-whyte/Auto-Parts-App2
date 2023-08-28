@@ -3,6 +3,7 @@ import { AntDesign } from "@expo/vector-icons";
 import Home from "../home/Home";
 import AccountTab from "../account/AccountTab";
 import { View } from "react-native";
+import OrdersTab from "../ordersTab/OrdersTab";
 const Tab = createBottomTabNavigator();
 
 const BottomTabs = () => {
@@ -26,6 +27,17 @@ const BottomTabs = () => {
             tabBarLabel: "Home",
             tabBarIcon: ({ color, size }) => (
               <AntDesign name="home" size={size} color={color} />
+            ),
+          }}
+        />
+
+        <Tab.Screen
+          name="Orders"
+          component={OrdersTab}
+          options={{
+            tabBarLabel: "Orders",
+            tabBarIcon: ({ color, size }) => (
+              <AntDesign name="user" size={size} color={color} />
             ),
           }}
         />

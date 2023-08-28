@@ -24,5 +24,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: "Inter-Regular",
   },
+
+  selectedstyle: {
+    color: "green",
+    fontSize: 12,
+    fontFamily: "Inter-Regular",
+  },
 });
 export default styles;

@@ -23,6 +23,9 @@ import SavedAddress from "./src/screens/savedAddress/SavedAddress";
 import EnterLocation from "./src/screens/enterLocation/EnterLocation";
 import NotificationScreen from "./src/screens/notification/NotificationScreen";
 import PaymentMethod from "./src/screens/paymentMethod/PaymentMethod";
+import PaymentScreen from "./src/screens/payment/PaymentScreen";
+import ReceiptScreen from "./src/screens/receipt/ReceiptScreen";
+import AccountTab from "./src/screens/account/AccountTab";
 const App = () => {
   //  console.log(fgf);w
 
@@ -79,6 +82,10 @@ const Test = () => {
             <Stack.Screen name="savedaddress" component={SavedAddress} />
             <Stack.Screen name="notification" component={NotificationScreen} />
             <Stack.Screen name="payment" component={PaymentMethod} />
+            <Stack.Screen name="paymentscreen" component={PaymentScreen} />
+
+            <Stack.Screen name="receipt" component={ReceiptScreen} />
+
             <Stack.Screen
               name="guestToUserSignUp"
               component={GuestToUserSignUp}
