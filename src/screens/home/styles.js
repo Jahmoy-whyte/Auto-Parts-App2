@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textBoxView: {
-    minHeight: 50,
+    minHeight: 45,
     borderRadius: 40,
     borderWidth: 0.5,
     borderColor: "white",

@@ -1,15 +1,12 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import styles from "../../styles";
-
-const Heading = ({ children, title, subtext, func, navigation }) => {
+import { memo } from "react";
+const Heading = ({ title, subtext, editText, func }) => {
   console.log("ddddddddddddd");
   return (
-    <View
-      style={styles.optionscontainer}
-      onPress={() => navigation.navigate("paymentscreen")}
-    >
+    <View style={styles.optionscontainer}>
       <View style={styles.imageandtextcontainer}>
-        <View style={styles.backimg}>{children}</View>
+        <View style={styles.backimg}></View>
 
         <View style={styles.textcontainer}>
           <Text style={styles.title}>{title}</Text>
@@ -17,10 +14,10 @@ const Heading = ({ children, title, subtext, func, navigation }) => {
         </View>
       </View>
       <TouchableOpacity style={styles.backarrow} onPress={func}>
-        <Text style={styles.edittext}>Edit</Text>
+        <Text style={styles.edittext}>{editText ? editText : "Edit"}</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default Heading;
+export default memo(Heading);

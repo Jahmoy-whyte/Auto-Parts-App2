@@ -4,12 +4,11 @@ import { memo } from "react";
 const UserInfoRow = ({ text, subtext, func, image }) => {
   return (
     <View style={styles.rowcontainer}>
-      <View style={styles.backspace}>
-        <Image style={styles.image} resizeMode="contain" source={image} />
-      </View>
       <View style={styles.rowtextcontainer}>
         <Text style={styles.rowtext1}>{text}</Text>
-        <Text style={styles.rowtext2}>{subtext}</Text>
+        {!subtext || subtext == "" ? null : (
+          <Text style={styles.rowtext2}>{subtext}</Text>
+        )}
       </View>
 
       {func ? (

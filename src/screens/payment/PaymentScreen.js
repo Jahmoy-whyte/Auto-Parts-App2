@@ -15,13 +15,25 @@ import phone from "../../assets/images/phone.png";
 import user from "../../assets/images/user.png";
 import email from "../../assets/images/email.png";
 import card from "../../assets/images/card.png";
+import { ACTIONS } from "./helper/reducerData";
+import { useCallback } from "react";
+import Loading from "../../components/loading/Loading";
 
 const PaymentScreen = () => {
-  const [userInfo, data, nav, setDataState, navigate] = usePayment();
+  const [
+    state,
+    dispatch,
+    userInfo,
+    nav,
+    fnShowCoupon,
+    fnShowDelivery,
+    subTotal,
+    submit,
+  ] = usePayment();
 
-  let cardNumber = data.cardInfo?.cardNumber?.substring(
-    data.cardInfo?.cardNumber.length - 4
-  );
+  //let cardNumber = data.cardInfo?.cardNumber?.substring(
+  //  data.cardInfo?.cardNumber.length - 4
+  // );
 
   return (
     <>
@@ -29,109 +41,121 @@ const PaymentScreen = () => {
       <View style={GlobalStyles.backDrop}></View>
       <SafeAreaView style={GlobalStyles.container}>
         <BackButton text={"Delivery"} />
+        {state.isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <ScrollView style={styles}>
+              <View style={styles.section}>
+                <Heading
+                  title={"Your Information"}
+                  subtext={"Please ensure your information is correct"}
+                  func={() => nav.navigate("accountsettings")}
+                />
 
-        <ScrollView style={styles}>
-          <View style={styles.section}>
-            <Heading
-              title={"Your Information"}
-              subtext={"Please ensure your information is correct"}
-              func={() => navigate("accountsettings")}
-            >
-              <AntDesign name="user" size={24} color="white" />
-            </Heading>
+                <UserInfoRow
+                  image={user}
+                  text={"Name: "}
+                  subtext={userInfo?.firstName + " " + userInfo?.lastName}
+                />
+                <UserInfoRow
+                  image={phone}
+                  text={"Phone Number: "}
+                  subtext={userInfo?.phone}
+                />
+                <UserInfoRow
+                  image={email}
+                  text={"Email: "}
+                  subtext={userInfo?.email}
+                />
+                <UserInfoRow
+                  image={location}
+                  text={"Address: "}
+                  subtext={userInfo?.address}
+                  func={() => nav.navigate("savedaddress")}
+                />
+              </View>
 
-            <UserInfoRow
-              image={user}
-              text={"Name: "}
-              subtext={userInfo?.firstName + " " + userInfo?.lastName}
-            />
-            <UserInfoRow
-              image={phone}
-              text={"Phone Number: "}
-              subtext={userInfo?.phone}
-            />
-            <UserInfoRow
-              image={email}
-              text={"Email: "}
-              subtext={userInfo?.email}
-            />
-            <UserInfoRow
-              image={location}
-              text={"Address: "}
-              subtext={userInfo?.address}
-              func={() => navigate("savedaddress")}
-            />
-          </View>
+              <View style={styles.section}>
+                <Heading
+                  title={"Payment Method"}
+                  func={() => nav.navigate("payment")}
+                />
+                {state.cardInfo != "" ? (
+                  <UserInfoRow
+                    image={card}
+                    text={"Visa: "}
+                    subtext={"Visa ending with: " + state.cardInfo}
+                  />
+                ) : null}
+              </View>
 
-          <View style={styles.section}>
-            <Heading
-              title={"Delivery Instructions"}
-              func={() => setDataState("showDelivery", !data.showDelivery)}
-            >
-              <AntDesign name="user" size={24} color="white" />
-            </Heading>
-            {data.showDelivery ? (
-              <TextInput
-                style={styles.textbox}
-                numberOfLines={3}
-                multiline={true}
-                textAlignVertical="top"
-                placeholder="Enter delivery indtructions"
-                onChangeText={(value) => setDataState("deliveryText", value)}
+              <View style={styles.section}>
+                <Heading
+                  title={"Delivery Instructions"}
+                  func={fnShowDelivery}
+                  editText={state.showDelivery ? "Delete" : null}
+                />
+                {state.showDelivery ? (
+                  <TextInput
+                    style={styles.textbox}
+                    numberOfLines={3}
+                    multiline={true}
+                    textAlignVertical="top"
+                    placeholder="Enter delivery indtructions"
+                    onChangeText={(value) =>
+                      dispatch({ type: ACTIONS.DELIVERYTEXT, payload: value })
+                    }
+                    value={state.deliveryText}
+                  />
+                ) : null}
+              </View>
+
+              <View style={styles.section}>
+                <Heading
+                  title={"Coupon"}
+                  subtext={"Enter Coupon Code For Discount"}
+                  func={fnShowCoupon}
+                  editText={state.showCoupon ? "Delete" : null}
+                />
+                {state.showCoupon ? (
+                  <TextInput
+                    style={styles.textbox}
+                    placeholder="Code"
+                    value={state.couponText}
+                    onChangeText={(value) =>
+                      dispatch({ type: ACTIONS.COUPONTEXT, payload: value })
+                    }
+                  />
+                ) : null}
+              </View>
+
+              <View style={styles.pricecontainer}>
+                <View style={styles.inforow}>
+                  <Text style={styles.infotextleft}>SubTotal:</Text>
+                  <Text style={styles.infotextright}>{subTotal}</Text>
+                </View>
+                <View style={styles.inforow}>
+                  <Text style={styles.infotextleft}>Tax:</Text>
+                  <Text style={styles.infotextright}>$0</Text>
+                </View>
+                <View style={styles.inforow}>
+                  <Text style={styles.infotextleft}>Total:</Text>
+                  <Text style={styles.infotextright}>{subTotal}</Text>
+                </View>
+              </View>
+            </ScrollView>
+
+            <View style={styles.section}>
+              <CustomButton
+                isLoading={state.btnisloading}
+                text={"Confirm Order"}
+                marginVertical={10}
+                FUNC={submit}
               />
-            ) : null}
-          </View>
-
-          <View style={styles.section}>
-            <Heading title={"Payment Method"} func={() => navigate("payment")}>
-              <AntDesign name="user" size={24} color="white" />
-            </Heading>
-
-            {cardNumber ? (
-              <UserInfoRow
-                image={card}
-                text={"Visa: "}
-                subtext={"Visa ending in: " + cardNumber}
-              />
-            ) : null}
-          </View>
-
-          <View style={styles.section}>
-            <Heading
-              title={"Coupon"}
-              subtext={"Enter Coupon Code For Discount"}
-              func={() => setDataState("showCoupon", !data.showCoupon)}
-            >
-              <AntDesign name="user" size={24} color="white" />
-            </Heading>
-
-            {data.showCoupon ? (
-              <TextInput
-                style={styles.textbox}
-                placeholder="Code"
-                onChangeText={(value) => setDataState("couponText", value)}
-              />
-            ) : null}
-          </View>
-
-          <View style={styles.pricecontainer}>
-            <View style={styles.inforow}>
-              <Text style={styles.infotextleft}>SubTotal:</Text>
-              <Text style={styles.infotextright}>0</Text>
             </View>
-            <View style={styles.inforow}>
-              <Text style={styles.infotextleft}>Tax:</Text>
-              <Text style={styles.infotextright}>0</Text>
-            </View>
-            <View style={styles.inforow}>
-              <Text style={styles.infotextleft}>Total:</Text>
-              <Text style={styles.infotextright}>0</Text>
-            </View>
-          </View>
-        </ScrollView>
-        <View style={styles.section}>
-          <CustomButton text={"Confirm Order"} marginVertical={10} />
-        </View>
+          </>
+        )}
       </SafeAreaView>
     </>
   );

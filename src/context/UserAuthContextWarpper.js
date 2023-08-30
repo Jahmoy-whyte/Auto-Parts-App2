@@ -103,7 +103,7 @@ const UserAuthContextWarpper = ({ children }) => {
         isAuth: false,
       }));
 
-      throw new Error("Sign Up To Continue");
+      throw new Error("Login To Continue");
     }
   };
 

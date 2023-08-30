@@ -120,19 +120,6 @@ const Home = ({ navigation }) => {
           <Loading text={"wdwdwd"} />
         ) : (
           <ScrollView>
-            <ScrollView
-              style={styles.test}
-              showsHorizontalScrollIndicator={false}
-              horizontal
-            >
-              <QuickCategories text={"HeadLights"} fill="#EBEBEB" />
-              <QuickCategories text={"Engine"} fill="#EBEBEB" />
-              <QuickCategories text={"Doors"} fill="#EBEBEB" />
-              <QuickCategories text={"Transmission"} fill="#EBEBEB" />
-              <QuickCategories text={"Home wdwdwd"} fill="#EBEBEB" />
-              <QuickCategories text={"Homedwdwd"} fill="#EBEBEB" />
-              <QuickCategories text={"Homew"} fill="#EBEBEB" />
-            </ScrollView>
             <Advert image={mainimage} />
 
             <Headings
