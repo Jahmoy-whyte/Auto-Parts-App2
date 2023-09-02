@@ -44,25 +44,31 @@ export const dbUserGuestLogin = async () => {
   return await checkResponce(responce);
 };
 
-export const dbUpdateGuestToUser = async (accessToken, email, password) => {
+export const dbUpdateGuestToUser = async (
+  accessToken,
+  email,
+  password,
+  refreshTokenTokenId
+) => {
   const responce = await fetch(`${BASE_URL}/users/guest-to-user-signup`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${accessToken}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ email, password, refreshTokenTokenId }),
   });
   return await checkResponce(responce);
 };
 
-export const dbLogoutUser = async (accessToken) => {
+export const dbLogoutUser = async (accessToken, refreshTokenTokenId) => {
   const responce = await fetch(`${BASE_URL}/users/logout`, {
-    method: "GET",
+    method: "POST",
     headers: {
       Authorization: `Bearer ${accessToken}`,
       "Content-Type": "application/json",
     },
+    body: JSON.stringify({ refreshTokenTokenId }),
   });
   return await checkResponce(responce);
 };

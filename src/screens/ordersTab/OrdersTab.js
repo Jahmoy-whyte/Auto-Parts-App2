@@ -13,15 +13,52 @@ import {
 } from "react-native";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
-
+import styles from "./styles";
+import OrderCards from "./components/orderCards/OrderCards";
+import useOrders from "./useOrders";
+import Loading from "../../components/loading/Loading";
+import { useNavigation } from "@react-navigation/native";
 const OrdersTab = () => {
+  const [orders] = useOrders();
+  console.log("orders ======================");
+  const nav = useNavigation();
   return (
     <>
       <ExpoStatusBar style="light" />
       <View style={GlobalStyles.backDrop}></View>
-      <SafeAreaView style={GlobalStyles.container}></SafeAreaView>
+      <SafeAreaView style={GlobalStyles.container}>
+        <View style={styles.headingcontainer}>
+          <Text style={styles.heading}>My Orders</Text>
+        </View>
+        {orders.isLoading ? (
+          <Loading />
+        ) : (
+          <View style={styles.container}>
+            <FlatList
+              data={orders.data}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <OrderCards date={item.date} orderId={item.id} nav={nav} />
+              )}
+            />
+          </View>
+        )}
+      </SafeAreaView>
     </>
   );
 };
 
 export default OrdersTab;
+/**
+ 
+
+  <ScrollView horizontal>
+              <View style={styles.statuscontainer}>
+                <Text style={styles.statustext}>Current Orders</Text>
+              </View>
+
+              <View style={styles.statuscontainer}>
+                <Text style={styles.statustext}>History</Text>
+              </View>
+            </ScrollView>
+ */

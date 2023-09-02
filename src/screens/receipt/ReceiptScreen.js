@@ -65,7 +65,7 @@ const ReceiptScreen = ({ navigation, route }) => {
             <View style={styles.section}>
               <Rows leftText={"OrderId:"} rightText={orderId} />
 
-              <Rows leftText={"Date:"} rightText={date.toLocaleDateString()} />
+              <Rows leftText={"Date:"} rightText={date.toDateString()} />
 
               <View style={styles.innercontainer}>
                 <Rows leftText={"Items:"} rightText={userInfo.cart.length} />

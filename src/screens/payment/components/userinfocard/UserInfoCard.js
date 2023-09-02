@@ -6,7 +6,7 @@ const UserInfoRow = ({ text, subtext, func, image }) => {
     <View style={styles.rowcontainer}>
       <View style={styles.rowtextcontainer}>
         <Text style={styles.rowtext1}>{text}</Text>
-        {!subtext || subtext == "" ? null : (
+        {!subtext || subtext == " " || subtext == "" ? null : (
           <Text style={styles.rowtext2}>{subtext}</Text>
         )}
       </View>

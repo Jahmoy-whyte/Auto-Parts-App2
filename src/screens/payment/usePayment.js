@@ -119,15 +119,14 @@ const usePayment = () => {
   }, [state.showCoupon]);
 
   const submit = async () => {
-    dispatch({ type: ACTIONS.BTNISLOADING, payload: true });
-    const total = userInfo?.cart?.reduce(
-      (prev, item) => prev + item.price * item.quantity,
-      0
-    );
-
     try {
       const { bool, message } = validater(userInfo, state);
-      if (bool) ShowToast("customErrorToast", message);
+      if (bool) return ShowToast("customErrorToast", message);
+      dispatch({ type: ACTIONS.BTNISLOADING, payload: true });
+      const total = userInfo?.cart?.reduce(
+        (prev, item) => prev + item.price * item.quantity,
+        0
+      );
 
       const orderId = await tokenAwareFetchWrapper(
         dbInsertOrders,

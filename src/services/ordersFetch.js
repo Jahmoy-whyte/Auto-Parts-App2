@@ -17,3 +17,21 @@ export const dbInsertOrders = async (
   });
   return await checkResponce(responce);
 };
+
+export const dbGetOrders = async (accessToken) => {
+  const responce = await fetch(`${BASE_URL}/orders`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return await checkResponce(responce);
+};
+
+export const dbGetUserOrderDetail = async (accessToken, orderId) => {
+  const responce = await fetch(`${BASE_URL}/orders/${orderId}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return await checkResponce(responce);
+};

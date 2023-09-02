@@ -26,6 +26,7 @@ import PaymentMethod from "./src/screens/paymentMethod/PaymentMethod";
 import PaymentScreen from "./src/screens/payment/PaymentScreen";
 import ReceiptScreen from "./src/screens/receipt/ReceiptScreen";
 import AccountTab from "./src/screens/account/AccountTab";
+import OrderDetails from "./src/screens/orderDetails/OrderDetails";
 const App = () => {
   //  console.log(fgf);w
 
@@ -83,7 +84,7 @@ const Test = () => {
             <Stack.Screen name="notification" component={NotificationScreen} />
             <Stack.Screen name="payment" component={PaymentMethod} />
             <Stack.Screen name="paymentscreen" component={PaymentScreen} />
-
+            <Stack.Screen name="orderdetails" component={OrderDetails} />
             <Stack.Screen name="receipt" component={ReceiptScreen} />
 
             <Stack.Screen

@@ -13,9 +13,9 @@ const validater = (userInfo, state) => {
   } else if (userInfo.phone == "") {
     bool = true;
     message = "Please Enter Phone Number";
-  } else if (userInfo.address == "") {
+  } else if (userInfo.address == "" || !userInfo.address) {
     bool = true;
-    message = "Please Enter Phone address";
+    message = "Please Enter address";
   } else if (state.cardInfo == "") {
     bool = true;
     message = "Please Enter Payment method";
