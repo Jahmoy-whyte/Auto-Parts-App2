@@ -26,11 +26,12 @@ import { useAuthContext } from "../../context/UserAuthContextWarpper";
 import Cards from "./components/cards/Cards";
 import { useCallback } from "react";
 import { useUserInfoContext } from "../../context/UserInfoContextWarpper";
+import SignupCard from "../../components/signupCard/SignupCard";
 
 const AccountTab = ({ navigation }) => {
   console.log("================ AccountTab");
   const { logout } = useAuthContext();
-  // const { userInfo } = useUserInfoContext();
+  const { userInfo } = useUserInfoContext();
   /*
     <View style={styles.accountcartcontainer}>
             <View style={styles.profile}>
@@ -47,42 +48,46 @@ const AccountTab = ({ navigation }) => {
       <ExpoStatusBar style="light" />
       <View style={GlobalStyles.backDrop}></View>
       <SafeAreaView style={GlobalStyles.container}>
-        <ScrollView>
-          <View style={styles.headingcontainer}>
-            <Text style={styles.heading}>Account</Text>
-          </View>
+        {userInfo.userStatus != "user" ? (
+          <SignupCard />
+        ) : (
+          <ScrollView>
+            <View style={styles.headingcontainer}>
+              <Text style={styles.heading}>Account</Text>
+            </View>
 
-          <Cards
-            image={accountImg}
-            title={"Account"}
-            subtext={"Name, email, phone number"}
-            func={() => navigation.navigate("accountsettings")}
-          />
-          <Cards
-            image={location}
-            title={"Location"}
-            subtext={"Add your address"}
-            func={() => navigation.navigate("savedaddress")}
-          />
-          <Cards
-            image={payment}
-            title={"Payment Method"}
-            subtext={"Visa | Debit | Credit"}
-            func={() => navigation.navigate("payment")}
-          />
-          <Cards
-            image={bell}
-            title={"Notifications"}
-            func={() => navigation.navigate("notification")}
-          />
-          <Cards image={web} title={"Privacy Policy"} />
-          <Cards
-            image={logoutImg}
-            title={"Logout"}
-            func={logout}
-            showarrow={false}
-          />
-        </ScrollView>
+            <Cards
+              image={accountImg}
+              title={"Account"}
+              subtext={"Name, email, phone number"}
+              func={() => navigation.navigate("accountsettings")}
+            />
+            <Cards
+              image={location}
+              title={"Location"}
+              subtext={"Add your address"}
+              func={() => navigation.navigate("savedaddress")}
+            />
+            <Cards
+              image={payment}
+              title={"Payment Method"}
+              subtext={"Visa | Debit | Credit"}
+              func={() => navigation.navigate("payment")}
+            />
+            <Cards
+              image={bell}
+              title={"Notifications"}
+              func={() => navigation.navigate("notification")}
+            />
+            <Cards image={web} title={"Privacy Policy"} />
+            <Cards
+              image={logoutImg}
+              title={"Logout"}
+              func={logout}
+              showarrow={false}
+            />
+          </ScrollView>
+        )}
       </SafeAreaView>
     </>
   );

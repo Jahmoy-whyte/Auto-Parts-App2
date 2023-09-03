@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 15,
-    // borderBottomWidth: 0.5,
+    borderBottomWidth: 0.5,
     borderBottomColor: "#B3B3B3",
     flexDirection: "row",
     alignItems: "center",
@@ -46,10 +46,6 @@ const styles = StyleSheet.create({
   textview: {
     gap: 2,
     flex: 1,
-  },
-  actionbtncontainer: {
-    height: 60,
-    justifyContent: "space-between",
   },
 });
 export default styles;

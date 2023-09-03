@@ -1,7 +1,7 @@
-import { useEffect, useState, memo } from "react";
+import { memo } from "react";
 import { Text, TouchableOpacity, Image, View } from "react-native";
 import styles from "./styles";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import formattedCost from "../../../../helper/formattedCost";
 const CartCard = ({
   id,
@@ -34,7 +34,7 @@ const CartCard = ({
           <AntDesign name="edit" size={24} color="black" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => deleteItem(id)}>
-          <AntDesign name="delete" size={24} color="#F47A00" />
+          <MaterialIcons name="delete-outline" size={24} color="red" />
         </TouchableOpacity>
       </View>
     </View>

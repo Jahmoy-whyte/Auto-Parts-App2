@@ -7,13 +7,12 @@ const styles = StyleSheet.create({
   },
 
   section: {
-    gap: 15,
     backgroundColor: "white",
     borderBottomWidth: 1,
     borderBottomColor: "#B3B3B3",
-    borderRadius: 10,
+    gap: 5,
     marginHorizontal: 15,
-    paddingVertical: 10,
+    paddingVertical: 15,
   },
 
   inforow: {
@@ -30,7 +29,7 @@ const styles = StyleSheet.create({
   },
   infotextright: {
     fontSize: 14,
-    fontFamily: "Inter-Regular",
+    fontFamily: "Inter-Bold",
     maxWidth: "50%",
     textAlign: "right",
   },

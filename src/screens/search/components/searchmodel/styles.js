@@ -9,9 +9,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     flex: 1,
   },
-  container: {
-    marginHorizontal: 15,
-  },
+  container: {},
   modelheading: {
     paddingHorizontal: 10,
     flexDirection: "row",
@@ -46,14 +44,14 @@ const styles = StyleSheet.create({
   },
 
   optionscontainer: {
+    marginHorizontal: 15,
     flexDirection: "row",
     alignItems: "center",
-    gap: 5,
-    minHeight: 50,
+    minHeight: 60,
     paddingVertical: 15,
-
+    gap: 5,
     borderBottomWidth: 0.5,
-    borderColor: "#B3B3B3",
+    borderBottomColor: "#B3B3B3",
   },
   optiontext: {
     flex: 1,

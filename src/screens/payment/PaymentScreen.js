@@ -2,7 +2,7 @@ import { View, Text, SafeAreaView, TextInput, ScrollView } from "react-native";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import styles from "./styles";
-import { AntDesign } from "@expo/vector-icons";
+
 import BackButton from "../../components/backbutton/BackButton";
 import CustomButton from "../../components/button/CustomButton";
 import usePayment from "./usePayment";
@@ -10,13 +10,12 @@ import usePayment from "./usePayment";
 import Heading from "./components/heading/Heading";
 import UserInfoRow from "./components/userinfocard/UserInfoCard";
 
-import location from "../../assets/images/location.png";
-import phone from "../../assets/images/phone.png";
-import user from "../../assets/images/user.png";
-import email from "../../assets/images/email.png";
-import card from "../../assets/images/card.png";
+import instructions from "../../assets/images/instructions.png";
+import accountwhite from "../../assets/images/accountwhite.png";
+import addcard from "../../assets/images/addcard.png";
+import coupon from "../../assets/images/coupon.png";
+
 import { ACTIONS } from "./helper/reducerData";
-import { useCallback } from "react";
 import Loading from "../../components/loading/Loading";
 
 const PaymentScreen = () => {
@@ -48,28 +47,22 @@ const PaymentScreen = () => {
             <ScrollView style={styles}>
               <View style={styles.section}>
                 <Heading
+                  img={accountwhite}
                   title={"Your Information"}
                   subtext={"Please ensure your information is correct"}
                   func={() => nav.navigate("accountsettings")}
                 />
 
                 <UserInfoRow
-                  image={user}
                   text={"Name: "}
                   subtext={userInfo?.firstName + " " + userInfo?.lastName}
                 />
                 <UserInfoRow
-                  image={phone}
                   text={"Phone Number: "}
                   subtext={userInfo?.phone}
                 />
+                <UserInfoRow text={"Email: "} subtext={userInfo?.email} />
                 <UserInfoRow
-                  image={email}
-                  text={"Email: "}
-                  subtext={userInfo?.email}
-                />
-                <UserInfoRow
-                  image={location}
                   text={"Address: "}
                   subtext={userInfo?.address}
                   func={() => nav.navigate("savedaddress")}
@@ -78,12 +71,12 @@ const PaymentScreen = () => {
 
               <View style={styles.section}>
                 <Heading
+                  img={addcard}
                   title={"Payment Method"}
                   func={() => nav.navigate("payment")}
                 />
                 {state.cardInfo != "" ? (
                   <UserInfoRow
-                    image={card}
                     text={"Visa: "}
                     subtext={"Visa ending with: " + state.cardInfo}
                   />
@@ -92,6 +85,7 @@ const PaymentScreen = () => {
 
               <View style={styles.section}>
                 <Heading
+                  img={instructions}
                   title={"Delivery Instructions"}
                   func={fnShowDelivery}
                   editText={state.showDelivery ? "Delete" : null}
@@ -113,6 +107,7 @@ const PaymentScreen = () => {
 
               <View style={styles.section}>
                 <Heading
+                  img={coupon}
                   title={"Coupon"}
                   subtext={"Enter Coupon Code For Discount"}
                   func={fnShowCoupon}

@@ -80,6 +80,10 @@ const useHome = () => {
     }
   };
 
+  const navToShowAll = useCallback(() => {
+    nav.navigate("showall");
+  }, []);
+
   const place =
     userInfo?.placeType && userInfo?.placeType != ""
       ? userInfo?.placeType
@@ -98,6 +102,7 @@ const useHome = () => {
     navigateToProduct,
     place,
     address,
+    navToShowAll,
   ];
 };
 

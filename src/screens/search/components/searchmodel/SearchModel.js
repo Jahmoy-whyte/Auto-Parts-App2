@@ -41,14 +41,6 @@ const SearhModel = ({ state, dispatch }) => {
             <Loading />
           ) : (
             <View style={styles.container}>
-              <View style={styles.searchmodelview}>
-                <AntDesign name="search1" size={20} color="#B3B3B3" />
-                <TextInput
-                  style={styles.searchmodeltext}
-                  placeholder="Search"
-                />
-              </View>
-
               <FlatList
                 data={state.modelOptions}
                 keyExtractor={(item) => item.id}
@@ -69,7 +61,7 @@ const SearhModel = ({ state, dispatch }) => {
                         });
                       }}
                     >
-                      <Octicons name="dot-fill" size={24} color="#F47A00" />
+                      <AntDesign name="search1" size={20} color="black" />
                       <Text style={styles.optiontext}>
                         {item[state.modelOptionsKey]}
                       </Text>
@@ -87,3 +79,13 @@ const SearhModel = ({ state, dispatch }) => {
 };
 
 export default SearhModel;
+/*
+   <View style={styles.searchmodelview}>
+                <AntDesign name="search1" size={20} color="#B3B3B3" />
+                <TextInput
+                  style={styles.searchmodeltext}
+                  placeholder="Search"
+                />
+              </View>
+
+*/

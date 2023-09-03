@@ -18,30 +18,40 @@ import OrderCards from "./components/orderCards/OrderCards";
 import useOrders from "./useOrders";
 import Loading from "../../components/loading/Loading";
 import { useNavigation } from "@react-navigation/native";
+import { useUserInfoContext } from "../../context/UserInfoContextWarpper";
+import SignupCard from "../../components/signupCard/SignupCard";
 const OrdersTab = () => {
   const [orders] = useOrders();
   console.log("orders ======================");
   const nav = useNavigation();
+  const { userInfo } = useUserInfoContext();
   return (
     <>
       <ExpoStatusBar style="light" />
       <View style={GlobalStyles.backDrop}></View>
       <SafeAreaView style={GlobalStyles.container}>
-        <View style={styles.headingcontainer}>
-          <Text style={styles.heading}>My Orders</Text>
-        </View>
-        {orders.isLoading ? (
-          <Loading />
+        {userInfo.userStatus != "user" ? (
+          <SignupCard />
         ) : (
-          <View style={styles.container}>
-            <FlatList
-              data={orders.data}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item }) => (
-                <OrderCards date={item.date} orderId={item.id} nav={nav} />
-              )}
-            />
-          </View>
+          <>
+            <View style={styles.headingcontainer}>
+              <Text style={styles.heading}>My Orders</Text>
+            </View>
+
+            {orders.isLoading ? (
+              <Loading />
+            ) : (
+              <View style={styles.container}>
+                <FlatList
+                  data={orders.data}
+                  keyExtractor={(item) => item.id}
+                  renderItem={({ item }) => (
+                    <OrderCards date={item.date} orderId={item.id} nav={nav} />
+                  )}
+                />
+              </View>
+            )}
+          </>
         )}
       </SafeAreaView>
     </>

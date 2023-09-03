@@ -66,6 +66,7 @@ const Home = ({ navigation }) => {
     navigateToProduct,
     place,
     address,
+    navToShowAll,
   ] = useHome();
   console.log("======= render home");
 
@@ -117,12 +118,18 @@ const Home = ({ navigation }) => {
           </Pressable>
         </View>
         {state.isLoading ? (
-          <Loading text={"wdwdwd"} />
+          <Loading
+            text={
+              "Node sever hosted on the free tier on render.com, free instance will spin down with inactivity. so it may take a minute to connect to server. Please wait"
+            }
+          />
         ) : (
           <ScrollView>
             <Advert image={mainimage} />
 
             <Headings
+              func={navToShowAll}
+              showShowall={true}
               image={newstar}
               text={"New Arrival"}
               subText={"Most select items"}
@@ -146,9 +153,11 @@ const Home = ({ navigation }) => {
             />
 
             <Headings
+              func={navToShowAll}
               image={star}
               text={"Categories"}
               subText={"Most select items"}
+              showShowall={true}
             />
             <FlatList
               style={styles.flatlist}
@@ -179,11 +188,13 @@ const Home = ({ navigation }) => {
                 image={headlight}
                 text={"item.text"}
                 subText={"item.subtext"}
+                func={navToShowAll}
               />
               <CategoriesCards
                 image={engine}
                 text={"item.text"}
                 subText={"item.subtext"}
+                func={navToShowAll}
               />
             </View>
             <View style={styles.CategoriesContainer}>
@@ -191,6 +202,7 @@ const Home = ({ navigation }) => {
                 image={headlight}
                 text={"item.text"}
                 subText={"item.subtext"}
+                func={navToShowAll}
               />
             </View>
           </ScrollView>

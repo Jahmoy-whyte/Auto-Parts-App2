@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import Home from "../home/Home";
 import AccountTab from "../account/AccountTab";
 import { View } from "react-native";
@@ -26,7 +26,7 @@ const BottomTabs = () => {
           options={{
             tabBarLabel: "Home",
             tabBarIcon: ({ color, size }) => (
-              <AntDesign name="home" size={size} color={color} />
+              <Ionicons name="md-home-outline" size={size} color={color} />
             ),
           }}
         />
@@ -37,7 +37,7 @@ const BottomTabs = () => {
           options={{
             tabBarLabel: "Orders",
             tabBarIcon: ({ color, size }) => (
-              <AntDesign name="user" size={size} color={color} />
+              <AntDesign name="shoppingcart" size={size} color={color} />
             ),
           }}
         />
