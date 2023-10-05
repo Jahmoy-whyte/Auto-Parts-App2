@@ -34,7 +34,7 @@ const useCart = () => {
     const getCartItems = async () => {
       try {
         const items = await tokenAwareFetchWrapper(dbGetUserCart);
-        console.log("==========================================items");
+
         setItemInCartState(items);
         dispatch({ type: ACTIONS.IS_LOADING, payload: false });
       } catch (error) {

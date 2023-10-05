@@ -153,7 +153,6 @@ const useSearch = () => {
           modelId,
           yearId
         );
-        console.log(responce);
       } else {
         responce = await tokenAwareFetchWrapper(
           dbSearchForProductWithCategory,
@@ -162,7 +161,6 @@ const useSearch = () => {
           yearId,
           categoryId
         );
-        console.log(responce);
       }
 
       dispatch({ type: ACTIONS.ADD_PRODUCTS_DATA, payload: responce });

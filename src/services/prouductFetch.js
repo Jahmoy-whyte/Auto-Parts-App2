@@ -2,7 +2,7 @@ import { BASE_URL } from "./helper/baseUrl";
 import checkResponce from "./helper/checkResponce";
 
 export const dbGetNewArrival = async (accessToken) => {
-  const responce = await fetch(`${BASE_URL}/products`, {
+  const responce = await fetch(`${BASE_URL}/products/get-new-arrival`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -47,11 +47,14 @@ export const dbSearchForProductWithCategory = async (
 };
 
 export const dbGetProductById = async (accessToken, productId) => {
-  const responce = await fetch(`${BASE_URL}/products/${productId}`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  const responce = await fetch(
+    `${BASE_URL}/products/get-product-by-id/${productId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
   return await checkResponce(responce);
 };
 

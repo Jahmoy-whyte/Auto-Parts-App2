@@ -3,7 +3,6 @@ import styles from "./styles";
 import { memo } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 const Cards = ({ title, subtext, image, func, showarrow = true }) => {
-  console.log("================== AccountTab cards");
   return (
     <TouchableOpacity style={styles.optionscontainer} onPress={func}>
       <View style={styles.imageandtextcontainer}>

@@ -11,15 +11,17 @@ const SignupCard = () => {
   return (
     <View style={styles.container}>
       <View style={styles.container2}>
-        <Text style={styles.text2}>{"Please Sign Up To View This Screen"}</Text>
+        <Text style={styles.toptext}>
+          {"Please Sign Up To View This Screen"}
+        </Text>
         <TouchableOpacity
           onPress={() => nav.navigate("guestToUserSignUp")}
-          style={styles.btn}
+          style={styles.btn1}
         >
           <Text style={styles.text1}>{"Sign Up"}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={logout} style={styles.btn3}>
-          <Text style={styles.text3}>{"Logout"}</Text>
+        <TouchableOpacity onPress={logout} style={styles.btn2}>
+          <Text style={styles.text2}>{"Logout"}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -37,23 +39,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-
-  btn: {
-    borderRadius: 10,
-    backgroundColor: "#F47A00",
-  },
-  img: {
-    height: "60%",
-    width: "60%",
-  },
-  text1: {
-    paddingHorizontal: 15,
-    paddingVertical: 5,
-    color: "white",
-    fontFamily: "Inter-Bold",
-    fontSize: 14,
-  },
-  text2: {
+  toptext: {
     marginBottom: 5,
     textAlign: "center",
     color: "#B3B3B3",
@@ -61,17 +47,41 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 
-  btn3: {
+  btn1: {
+    borderRadius: 10,
+    backgroundColor: "#F47A00",
+    minHeight: 40,
+    minWidth: 40,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  text1: {
+    marginHorizontal: 15,
+    color: "white",
+    fontFamily: "Inter-Bold",
+    fontSize: 14,
+  },
+
+  btn2: {
     marginTop: 5,
     borderRadius: 10,
     borderWidth: 0.5,
+
+    minHeight: 40,
+    minWidth: 40,
+    justifyContent: "center",
+    alignItems: "center",
   },
-  text3: {
-    textAlign: "center",
-    paddingHorizontal: 15,
-    paddingVertical: 5,
+  text2: {
+    marginHorizontal: 15,
     fontFamily: "Inter-Bold",
     fontSize: 14,
+  },
+
+  img: {
+    height: "60%",
+    width: "60%",
   },
 });
 

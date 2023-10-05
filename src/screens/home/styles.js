@@ -22,21 +22,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textBoxView: {
+    backgroundColor: "white",
     minHeight: 45,
     borderRadius: 40,
-    borderWidth: 0.5,
-    borderColor: "white",
+
     alignItems: "center",
     flexDirection: "row",
     gap: 10,
     paddingHorizontal: 15,
     marginTop: 10,
-
-    backgroundColor: "#0954B6",
   },
   textBoxText: {
     flex: 1,
-    color: "white",
+
     fontSize: 12,
     fontFamily: "Inter-Regular",
   },
@@ -82,7 +80,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row-reverse",
     gap: 5,
-    backgroundColor: "#F47A00",
+    //  backgroundColor: "#F47A00",
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 6,

@@ -15,7 +15,7 @@ const CartCard = ({
   deleteItem,
 }) => {
   const formattedPrice = formattedCost(price * quantity);
-  console.log("======================================= card cart");
+
   return (
     <View style={styles.container} onPress={() => func(productId)}>
       <View style={styles.imagecontainer}>

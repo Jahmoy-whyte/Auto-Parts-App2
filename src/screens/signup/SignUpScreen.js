@@ -28,7 +28,6 @@ import { ACTIONS } from "./helper/reducerActions";
 const SignUpScreen = ({ navigation }) => {
   const [state, dispatch, submit, nav] = useSignUp();
 
-  console.log("======= render signup");
   return (
     <>
       <ExpoStatusBar style="light" />

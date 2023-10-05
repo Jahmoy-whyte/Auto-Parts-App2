@@ -48,7 +48,6 @@ const useLogin = () => {
       await login(email, password);
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
       setIsLoading(false);
       ShowToast("customErrorToast", error.message);
     }

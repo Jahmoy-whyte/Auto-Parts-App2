@@ -17,7 +17,6 @@ const useEnterLocation = () => {
     placeType: "",
   });
 
-  console.log(data);
   const onChangeHandler = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }));
   };

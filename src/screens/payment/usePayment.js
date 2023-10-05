@@ -14,6 +14,7 @@ import {
 } from "../../context/UserAuthContextWarpper";
 import { getNewAccessToken } from "../../services/refreshTokenFetch";
 import { dbInsertOrders } from "../../services/ordersFetch";
+import useSocket from "../../hooks/useSocket";
 const usePayment = () => {
   const reducer = (state, action) => {
     switch (action.type) {
@@ -39,53 +40,17 @@ const usePayment = () => {
     }
   };
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { userInfo, setUserInfo } = useUserInfoContext();
-  const { accessToken, setAuthData, tokenAwareFetchWrapper } = useAuthContext();
+  const { userInfo } = useUserInfoContext();
+  const { tokenAwareFetchWrapper } = useAuthContext();
   const { getData } = useAsyncStore();
+  const { socket } = useSocket();
   const focus = useIsFocused();
   const nav = useNavigation();
-  const socketRef = useRef();
 
   useEffect(() => {
-    const socket = io("http://192.168.100.28:3000", {
-      auth: {
-        token: accessToken,
-      },
-    });
-
-    socket.on("connect", () => {
-      console.log("connected ===============================");
-      socketRef.current = socket;
-      dispatch({ type: ACTIONS.ISLOADING, payload: false });
-    });
-
-    socket.on("connect_error", async (error) => {
-      try {
-        if (error.message !== "jwt expired") throw error;
-        console.log(
-          "=========================================================error"
-        );
-        const refreshToken = await getRefreshTokenFromStorage();
-        const newAccessToken = await getNewAccessToken(refreshToken);
-        socket.auth.token = newAccessToken;
-        socket.connect();
-      } catch (error) {
-        if (
-          error.message == "forbidden(R101)" ||
-          error.message == "forbidden(R102)"
-        ) {
-          setAuthData((prev) => ({
-            ...prev,
-            isAuth: false,
-          }));
-          return;
-        }
-
-        ShowToast("customErrorToast", error.message);
-      }
-    });
-    return () => socket.disconnect();
-  }, []);
+    if (socket.isLoading) return;
+    dispatch({ type: ACTIONS.ISLOADING, payload: false });
+  }, [socket]);
 
   useEffect(() => {
     if (!focus) return;
@@ -135,13 +100,12 @@ const usePayment = () => {
         total
       );
 
-      socketRef.current.emit("hello", "this is my messahe");
+      socket.socket.emit("OrderSent", "ordersent");
       nav.navigate("receipt", {
         orderId: orderId,
       });
     } catch (error) {
       ShowToast("customErrorToast", error.message);
-      console.log(error);
     }
     dispatch({ type: ACTIONS.BTNISLOADING, payload: false });
     // const dwdw = await dbInsertOrders()

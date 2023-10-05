@@ -21,6 +21,8 @@ import location from "./images/location.png";
 import payment from "./images/payment.png";
 import bell from "./images/bell.png";
 import web from "./images/web.png";
+import blackstar from "./images/blackstar.png";
+
 import logoutImg from "./images/logout.png";
 import { useAuthContext } from "../../context/UserAuthContextWarpper";
 import Cards from "./components/cards/Cards";
@@ -29,7 +31,6 @@ import { useUserInfoContext } from "../../context/UserInfoContextWarpper";
 import SignupCard from "../../components/signupCard/SignupCard";
 
 const AccountTab = ({ navigation }) => {
-  console.log("================ AccountTab");
   const { logout } = useAuthContext();
   const { userInfo } = useUserInfoContext();
   /*
@@ -79,6 +80,12 @@ const AccountTab = ({ navigation }) => {
               title={"Notifications"}
               func={() => navigation.navigate("notification")}
             />
+            <Cards
+              image={blackstar}
+              title={"Favorites"}
+              func={() => navigation.navigate("favorite")}
+            />
+
             <Cards image={web} title={"Privacy Policy"} />
             <Cards
               image={logoutImg}

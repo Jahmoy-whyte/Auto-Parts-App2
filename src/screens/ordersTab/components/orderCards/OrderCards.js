@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import styles from "./styles";
 import { memo } from "react";
 
-const OrderCards = ({ date, orderId, nav }) => {
+const OrderCards = ({ date, orderId, nav, status }) => {
   console.log("================== order cards");
   const newDate = date.split("T");
   return (
@@ -22,7 +22,7 @@ const OrderCards = ({ date, orderId, nav }) => {
       </View>
 
       <View style={styles.statuscontainer}>
-        <Text style={styles.statustext}>status</Text>
+        <Text style={styles.statustext}>{status}</Text>
       </View>
     </TouchableOpacity>
   );

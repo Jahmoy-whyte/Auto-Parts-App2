@@ -28,10 +28,13 @@ export const dbGetOrders = async (accessToken) => {
 };
 
 export const dbGetUserOrderDetail = async (accessToken, orderId) => {
-  const responce = await fetch(`${BASE_URL}/orders/${orderId}`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  const responce = await fetch(
+    `${BASE_URL}/orders/get-order-by-id/${orderId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
   return await checkResponce(responce);
 };

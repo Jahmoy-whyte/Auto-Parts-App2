@@ -3,10 +3,20 @@ import { Text, TouchableOpacity, Image, View } from "react-native";
 import styles from "./styles";
 import formattedCost from "../../../../helper/formattedCost";
 
-const ProductCard = ({ title, price, description, image, func, productId }) => {
-  console.log("ProductCard ===================");
+const ProductCard = ({
+  title,
+  price,
+
+  image,
+  func,
+  productId,
+  status,
+}) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={() => func(productId)}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => (status !== "In stock" ? null : func(productId))}
+    >
       <View style={styles.imagecontainer}>
         <Image style={styles.image} source={{ uri: image }} />
       </View>
@@ -16,7 +26,11 @@ const ProductCard = ({ title, price, description, image, func, productId }) => {
           <Text style={styles.pricetext}>Price: </Text>
           {formattedCost(price)}
         </Text>
-        <Text style={styles.description}>Description: {"description"}</Text>
+        <Text
+          style={status === "In stock" ? styles.statusGreen : styles.statusRed}
+        >
+          {status}
+        </Text>
       </View>
     </TouchableOpacity>
   );

@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   container: {
     width: 232.33,
-
+    overflow: "hidden",
     marginRight: 10,
     backgroundColor: "white",
     borderRadius: 10,
@@ -49,6 +49,18 @@ const styles = StyleSheet.create({
     color: "white",
     paddingVertical: 2,
     paddingHorizontal: 10,
+  },
+
+  statusGreen: {
+    fontFamily: "Inter-Regular",
+    fontSize: 12,
+    color: "green",
+  },
+
+  statusRed: {
+    fontFamily: "Inter-Regular",
+    fontSize: 12,
+    color: "red",
   },
 });
 export default styles;

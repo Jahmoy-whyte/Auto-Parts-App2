@@ -26,7 +26,6 @@ const useLocationLanding = () => {
     searchIsLoading(true);
     const time = setTimeout(async () => {
       try {
-        console.log("search ing");
         const list = await tokenAwareFetchWrapper(
           dbSearchForLocation,
           data.seachBoxText

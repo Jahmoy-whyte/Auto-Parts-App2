@@ -1,7 +1,6 @@
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import styles from "./styles";
 const Headings = ({ image, text, subText, func, showShowall }) => {
-  console.log("had");
   return (
     <View style={styles.subHeadingContainer}>
       <View style={styles.subHeadingIconAndTextContainer}>

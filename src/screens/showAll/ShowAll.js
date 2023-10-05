@@ -40,10 +40,10 @@ const ShowAll = () => {
                 <ProductCard
                   title={`${item.productName} ${item.model}`}
                   image={item.image}
-                  description={item.description}
                   price={item.price}
                   func={navigateToProduct}
                   productId={item.id}
+                  status={item.status}
                 />
               );
             }}

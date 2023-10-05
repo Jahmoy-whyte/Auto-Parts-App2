@@ -3,30 +3,52 @@ import { dbGetOrders } from "../../services/ordersFetch";
 import { useAuthContext } from "../../context/UserAuthContextWarpper";
 import ShowToast from "../../helper/ShowToast";
 import { useIsFocused } from "@react-navigation/native";
+import useSocket from "../../hooks/useSocket";
+import { useUserInfoContext } from "../../context/UserInfoContextWarpper";
 
 const useOrders = () => {
-  const [orders, setOrders] = useState({ isLoading: true, data: [] });
+  const [orders, setOrders] = useState({
+    isLoading: true,
+    data: [],
+    selected: "sent",
+  });
   const { tokenAwareFetchWrapper } = useAuthContext();
 
-  const focus = useIsFocused();
-  useEffect(() => {
-    if (!focus) return;
-    const getOrders = async () => {
-      setOrders((prev) => ({ ...prev, isLoading: true }));
-      try {
-        const orders = await tokenAwareFetchWrapper(dbGetOrders);
+  const { userInfo } = useUserInfoContext();
+  const { socket } = useSocket();
 
-        setOrders((prev) => ({ ...prev, data: orders }));
-      } catch (error) {
-        ShowToast("customErrorToast", "Error", error.message);
+  useEffect(() => {
+    if (socket.isLoading) return;
+
+    socket.socket.on("OrderUpdate-res", (arg) => {
+      if (arg.userId === userInfo.id) {
+        getOrders();
       }
-      setOrders((prev) => ({ ...prev, isLoading: false }));
-    };
+    });
 
     getOrders();
-  }, [focus]);
+  }, [socket]);
 
-  return [orders];
+  const getOrders = async (orderStatus = "sent") => {
+    setOrders((prev) => ({ ...prev, isLoading: true }));
+    try {
+      const orderData = await tokenAwareFetchWrapper(dbGetOrders);
+
+      const data = orderData.filter((data1) => data1.status == orderStatus);
+
+      setOrders((prev) => ({ ...prev, data: data }));
+    } catch (error) {
+      ShowToast("customErrorToast", "Error", error.message);
+    }
+    setOrders((prev) => ({ ...prev, isLoading: false }));
+  };
+
+  const selectOrderStatus = (orderStatus) => {
+    setOrders((prev) => ({ ...prev, selected: orderStatus }));
+    getOrders(orderStatus);
+  };
+
+  return [orders, selectOrderStatus];
 };
 
 export default useOrders;

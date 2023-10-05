@@ -2,7 +2,6 @@ import { Text, TouchableOpacity } from "react-native";
 import styles from "./styles";
 import { memo } from "react";
 const Options = ({ children, text, data, func }) => {
-  console.log("ddddddddddddddd");
   return (
     <TouchableOpacity
       style={[

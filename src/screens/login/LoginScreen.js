@@ -19,8 +19,6 @@ import useLogin from "./useLogin";
 import { Ionicons } from "@expo/vector-icons";
 import { ACTIONS } from "./helper/reducerActions";
 const LoginScreen = () => {
-  console.log("======= render Login");
-
   const [state, dispatch, submit, nav] = useLogin();
   return (
     <>

@@ -11,8 +11,6 @@ import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import useLanding from "./useLanding";
 
 const LandingScreen = () => {
-  console.log("======= render landing");
-
   const [isLoading, nav, continueAsGuest] = useLanding();
   return (
     <>

@@ -28,14 +28,14 @@ import ReceiptScreen from "./src/screens/receipt/ReceiptScreen";
 import AccountTab from "./src/screens/account/AccountTab";
 import OrderDetails from "./src/screens/orderDetails/OrderDetails";
 import ShowAll from "./src/screens/showAll/ShowAll";
+import FavoritesScreen from "./src/screens/favorites/FavoritesScreen";
+import { Suspense } from "react";
 const App = () => {
-  //  console.log(fgf);w
-
   return (
     <>
       <UserAuthContextWarpper>
         <UserInfoContextWarpper>
-          <Test />
+          <Screens />
         </UserInfoContextWarpper>
       </UserAuthContextWarpper>
       <Toast config={toastConfig} />
@@ -43,7 +43,7 @@ const App = () => {
   );
 };
 
-const Test = () => {
+const Screens = () => {
   const Stack = createNativeStackNavigator();
   const { isAuth } = useAuthContext();
   // console.log("===============================");
@@ -88,6 +88,8 @@ const Test = () => {
             <Stack.Screen name="orderdetails" component={OrderDetails} />
             <Stack.Screen name="receipt" component={ReceiptScreen} />
             <Stack.Screen name="showall" component={ShowAll} />
+
+            <Stack.Screen name="favorite" component={FavoritesScreen} />
 
             <Stack.Screen
               name="guestToUserSignUp"

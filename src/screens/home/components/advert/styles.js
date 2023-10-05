@@ -2,18 +2,20 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   image: {
-    height: "100%",
-    width: "100%",
+    height: 100,
+    width: 100,
     borderRadius: 6,
   },
   imageContainer: {
-    backgroundColor: "#EBEBEB",
-    overflow: "hidden",
-
-    height: 180,
+    backgroundColor: "#0954B6",
+    flexDirection: "row",
+    height: 136,
     marginTop: 15,
     marginHorizontal: 15,
     borderRadius: 10,
+    gap: 10,
+    alignItems: "center",
+    paddingHorizontal: 10,
   },
 
   infoContainer: {
@@ -33,16 +35,23 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 12,
+    fontSize: 18,
     fontFamily: "Inter-Bold",
     color: "white",
   },
   subText: {
     fontSize: 10,
     fontFamily: "Inter-Regular",
-    color: "#B3B3B3",
+
     color: "white",
   },
+
+  subTextcolor: {
+    fontSize: 10,
+    fontFamily: "Inter-Bold",
+    color: "#F47A00",
+  },
+
   LearnMoreContainer: {
     backgroundColor: "#F47A00",
     minHeight: 35,
@@ -56,12 +65,6 @@ const styles = StyleSheet.create({
     fontFamily: "Inter-Bold",
     color: "white",
   },
-  overlay: {
-    width: "100%",
-    height: "100%",
-    backgroundColor: "rgba(0, 0, 0, 0.19)",
-    position: "absolute",
-    zIndex: 1,
-  },
+  overlay: {},
 });
 export default styles;

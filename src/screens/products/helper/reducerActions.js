@@ -4,6 +4,7 @@ export const ACTIONS = {
   BTN_IS_LOADING: "btn_is_loading",
   ADDED: "added",
   CALCULATE_QUANTITY_PRICE: "calculate_quantity_price",
+  SET_IS_FAVORITE: "set_is_favorite",
 };
 
 const test = {

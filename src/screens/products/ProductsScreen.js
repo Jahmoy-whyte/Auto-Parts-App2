@@ -25,12 +25,15 @@ import formattedCost from "../../helper/formattedCost";
 const ProductsScreen = ({ route }) => {
   console.log("======================== product screen");
   const { navProductId, navActionType, navQuantity, navCartId } = route.params;
-  const [state, dispatch, nav, addToCart, updateCartItem] = useProducts(
-    navProductId,
-    navActionType,
-    navQuantity,
-    navCartId
-  );
+  const [
+    state,
+    dispatch,
+    nav,
+    addToCart,
+    updateCartItem,
+    addFavorites,
+    removeFavorite,
+  ] = useProducts(navProductId, navActionType, navQuantity, navCartId);
 
   const Card = ({ title, text }) => {
     return (
@@ -76,8 +79,15 @@ const ProductsScreen = ({ route }) => {
                   />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.actionbtn}>
-                  <FontAwesome name="bookmark-o" size={20} color="#0954B6" />
+                <TouchableOpacity
+                  style={styles.actionbtn}
+                  onPress={state.isFavorite ? removeFavorite : addFavorites}
+                >
+                  {state.isFavorite ? (
+                    <FontAwesome name="bookmark" size={20} color="#F47A00" />
+                  ) : (
+                    <FontAwesome name="bookmark-o" size={20} color="#0954B6" />
+                  )}
                 </TouchableOpacity>
               </View>
               <View style={styles.imagecontainer}>

@@ -12,6 +12,7 @@ import {
   FlipType,
   ActionResize,
 } from "expo-image-manipulator";
+import box from "../../../../assets/images/box.png";
 
 const Advert = ({ image, text, subtext }) => {
   /**
@@ -38,8 +39,14 @@ const Advert = ({ image, text, subtext }) => {
  */
   return (
     <View style={styles.imageContainer}>
-      <Image source={image} style={styles.image} resizeMode="contain" />
-      <View style={styles.overlay}></View>
+      <View style={styles.textContainer}>
+        <Text style={styles.title}>Auto Parts</Text>
+        <Text style={styles.subText}>
+          The One Stop Shop For All Your Car Needs New offering delivery
+        </Text>
+        <Text style={styles.subTextcolor}> Read More </Text>
+      </View>
+      <Image source={box} style={styles.image} resizeMode="contain" />
     </View>
   );
 };

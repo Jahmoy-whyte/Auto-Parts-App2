@@ -19,7 +19,6 @@ export const getMakeOptions = async (
       payload: { modelOptions: responce },
     });
   } catch (error) {
-    console.log(error);
     ShowToast("customErrorToast", "Error", error.message);
   }
 };
@@ -41,7 +40,6 @@ export const getModelOptions = async (
       payload: { modelOptions: responce },
     });
   } catch (error) {
-    console.log(error);
     ShowToast("customErrorToast", "Error", error.message);
   }
 };
@@ -62,7 +60,6 @@ export const getYearOptions = async (
       payload: { modelOptions: responce },
     });
   } catch (error) {
-    console.log(error);
     ShowToast("customErrorToast", "Error", error.message);
   }
 };
@@ -79,7 +76,6 @@ export const getSubCategoryOptions = async (
       payload: { modelOptions: responce },
     });
   } catch (error) {
-    console.log(error);
     ShowToast("customErrorToast", "Error", error.message);
   }
 };

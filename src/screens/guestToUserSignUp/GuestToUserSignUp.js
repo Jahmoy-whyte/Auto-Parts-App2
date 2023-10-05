@@ -28,7 +28,6 @@ import { ACTIONS } from "./helper/reducerActions";
 const GuestToUserSignUp = ({ navigation }) => {
   const [state, dispatch, submit, nav] = useGuestToUserSignUp();
 
-  console.log("======= render signup");
   return (
     <>
       <ExpoStatusBar style="light" />

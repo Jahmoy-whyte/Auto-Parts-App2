@@ -38,11 +38,18 @@ const styles = StyleSheet.create({
     fontFamily: "Inter-Bold",
     fontSize: 14,
   },
-  description: {
+  statusGreen: {
     fontFamily: "Inter-Regular",
     fontSize: 12,
-    color: "#B3B3B3",
+    color: "green",
   },
+
+  statusRed: {
+    fontFamily: "Inter-Regular",
+    fontSize: 12,
+    color: "red",
+  },
+
   textview: {
     gap: 2,
     flex: 1,

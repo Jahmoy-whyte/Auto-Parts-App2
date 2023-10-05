@@ -35,7 +35,6 @@ const SearchScreen = () => {
     navigateToProduct,
     tokenAwareFetchWrapper,
   ] = useSearch();
-  console.log("======= render SearchScreen");
 
   const Top = () => {
     return (
@@ -119,6 +118,7 @@ const SearchScreen = () => {
                 price={item.price}
                 func={navigateToProduct}
                 productId={item.id}
+                status={item.status}
               />
             );
           }}

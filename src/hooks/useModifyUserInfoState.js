@@ -4,8 +4,6 @@ const useModifyUserInfoState = () => {
   const { userInfo, setUserInfo } = useUserInfoContext();
   //  {"cartId": 9, "productId": 1239, "quantity": 1}
 
-  console.log("useModifyUserInfoState");
-
   const setUserInfoState = (userInfo) => {
     setUserInfo(userInfo);
   };

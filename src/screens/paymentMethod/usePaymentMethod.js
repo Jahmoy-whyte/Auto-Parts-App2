@@ -15,7 +15,6 @@ const usePaymentMethod = () => {
   useEffect(() => {
     const test = async () => {
       const data = await getData("cardInfo");
-      console.log(data);
     };
 
     test();

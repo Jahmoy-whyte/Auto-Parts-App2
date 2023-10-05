@@ -9,21 +9,28 @@ const HomePartCards = ({
   price,
   id,
   navigateToProduct,
+  status,
 }) => {
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigateToProduct(id)}
+      onPress={() => (status === "Out of stock" ? null : navigateToProduct(id))}
     >
       <View style={styles.imagecontainer}>
-        <Image source={image} style={styles.img} />
+        <Image source={{ uri: image }} style={styles.img} />
       </View>
 
       <View style={styles.textAndPriceContainer}>
         <View style={styles.textContainer}>
           <Text style={styles.text}>{text}</Text>
-          <Text style={styles.subText} numberOfLines={2}>
-            {subtext}
+
+          <Text
+            style={
+              status === "Out of stock" ? styles.statusRed : styles.statusGreen
+            }
+            numberOfLines={2}
+          >
+            {status}
           </Text>
         </View>
         <View style={styles.priceContainer}>
@@ -35,3 +42,8 @@ const HomePartCards = ({
 };
 
 export default memo(HomePartCards);
+{
+  /* <Text style={styles.subText} numberOfLines={2}>
+{subtext}
+</Text> */
+}

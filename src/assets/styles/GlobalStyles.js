@@ -12,7 +12,7 @@ const GlobalStyles = StyleSheet.create({
 
   backDrop: {
     height: "100%",
-    backgroundColor: "red",
+    // backgroundColor: "red",
     position: "absolute",
     width: "100%",
     top: 0,

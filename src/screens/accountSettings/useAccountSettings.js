@@ -8,7 +8,7 @@ const useAccountSettings = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { userInfo, setUserInfo } = useUserInfoContext();
-  console.log(userInfo);
+
   const { tokenAwareFetchWrapper } = useAuthContext();
   const [textBoxData, setTextBoxData] = useState({
     firstName: userInfo?.firstName ? userInfo?.firstName : "",
@@ -16,7 +16,6 @@ const useAccountSettings = () => {
     phone: userInfo?.phone ? userInfo?.phone : "",
     email: userInfo?.email ? userInfo?.email : "",
   });
-  console.log(textBoxData);
 
   const setTextboxText = (textbox, value) => {
     setTextBoxData((prev) => ({ ...prev, [textbox]: value }));

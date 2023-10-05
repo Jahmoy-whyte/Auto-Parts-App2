@@ -2,7 +2,6 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import styles from "../../styles";
 import { memo } from "react";
 const Heading = ({ title, subtext, editText, func, img }) => {
-  console.log("ddddddddddddd");
   return (
     <View style={styles.optionscontainer}>
       <View style={styles.imageandtextcontainer}>

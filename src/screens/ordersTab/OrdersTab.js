@@ -20,9 +20,10 @@ import Loading from "../../components/loading/Loading";
 import { useNavigation } from "@react-navigation/native";
 import { useUserInfoContext } from "../../context/UserInfoContextWarpper";
 import SignupCard from "../../components/signupCard/SignupCard";
+import Tabs from "./components/tabs/Tabs";
 const OrdersTab = () => {
-  const [orders] = useOrders();
-  console.log("orders ======================");
+  const [orders, selectOrderStatus] = useOrders();
+
   const nav = useNavigation();
   const { userInfo } = useUserInfoContext();
   return (
@@ -37,6 +38,7 @@ const OrdersTab = () => {
             <View style={styles.headingcontainer}>
               <Text style={styles.heading}>My Orders</Text>
             </View>
+            <Tabs onPress={selectOrderStatus} selected={orders.selected} />
 
             {orders.isLoading ? (
               <Loading />
@@ -46,7 +48,12 @@ const OrdersTab = () => {
                   data={orders.data}
                   keyExtractor={(item) => item.id}
                   renderItem={({ item }) => (
-                    <OrderCards date={item.date} orderId={item.id} nav={nav} />
+                    <OrderCards
+                      date={item.date}
+                      orderId={item.id}
+                      nav={nav}
+                      status={item.status}
+                    />
                   )}
                 />
               </View>

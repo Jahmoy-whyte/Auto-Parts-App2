@@ -7,7 +7,6 @@ import { dbGetUserInfo } from "../../services/usersFetch";
 import { useAuthContext } from "../../context/UserAuthContextWarpper";
 import { useNavigation } from "@react-navigation/native";
 const useHome = () => {
-  // console.log(authData);ww
   const initialState = {
     isLoading: true,
     userInfo: [],
@@ -46,12 +45,11 @@ const useHome = () => {
         const userInfo = await tokenAwareFetchWrapper(dbGetUserInfo);
         console.log(userInfo);
         setUserInfo(userInfo);
-        console.log("this is my info ================================");
+
         dispatch({ type: ACTIONS.NEW_ARRIVAL, payload: responce });
       } catch (error) {
         dispatch({ type: ACTIONS.ON_ERROR });
         ShowToast("customErrorToast", "Error", error.message);
-        console.log(error);
       }
     };
     onStart();
@@ -70,13 +68,12 @@ const useHome = () => {
     try {
       const responce = await tokenAwareFetchWrapper(dbGetNewArrival);
       const userInfo = await tokenAwareFetchWrapper(dbGetUserInfo);
-      console.log(userInfo);
+
       setUserInfo((prev) => ({ ...prev, userInfo: userInfo }));
       dispatch({ type: ACTIONS.NEW_ARRIVAL, payload: responce });
     } catch (error) {
       dispatch({ type: ACTIONS.ON_ERROR });
       ShowToast("customErrorToast", "Error", error.message);
-      console.log(error);
     }
   };
 

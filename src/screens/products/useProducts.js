@@ -7,6 +7,10 @@ import useRefreshToken from "../../hooks/useRefreshToken";
 import { dbAddToCart, dbUpdateCartItem } from "../../services/cartFetch";
 import useModifyUserInfoState from "../../hooks/useModifyUserInfoState";
 import { useAuthContext } from "../../context/UserAuthContextWarpper";
+import {
+  dbAddFavorites,
+  dbDeleteFavorites,
+} from "../../services/favoriteFetch";
 const useProducts = (navProductId, navActionType, navQuantity, navCartId) => {
   const intitalState = {
     isLoading: true,
@@ -15,18 +19,22 @@ const useProducts = (navProductId, navActionType, navQuantity, navCartId) => {
     quantity: navQuantity,
     quantityPrice: "",
     btnIsLoading: false,
+    isFavorite: false,
   };
 
   const reducer = (state, action) => {
     switch (action.type) {
-      case "get_product_data":
+      case "get_product_data": {
         const productData = action.payload;
+        const bool = productData?.favoriteBool;
         return {
           ...state,
           isLoading: false,
           productData: productData,
+          isFavorite: bool ? true : false,
           quantityPrice: productData.price * navQuantity,
         };
+      }
       case "quantity":
         const actionType = action.payload;
         const newQuantity = state.quantity + 1;
@@ -53,6 +61,13 @@ const useProducts = (navProductId, navActionType, navQuantity, navCartId) => {
           ...state,
           btnIsLoading: action.payload,
         };
+
+      case "set_is_favorite":
+        return {
+          ...state,
+          isFavorite: action.payload,
+        };
+
       case "added":
         return {
           ...state,
@@ -79,9 +94,9 @@ const useProducts = (navProductId, navActionType, navQuantity, navCartId) => {
         if (responce.length == 0) {
           return;
         }
+
         dispatch({ type: ACTIONS.GET_PRODUCT_DATA, payload: responce[0] });
       } catch (error) {
-        console.log(error);
         ShowToast("customErrorToast", error.message);
       }
     };
@@ -101,7 +116,6 @@ const useProducts = (navProductId, navActionType, navQuantity, navCartId) => {
       dispatch({ type: ACTIONS.ADDED });
       ShowToast("customSuccessToast", "Cart", "Item is now in cart");
     } catch (error) {
-      console.log(error);
       ShowToast("customErrorToast", "Cart Error", error.message);
       dispatch({ type: ACTIONS.BTN_IS_LOADING, payload: false });
     }
@@ -123,13 +137,49 @@ const useProducts = (navProductId, navActionType, navQuantity, navCartId) => {
       );
       nav.goBack();
     } catch (error) {
-      console.log(error);
       ShowToast("customErrorToast", "Cart Error", error.message);
       dispatch({ type: ACTIONS.BTN_IS_LOADING, payload: false });
     }
   };
 
-  return [state, dispatch, nav, addToCart, updateCartItem];
+  const addFavorites = async () => {
+    try {
+      dispatch({ type: ACTIONS.SET_IS_FAVORITE, payload: true });
+      const message = await tokenAwareFetchWrapper(
+        dbAddFavorites,
+        navProductId
+      );
+      ShowToast("customSuccessToast", message);
+    } catch (error) {
+      ShowToast("customErrorToast", "Cart Error", error.message);
+      dispatch({ type: ACTIONS.SET_IS_FAVORITE, payload: false });
+    }
+  };
+
+  const removeFavorite = async () => {
+    try {
+      const productId = state.productData.id;
+      dispatch({ type: ACTIONS.SET_IS_FAVORITE, payload: false });
+      const message = await tokenAwareFetchWrapper(
+        dbDeleteFavorites,
+        productId
+      );
+      ShowToast("customSuccessToast", message);
+    } catch (error) {
+      ShowToast("customErrorToast", "Cart Error", error.message);
+      dispatch({ type: ACTIONS.SET_IS_FAVORITE, payload: true });
+    }
+  };
+
+  return [
+    state,
+    dispatch,
+    nav,
+    addToCart,
+    updateCartItem,
+    addFavorites,
+    removeFavorite,
+  ];
 };
 
 export default useProducts;

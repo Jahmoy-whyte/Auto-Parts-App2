@@ -113,7 +113,7 @@ const Home = ({ navigation }) => {
             style={styles.textBoxView}
             onPress={() => navigation.navigate("search")}
           >
-            <AntDesign name="search1" size={20} color="white" />
+            <AntDesign name="search1" size={20} />
             <Text style={styles.textBoxText}>Search For Your Car Parts</Text>
           </Pressable>
         </View>
@@ -142,10 +142,11 @@ const Home = ({ navigation }) => {
                 <HomePartCards
                   id={item.id}
                   navigateToProduct={navigateToProduct}
-                  image={cardoor}
+                  image={item.image}
                   text={item.productName + " " + item.model}
                   price={item.price}
                   subtext={"Model: " + item.model}
+                  status={item.status}
                 />
               )}
               keyExtractor={(item) => item.id}
@@ -167,10 +168,11 @@ const Home = ({ navigation }) => {
                 <HomePartCards
                   id={item.id}
                   navigateToProduct={navigateToProduct}
-                  image={cardoor}
+                  image={item.image}
                   text={item.productName + " " + item.model}
                   price={item.price}
                   subtext={"Model: " + item.model}
+                  status={item.status}
                 />
               )}
               keyExtractor={(item) => item.id}
