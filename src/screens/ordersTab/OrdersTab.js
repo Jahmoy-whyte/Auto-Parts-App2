@@ -26,6 +26,8 @@ const OrdersTab = () => {
 
   const nav = useNavigation();
   const { userInfo } = useUserInfoContext();
+  console.log("orders ===================================");
+  // <Tabs onPress={selectOrderStatus} selected={orders.selected} />
   return (
     <>
       <ExpoStatusBar style="light" />
@@ -38,14 +40,20 @@ const OrdersTab = () => {
             <View style={styles.headingcontainer}>
               <Text style={styles.heading}>My Orders</Text>
             </View>
-            <Tabs onPress={selectOrderStatus} selected={orders.selected} />
 
+            <Tabs onPress={selectOrderStatus} selected={orders.selected} />
             {orders.isLoading ? (
               <Loading />
             ) : (
               <View style={styles.container}>
                 <FlatList
-                  data={orders.data}
+                  data={
+                    orders.selected == "all"
+                      ? orders.data
+                      : orders?.data.filter(
+                          (data1) => data1.status == orders.selected
+                        )
+                  }
                   keyExtractor={(item) => item.id}
                   renderItem={({ item }) => (
                     <OrderCards
@@ -53,6 +61,7 @@ const OrdersTab = () => {
                       orderId={item.id}
                       nav={nav}
                       status={item.status}
+                      total={item.total}
                     />
                   )}
                 />

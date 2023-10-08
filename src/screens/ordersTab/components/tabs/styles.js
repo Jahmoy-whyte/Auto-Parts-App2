@@ -2,37 +2,40 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   constainer: {
-    minHeight: 40,
-    alignItems: "center",
+    minHeight: 45,
     flexDirection: "row",
-    justifyContent: "space-around",
-    backgroundColor: "gray",
-    borderRadius: 6,
+    backgroundColor: "#ededed",
+    borderRadius: 20,
     marginHorizontal: 10,
     marginTop: 10,
+    paddingHorizontal: 5,
     paddingVertical: 3,
   },
 
   tab: {
-    flex: 1,
-    marginHorizontal: 2,
-  },
-
-  tabText: {
-    textAlign: "center",
-    fontSize: 12,
-    fontFamily: "Inter-Bold",
-    color: "white",
+    minWidth: 50,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   selected: {
-    flex: 1,
+    minWidth: 50,
     backgroundColor: "white",
-    paddingVertical: 10,
-    borderRadius: 6,
-    marginHorizontal: 2,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
   },
+
+  tabText: {
+    paddingHorizontal: 10,
+    textAlign: "center",
+    fontSize: 12,
+    fontFamily: "Inter-Regular",
+  },
+
   selectedText: {
+    paddingHorizontal: 10,
     textAlign: "center",
     fontSize: 12,
     fontFamily: "Inter-Bold",

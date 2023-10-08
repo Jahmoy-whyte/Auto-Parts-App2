@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { dbGetOrders } from "../../services/ordersFetch";
 import { useAuthContext } from "../../context/UserAuthContextWarpper";
 import ShowToast from "../../helper/ShowToast";
@@ -29,24 +29,21 @@ const useOrders = () => {
     getOrders();
   }, [socket]);
 
-  const getOrders = async (orderStatus = "sent") => {
+  const getOrders = async () => {
     setOrders((prev) => ({ ...prev, isLoading: true }));
     try {
       const orderData = await tokenAwareFetchWrapper(dbGetOrders);
 
-      const data = orderData.filter((data1) => data1.status == orderStatus);
-
-      setOrders((prev) => ({ ...prev, data: data }));
+      setOrders((prev) => ({ ...prev, data: orderData }));
     } catch (error) {
       ShowToast("customErrorToast", "Error", error.message);
     }
     setOrders((prev) => ({ ...prev, isLoading: false }));
   };
 
-  const selectOrderStatus = (orderStatus) => {
+  const selectOrderStatus = useCallback((orderStatus) => {
     setOrders((prev) => ({ ...prev, selected: orderStatus }));
-    getOrders(orderStatus);
-  };
+  }, []);
 
   return [orders, selectOrderStatus];
 };

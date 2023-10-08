@@ -25,17 +25,12 @@ const UserAuthContextWarpper = ({ children }) => {
 
   const login = async (email, password) => {
     // get auth Token
-    const { accessToken, refreshToken, refreshTokenTokenId } =
-      await dbUserLogin(email, password);
+    const { accessToken, refreshToken } = await dbUserLogin(email, password);
 
-    console.log(refreshTokenTokenId);
     // get store auth Token
     await SecureStore.setItemAsync("AccessToken", accessToken);
     await SecureStore.setItemAsync("RefreshToken", refreshToken);
-    await SecureStore.setItemAsync(
-      "refreshTokenTokenId",
-      JSON.stringify(refreshTokenTokenId)
-    );
+
     // set is Auth to true
     setAuthData((prev) => ({
       ...prev,
@@ -50,11 +45,11 @@ const UserAuthContextWarpper = ({ children }) => {
   };
 
   const logout = async () => {
-    const refreshTokenTokenId = await getRefreshTokenTokenId();
-    if (!refreshTokenTokenId) return alert("error");
+    const refreshToken = await getRefreshTokenFromStorage();
+    if (!refreshToken) return alert("error");
     //dw
     try {
-      await tokenAwareFetchWrapper(dbLogoutUser, refreshTokenTokenId);
+      await tokenAwareFetchWrapper(dbLogoutUser, refreshToken);
       await deleteTokensFromStorage();
       setAuthData((prev) => ({
         ...prev,
@@ -72,10 +67,7 @@ const UserAuthContextWarpper = ({ children }) => {
     //  then store both locally
     await SecureStore.setItemAsync("AccessToken", tokens.accessToken);
     await SecureStore.setItemAsync("RefreshToken", tokens.refreshToken);
-    await SecureStore.setItemAsync(
-      "refreshTokenTokenId",
-      JSON.stringify(tokens.refreshTokenTokenId)
-    );
+
     //  after store stop loading and set isAuth true and store auth token
 
     setAuthData((prev) => ({
@@ -205,12 +197,6 @@ export const useAuthContext = () => {
 export const saveAccessTokenToStorage = async (accessToken) => {
   await SecureStore.setItemAsync("AccessToken", accessToken);
 };
-export const getRefreshTokenTokenId = async () => {
-  const refreshTokenTokenId = await SecureStore.getItemAsync(
-    "refreshTokenTokenId"
-  );
-  return JSON.parse(refreshTokenTokenId);
-};
 
 export const getRefreshTokenFromStorage = async () => {
   const refreshToken = await SecureStore.getItemAsync("RefreshToken");
@@ -220,7 +206,6 @@ export const getRefreshTokenFromStorage = async () => {
 export const deleteTokensFromStorage = async () => {
   await SecureStore.deleteItemAsync("AccessToken");
   await SecureStore.deleteItemAsync("RefreshToken");
-  await SecureStore.deleteItemAsync("refreshTokenTokenId");
 };
 
 export default UserAuthContextWarpper;

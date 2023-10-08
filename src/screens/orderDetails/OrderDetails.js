@@ -19,6 +19,7 @@ import styles from "./styles";
 import formattedCost from "../../helper/formattedCost";
 import Loading from "../../components/loading/Loading";
 import CustomButton from "../../components/button/CustomButton";
+import inititalCapitalization from "../../helper/inititalCapitalization";
 const OrderDetails = () => {
   const [details] = useOrderDetails();
   const Rows = ({ leftText, rightText }) => {
@@ -47,7 +48,7 @@ const OrderDetails = () => {
                 <Text style={styles.infotextleft}>Status:</Text>
                 <View style={styles.infotextright2conatiner}>
                   <Text style={styles.infotextright2}>
-                    {details.data.status != "" ? details.data.status : "Sent"}
+                    {inititalCapitalization(details.data.status)}
                   </Text>
                 </View>
               </View>

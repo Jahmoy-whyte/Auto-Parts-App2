@@ -4,7 +4,7 @@ import useRefreshToken from "../../hooks/useRefreshToken";
 import { dbGetUserInfo, dbUpdateGuestToUser } from "../../services/usersFetch";
 import {
   deleteTokensFromStorage,
-  getRefreshTokenTokenId,
+  getRefreshTokenFromStorage,
   useAuthContext,
 } from "../../context/UserAuthContextWarpper";
 import { ACTIONS } from "./helper/reducerActions";
@@ -51,12 +51,12 @@ const useGuestToUserSignUp = () => {
     try {
       const email = state.email.trim();
       const password = state.password.trim();
-      const refreshTokenTokenId = await getRefreshTokenTokenId();
+      const refreshToken = await getRefreshTokenFromStorage();
       await tokenAwareFetchWrapper(
         dbUpdateGuestToUser,
         email,
         password,
-        refreshTokenTokenId
+        refreshToken
       );
       await login(email, password);
       const res = await tokenAwareFetchWrapper(dbGetUserInfo);

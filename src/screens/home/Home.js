@@ -185,13 +185,36 @@ const Home = ({ navigation }) => {
               subText={"Most select items"}
             />
 
-            <View style={styles.CategoriesContainer}>
-              <CategoriesCards
-                image={headlight}
-                text={"item.text"}
-                subText={"item.subtext"}
-                func={navToShowAll}
-              />
+            {[
+              "Side Steps",
+              "Side Door Mirrors",
+              "Rear Window Glass",
+              "Rear Bumpers",
+              "Front Windshields Glass",
+              "Doors Rear Right",
+            ].map((text) => {
+              return (
+                <CategoriesCards
+                  image={headlight}
+                  text={text}
+                  subText={"item.subtext"}
+                  func={navToShowAll}
+                />
+              );
+            })}
+          </ScrollView>
+        )}
+      </SafeAreaView>
+    </>
+  );
+};
+
+export default Home;
+
+/*
+
+   <View style={styles.CategoriesContainer}>
+            
               <CategoriesCards
                 image={engine}
                 text={"item.text"}
@@ -207,11 +230,4 @@ const Home = ({ navigation }) => {
                 func={navToShowAll}
               />
             </View>
-          </ScrollView>
-        )}
-      </SafeAreaView>
-    </>
-  );
-};
-
-export default Home;
+*/

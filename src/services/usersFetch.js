@@ -48,7 +48,7 @@ export const dbUpdateGuestToUser = async (
   accessToken,
   email,
   password,
-  refreshTokenTokenId
+  refreshToken
 ) => {
   const responce = await fetch(`${BASE_URL}/users/guest-to-user-signup`, {
     method: "POST",
@@ -56,19 +56,19 @@ export const dbUpdateGuestToUser = async (
       Authorization: `Bearer ${accessToken}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email, password, refreshTokenTokenId }),
+    body: JSON.stringify({ email, password, refreshToken }),
   });
   return await checkResponce(responce);
 };
 
-export const dbLogoutUser = async (accessToken, refreshTokenTokenId) => {
+export const dbLogoutUser = async (accessToken, refreshToken) => {
   const responce = await fetch(`${BASE_URL}/users/logout`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${accessToken}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ refreshTokenTokenId }),
+    body: JSON.stringify({ refreshToken }),
   });
   return await checkResponce(responce);
 };

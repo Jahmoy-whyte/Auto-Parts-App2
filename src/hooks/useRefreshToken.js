@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   getRefreshTokenFromStorage,
   saveAccessTokenToStorage,
@@ -8,9 +9,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
 
 const useRefreshToken123 = () => {
-  const { accessToken, setAuthData } = useAuthContext();
-  const nav = useNavigation();
-
-  return "tokenAwareFetchWrapper";
+  const [w, w2] = useState("dwdwdwdwd");
+  return { w, w2 };
 };
 export default useRefreshToken123;

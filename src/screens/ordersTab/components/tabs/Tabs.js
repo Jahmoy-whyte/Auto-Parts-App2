@@ -1,34 +1,49 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  FlatList,
+} from "react-native";
 import styles from "./styles";
-const Tabs = ({ onPress, selected = "Sent" }) => {
+import { memo } from "react";
+const Tabs = ({ onPress, selected = "sent" }) => {
+  console.log("tabs =====================================");
   const tabs = [
+    { text: "All", value: "all" },
     { text: "Sent", value: "sent" },
-    { text: "Delivered", value: "delivered" },
+
     { text: "In Transit", value: "transit" },
+    { text: "Delivered", value: "delivered" },
     { text: "Cancelled", value: "cancelled" },
   ];
 
   return (
     <View style={styles.constainer}>
-      {tabs.map((tab) => {
-        return (
+      <FlatList
+        style={styles.flatList}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        data={tabs}
+        keyExtractor={(item) => item.value}
+        renderItem={({ item }) => (
           <TouchableOpacity
-            key={tab.value}
-            onPress={() => onPress(tab.value)}
-            style={selected == tab.value ? styles.selected : styles.tab}
+            key={item.value}
+            onPress={() => onPress(item.value)}
+            style={selected == item.value ? styles.selected : styles.tab}
           >
             <Text
               style={
-                selected == tab.value ? styles.selectedText : styles.tabText
+                selected == item.value ? styles.selectedText : styles.tabText
               }
             >
-              {tab.text}
+              {item.text}
             </Text>
           </TouchableOpacity>
-        );
-      })}
+        )}
+      />
     </View>
   );
 };
 
-export default Tabs;
+export default memo(Tabs);
