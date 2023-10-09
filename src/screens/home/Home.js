@@ -59,14 +59,12 @@ import * as SecureStore from "expo-secure-store";
 const Home = ({ navigation }) => {
   const [
     state,
-    dispatch,
     userInfo,
-    getProducts,
-    logout,
     navigateToProduct,
     place,
     address,
     navToShowAll,
+    navToGetProductsByCategory,
   ] = useHome();
   console.log("======= render home");
 
@@ -162,7 +160,7 @@ const Home = ({ navigation }) => {
             />
             <FlatList
               style={styles.flatlist}
-              data={state.newArrival}
+              data={state.products}
               horizontal
               renderItem={({ item }) => (
                 <HomePartCards
@@ -184,24 +182,7 @@ const Home = ({ navigation }) => {
               text={"Categories"}
               subText={"Most select items"}
             />
-
-            {[
-              "Side Steps",
-              "Side Door Mirrors",
-              "Rear Window Glass",
-              "Rear Bumpers",
-              "Front Windshields Glass",
-              "Doors Rear Right",
-            ].map((text) => {
-              return (
-                <CategoriesCards
-                  image={headlight}
-                  text={text}
-                  subText={"item.subtext"}
-                  func={navToShowAll}
-                />
-              );
-            })}
+            <CategoriesCards func={navToGetProductsByCategory} />
           </ScrollView>
         )}
       </SafeAreaView>

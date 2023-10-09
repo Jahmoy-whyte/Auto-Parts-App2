@@ -10,7 +10,7 @@ const useOrders = () => {
   const [orders, setOrders] = useState({
     isLoading: true,
     data: [],
-    selected: "sent",
+    selected: "all",
   });
   const { tokenAwareFetchWrapper } = useAuthContext();
 

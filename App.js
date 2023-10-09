@@ -29,6 +29,7 @@ import AccountTab from "./src/screens/account/AccountTab";
 import OrderDetails from "./src/screens/orderDetails/OrderDetails";
 import ShowAll from "./src/screens/showAll/ShowAll";
 import FavoritesScreen from "./src/screens/favorites/FavoritesScreen";
+import GetProductsByCategory from "./src/screens/show-prodouct-by-category/GetProductsByCategory";
 import { Suspense } from "react";
 const App = () => {
   return (
@@ -88,7 +89,10 @@ const Screens = () => {
             <Stack.Screen name="orderdetails" component={OrderDetails} />
             <Stack.Screen name="receipt" component={ReceiptScreen} />
             <Stack.Screen name="showall" component={ShowAll} />
-
+            <Stack.Screen
+              name="getProductsByCategory"
+              component={GetProductsByCategory}
+            />
             <Stack.Screen name="favorite" component={FavoritesScreen} />
 
             <Stack.Screen

@@ -1,5 +1,6 @@
 export const ACTIONS = {
   NEW_ARRIVAL: "new_arrival",
+  productCards: "productCards",
   USER_INFO: "user_info",
   ON_ERROR: "on_error",
 };

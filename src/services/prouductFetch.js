@@ -66,3 +66,15 @@ export const dbProuductPagination = async (accessToken, start) => {
   });
   return await checkResponce(responce);
 };
+
+export const dbGetProductsByCategory = async (accessToken, subCategoryId) => {
+  const responce = await fetch(
+    `${BASE_URL}/products/get-product-by-category/${subCategoryId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+  return await checkResponce(responce);
+};

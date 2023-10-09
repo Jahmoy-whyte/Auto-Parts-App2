@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useReducer } from "react";
-import { dbGetNewArrival } from "../../services/prouductFetch";
+import {
+  dbGetNewArrival,
+  dbGetProductsByCategory,
+} from "../../services/prouductFetch";
 import ShowToast from "../../helper/ShowToast";
 import { ACTIONS } from "./helper/reducerActions";
 import { useUserInfoContext } from "../../context/UserInfoContextWarpper";
@@ -12,14 +15,20 @@ const useHome = () => {
     userInfo: [],
     cart: [],
     newArrival: [],
+    products: [],
     onerror: false,
   };
 
   const reducer = (state, action) => {
     switch (action.type) {
-      case "new_arrival":
+      case "productCards":
         const data = action.payload;
-        return { ...state, newArrival: data, isLoading: false };
+        return {
+          ...state,
+          newArrival: data.newArrival,
+          products: data.products,
+          isLoading: false,
+        };
 
       case "user_info":
         return { ...state };
@@ -34,19 +43,25 @@ const useHome = () => {
   // const tokenAwareFetchWrapper = useRefreshToken();
   const [state, dispatch] = useReducer(reducer, initialState);
   const { setUserInfo, userInfo } = useUserInfoContext();
-  const { tokenAwareFetchWrapper, logout } = useAuthContext();
+  const { tokenAwareFetchWrapper } = useAuthContext();
   const nav = useNavigation();
   // const userInfo = {};
   //efef
   useEffect(() => {
     const onStart = async () => {
       try {
-        const responce = await tokenAwareFetchWrapper(dbGetNewArrival);
-        const userInfo = await tokenAwareFetchWrapper(dbGetUserInfo);
-        console.log(userInfo);
-        setUserInfo(userInfo);
+        const data = await Promise.all([
+          await tokenAwareFetchWrapper(dbGetUserInfo),
+          await tokenAwareFetchWrapper(dbGetNewArrival),
+          await tokenAwareFetchWrapper(dbGetProductsByCategory, 8),
+        ]);
 
-        dispatch({ type: ACTIONS.NEW_ARRIVAL, payload: responce });
+        setUserInfo(data[0]);
+
+        dispatch({
+          type: ACTIONS.productCards,
+          payload: { newArrival: data[1], products: data[2] },
+        });
       } catch (error) {
         dispatch({ type: ACTIONS.ON_ERROR });
         ShowToast("customErrorToast", "Error", error.message);
@@ -64,21 +79,15 @@ const useHome = () => {
     });
   }, []);
 
-  const getProducts = async () => {
-    try {
-      const responce = await tokenAwareFetchWrapper(dbGetNewArrival);
-      const userInfo = await tokenAwareFetchWrapper(dbGetUserInfo);
-
-      setUserInfo((prev) => ({ ...prev, userInfo: userInfo }));
-      dispatch({ type: ACTIONS.NEW_ARRIVAL, payload: responce });
-    } catch (error) {
-      dispatch({ type: ACTIONS.ON_ERROR });
-      ShowToast("customErrorToast", "Error", error.message);
-    }
-  };
-
   const navToShowAll = useCallback(() => {
     nav.navigate("showall");
+  }, []);
+
+  const navToGetProductsByCategory = useCallback((category, id) => {
+    nav.navigate("getProductsByCategory", {
+      category: category,
+      id: id,
+    });
   }, []);
 
   const place =
@@ -92,14 +101,13 @@ const useHome = () => {
 
   return [
     state,
-    dispatch,
     userInfo,
-    getProducts,
-    logout,
+
     navigateToProduct,
     place,
     address,
     navToShowAll,
+    navToGetProductsByCategory,
   ];
 };
 
