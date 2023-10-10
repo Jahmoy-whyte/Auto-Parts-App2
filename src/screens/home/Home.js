@@ -32,6 +32,7 @@ import CategoriesCards from "./components/categories_cards/CategoriesCards";
 import useHome from "./useHome";
 import Loading from "../../components/loading/Loading";
 import * as SecureStore from "expo-secure-store";
+import usePushNotifications from "../../hooks/usePushNotifications";
 
 /*
 
@@ -57,6 +58,7 @@ import * as SecureStore from "expo-secure-store";
         <Button title="test" onPress={() => getProducts()} />
 */
 const Home = ({ navigation }) => {
+  const { expoPushToken, notification } = usePushNotifications();
   const [
     state,
     userInfo,
@@ -67,7 +69,8 @@ const Home = ({ navigation }) => {
     navToGetProductsByCategory,
   ] = useHome();
   console.log("======= render home");
-
+  console.log(userInfo);
+  console.log(expoPushToken);
   return (
     <>
       <ExpoStatusBar style="light" />

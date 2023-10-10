@@ -45,6 +45,7 @@ const useHome = () => {
   const { setUserInfo, userInfo } = useUserInfoContext();
   const { tokenAwareFetchWrapper } = useAuthContext();
   const nav = useNavigation();
+
   // const userInfo = {};
   //efef
   useEffect(() => {

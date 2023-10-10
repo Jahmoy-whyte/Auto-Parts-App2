@@ -96,3 +96,15 @@ export const dbUpdateSelectedAddress = async (accessToken, addressId) => {
   });
   return await checkResponce(responce);
 };
+
+export const dbSavePushToken = async (accessToken, expoPushToken) => {
+  const responce = await fetch(`${BASE_URL}/users/save-push-token`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ expoPushToken }),
+  });
+  return await checkResponce(responce);
+};
