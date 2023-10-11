@@ -97,8 +97,8 @@ export const dbUpdateSelectedAddress = async (accessToken, addressId) => {
   return await checkResponce(responce);
 };
 
-export const dbSavePushToken = async (accessToken, expoPushToken) => {
-  const responce = await fetch(`${BASE_URL}/users/save-push-token`, {
+export const dbIfPushTokenExist = async (accessToken, expoPushToken) => {
+  const responce = await fetch(`${BASE_URL}/users/if-push-token-exist`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${accessToken}`,

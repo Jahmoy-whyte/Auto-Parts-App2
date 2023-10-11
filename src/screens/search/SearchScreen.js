@@ -26,6 +26,7 @@ import {
 import SearhModel from "./components/searchmodel/SearchModel";
 import ShowToast from "../../helper/ShowToast";
 import ProductCard from "./components/productcards/ProductCard";
+import Loading from "../../components/loading/Loading";
 
 const SearchScreen = () => {
   const [
@@ -105,24 +106,28 @@ const SearchScreen = () => {
       <SafeAreaView style={GlobalStyles.container}>
         <BackButton text={"Search"} subText={"Search For You Parts"} />
 
-        <FlatList
-          ListHeaderComponent={Top}
-          data={state.productsData}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => {
-            return (
-              <ProductCard
-                title={`${item.productName} ${item.model}`}
-                image={item.image}
-                description={item.description}
-                price={item.price}
-                func={navigateToProduct}
-                productId={item.id}
-                status={item.status}
-              />
-            );
-          }}
-        />
+        {state.isLoading ? (
+          <Loading />
+        ) : (
+          <FlatList
+            ListHeaderComponent={Top}
+            data={state.productsData}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => {
+              return (
+                <ProductCard
+                  title={`${item.productName} ${item.model}`}
+                  image={item.image}
+                  description={item.description}
+                  price={item.price}
+                  func={navigateToProduct}
+                  productId={item.id}
+                  status={item.status}
+                />
+              );
+            }}
+          />
+        )}
         <SearhModel dispatch={dispatch} state={state} />
       </SafeAreaView>
     </>

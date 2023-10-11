@@ -10,6 +10,7 @@ const intitalState = {
   isSearching: false,
   disableAllDropdown: false,
   productsData: [],
+  isLoading: true,
 
   makeDropDownBox: {
     selectedValue: "",

@@ -1,24 +1,91 @@
 import {
   View,
   Text,
-  StatusBar,
   SafeAreaView,
-  TextInput,
   ScrollView,
-  FlatList,
-  Image,
-  Pressable,
-  Button,
   TouchableOpacity,
 } from "react-native";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import BackButton from "../../components/backbutton/BackButton";
-import { MaterialIcons, Ionicons, AntDesign } from "@expo/vector-icons";
+import {
+  MaterialIcons,
+  Ionicons,
+  AntDesign,
+  Feather,
+} from "@expo/vector-icons";
 import delivery from "../../assets/images/delivery.png";
 import pickup from "../../assets/images/pickup.png";
 import styles from "./styles";
+import * as Linking from "expo-linking";
+import Loading from "../../components/loading/Loading";
+import usePushNotifications from "../../hooks/usePushNotifications";
 const CheckOutScreen = ({ navigation }) => {
+  const { expoPushTokenData, retryTokenData } = usePushNotifications();
+
+  if (expoPushTokenData.isLoading)
+    return (
+      <>
+        <View style={GlobalStyles.backDrop}></View>
+
+        <SafeAreaView style={GlobalStyles.container}>
+          <BackButton text={"CheckOut"} />
+          <Loading />
+        </SafeAreaView>
+      </>
+    );
+
+  if (expoPushTokenData.error)
+    return (
+      <>
+        <View style={GlobalStyles.backDrop}></View>
+        <SafeAreaView style={GlobalStyles.container}>
+          <BackButton text={"CheckOut"} />
+          <View style={styles.permissionContainer}>
+            <View style={[styles.bellbackground, { backgroundColor: "red" }]}>
+              <AntDesign name="close" size={40} color="white" />
+            </View>
+
+            <Text style={styles.permissionText}>
+              {expoPushTokenData.message}
+            </Text>
+            <Text style={styles.permissionRetry} onPress={retryTokenData}>
+              Retry
+            </Text>
+          </View>
+        </SafeAreaView>
+      </>
+    );
+
+  if (!expoPushTokenData.isPermitted)
+    return (
+      <>
+        <View style={GlobalStyles.backDrop}></View>
+        <SafeAreaView style={GlobalStyles.container}>
+          <BackButton text={"CheckOut"} />
+          <View style={styles.permissionContainer}>
+            <View style={styles.bellbackground}>
+              <Feather name="bell" size={40} color="white" />
+            </View>
+
+            <Text style={styles.permissionText}>
+              {expoPushTokenData.message}
+            </Text>
+
+            <Text
+              style={styles.opensettings}
+              onPress={() => Linking.openSettings()}
+            >
+              OpenSettings
+            </Text>
+            <TouchableOpacity style={styles.retrybtn} onPress={retryTokenData}>
+              <Text style={styles.permissionRetry}>Retry</Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      </>
+    );
+
   const Options = ({ children, title, subtext }) => {
     return (
       <TouchableOpacity
@@ -53,17 +120,22 @@ const CheckOutScreen = ({ navigation }) => {
             >
               <AntDesign name="car" size={24} color="white" />
             </Options>
-            <Options
-              title={"Pick Up"}
-              subtext={"Head to our nearest location an pick up your parts."}
-            >
-              <Ionicons name="walk-sharp" size={24} color="white" />
-            </Options>
           </View>
         </ScrollView>
       </SafeAreaView>
     </>
   );
 };
+
+/*
+     <Options
+            
+              title={"Pick Up"}
+              subtext={"Head to our nearest location an pick up your parts."}
+            >
+              <Ionicons name="walk-sharp" size={24} color="white" />
+            </Options>
+
+*/
 
 export default CheckOutScreen;

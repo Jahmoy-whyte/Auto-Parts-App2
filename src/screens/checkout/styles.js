@@ -59,5 +59,49 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+
+  permissionContainer: {
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    gap: 5,
+  },
+  permissionText: {
+    marginHorizontal: 10,
+    color: "#B3B3B3",
+    fontSize: 16,
+    fontFamily: "Inter-Regular",
+    textAlign: "center",
+  },
+
+  retrybtn: {
+    marginTop: 15,
+    backgroundColor: "#F47A00",
+    padding: 5,
+    borderRadius: 6,
+  },
+
+  opensettings: {
+    marginHorizontal: 10,
+    color: "#F47A00",
+    fontSize: 14,
+    fontFamily: "Inter-Bold",
+    textAlign: "center",
+  },
+
+  permissionRetry: {
+    marginHorizontal: 10,
+    color: "white",
+    fontSize: 14,
+    fontFamily: "Inter-Bold",
+    textAlign: "center",
+  },
+
+  bellbackground: {
+    backgroundColor: "#F47A00",
+    borderRadius: 40,
+    padding: 10,
+  },
 });
 export default styles;

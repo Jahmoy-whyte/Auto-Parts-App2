@@ -58,7 +58,6 @@ import usePushNotifications from "../../hooks/usePushNotifications";
         <Button title="test" onPress={() => getProducts()} />
 */
 const Home = ({ navigation }) => {
-  const { expoPushToken, notification } = usePushNotifications();
   const [
     state,
     userInfo,
@@ -70,7 +69,7 @@ const Home = ({ navigation }) => {
   ] = useHome();
   console.log("======= render home");
   console.log(userInfo);
-  console.log(expoPushToken);
+
   return (
     <>
       <ExpoStatusBar style="light" />

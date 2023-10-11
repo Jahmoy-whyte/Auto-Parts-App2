@@ -3,6 +3,9 @@ import { Text, View, Button, Platform } from "react-native";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
+import { useAuthContext } from "../context/UserAuthContextWarpper";
+import ShowToast from "../helper/ShowToast";
+import { dbIfPushTokenExist } from "../services/usersFetch";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -33,49 +36,22 @@ Notifications.setNotificationHandler({
 //   });
 // }
 
-async function registerForPushNotificationsAsync() {
-  let token;
-
-  if (Platform.OS === "android") {
-    Notifications.setNotificationChannelAsync("default", {
-      name: "default",
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: "#FF231F7C",
-    });
-  }
-
-  if (Device.isDevice) {
-    const { status: existingStatus } =
-      await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== "granted") {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-    if (finalStatus !== "granted") {
-      alert("Failed to get push token for push notification!");
-      return;
-    }
-    token = await Notifications.getExpoPushTokenAsync({
-      projectId: Constants.expoConfig.extra.eas.projectId,
-    });
-  } else {
-    alert("Must use physical device for Push Notifications");
-  }
-
-  return token;
-}
-
 const usePushNotifications = () => {
-  const [expoPushToken, setExpoPushToken] = useState("");
+  const [expoPushTokenData, setExpoPushTokenData] = useState({
+    isLoading: true,
+    isPermitted: false,
+    token: null,
+    message: "",
+    error: false,
+  });
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
+  const { tokenAwareFetchWrapper } = useAuthContext();
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token) =>
-      setExpoPushToken(token)
+    registerForPushNotificationsAsync().then((tokenData) =>
+      setExpoPushTokenData((prev) => ({ ...prev, ...tokenData }))
     );
 
     notificationListener.current =
@@ -96,7 +72,77 @@ const usePushNotifications = () => {
     };
   }, []);
 
-  return { expoPushToken, notification };
+  const retryTokenData = () => {
+    setExpoPushTokenData((prev) => ({
+      ...prev,
+      isLoading: true,
+      error: false,
+    }));
+    registerForPushNotificationsAsync().then((tokenData) =>
+      setExpoPushTokenData((prev) => ({ ...prev, ...tokenData }))
+    );
+  };
+
+  const registerForPushNotificationsAsync = async () => {
+    let token = null;
+
+    if (Platform.OS === "android") {
+      Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+
+    if (!Device.isDevice)
+      return {
+        isLoading: false,
+        isPermitted: false,
+        error: true,
+        message: "Must use physical device for Push Notifications.",
+      };
+
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+
+    if (finalStatus !== "granted") {
+      // alert("Failed to get push token for push notification!");
+      return {
+        isLoading: false,
+        token: null,
+        isPermitted: false,
+        message: "Please enable push notifications to continue to checkout.",
+      };
+    }
+    //open setting > enable notificatons and press retry
+    try {
+      token = await Notifications.getExpoPushTokenAsync({
+        projectId: Constants.expoConfig.extra.eas.projectId,
+      });
+      await tokenAwareFetchWrapper(dbIfPushTokenExist, token.data);
+      return {
+        isPermitted: true,
+        message: "successful",
+        isLoading: false,
+      };
+    } catch (error) {
+      ShowToast("customErrorToast", error.message);
+      return {
+        isPermitted: false,
+        isLoading: false,
+        error: true,
+        message: error.message,
+      };
+    }
+  };
+
+  return { expoPushTokenData, retryTokenData };
 };
 
 export default usePushNotifications;

@@ -26,6 +26,13 @@ const useSearch = () => {
         };
       }
 
+      case "is_loading": {
+        return {
+          ...state,
+          isLoading: action.payload,
+        };
+      }
+
       case "is_searching": {
         const trueOrFalse = action.payload;
         return {
@@ -42,6 +49,7 @@ const useSearch = () => {
           isSearching: false,
           disableAllDropdown: false,
           productsData: data,
+          isLoading: false,
         };
       }
 
@@ -124,6 +132,7 @@ const useSearch = () => {
         const responce = await tokenAwareFetchWrapper(dbGetNewArrival);
         dispatch({ type: ACTIONS.ADD_PRODUCTS_DATA, payload: responce });
       } catch (error) {
+        dispatch({ type: ACTIONS.IS_LOADING, payload: false });
         ShowToast("customWarnToast", "Error", error.message);
       }
     };

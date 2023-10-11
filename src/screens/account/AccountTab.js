@@ -29,7 +29,7 @@ import Cards from "./components/cards/Cards";
 import { useCallback } from "react";
 import { useUserInfoContext } from "../../context/UserInfoContextWarpper";
 import SignupCard from "../../components/signupCard/SignupCard";
-
+import * as Linking from "expo-linking";
 const AccountTab = ({ navigation }) => {
   const { logout } = useAuthContext();
   const { userInfo } = useUserInfoContext();
@@ -86,7 +86,15 @@ const AccountTab = ({ navigation }) => {
               func={() => navigation.navigate("favorite")}
             />
 
-            <Cards image={web} title={"Privacy Policy"} />
+            <Cards
+              image={web}
+              title={"Privacy Policy"}
+              func={() =>
+                Linking.openURL(
+                  "https://docs.expo.dev/versions/latest/sdk/linking/#linkingopensettings"
+                )
+              }
+            />
             <Cards
               image={logoutImg}
               title={"Logout"}
