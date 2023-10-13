@@ -24,7 +24,8 @@ import {
 import Checkbox from "expo-checkbox";
 import useSignUp from "./useSignUp";
 import { ACTIONS } from "./helper/reducerActions";
-
+import * as Linking from "expo-linking";
+import { PRIVACY_POLICY_URL } from "../../helper/privacy-policy-url";
 const SignUpScreen = ({ navigation }) => {
   const [state, dispatch, submit, nav] = useSignUp();
 
@@ -101,7 +102,13 @@ const SignUpScreen = ({ navigation }) => {
                   I Have Read And Agreed Our
                 </Text>
                 <TouchableOpacity>
-                  <Text style={styles.checkboxtextbold}> Privacy Policy</Text>
+                  <Text
+                    style={styles.checkboxtextbold}
+                    onPress={() => Linking.openURL(PRIVACY_POLICY_URL)}
+                  >
+                    {" "}
+                    Privacy Policy
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>

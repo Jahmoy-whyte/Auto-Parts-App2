@@ -10,19 +10,17 @@ const SignupCard = () => {
   const { logout } = useAuthContext();
   return (
     <View style={styles.container}>
+      <Text style={styles.toptext}>{"Please Sign Up To View This Screen"}</Text>
       <View style={styles.container2}>
-        <Text style={styles.toptext}>
-          {"Please Sign Up To View This Screen"}
-        </Text>
-        <TouchableOpacity
+        <Text
+          style={styles.text1}
           onPress={() => nav.navigate("guestToUserSignUp")}
-          style={styles.btn1}
         >
-          <Text style={styles.text1}>{"Sign Up"}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={logout} style={styles.btn2}>
-          <Text style={styles.text2}>{"Logout"}</Text>
-        </TouchableOpacity>
+          {"Sign Up"}
+        </Text>
+        <Text style={styles.text2} onPress={logout}>
+          {"Logout"}
+        </Text>
       </View>
     </View>
   );
@@ -35,9 +33,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   container2: {
+    flexDirection: "row",
     marginHorizontal: 15,
     justifyContent: "center",
     alignItems: "center",
+    borderColor: "black",
+    padding: 10,
+    borderWidth: 0.5,
+    borderRadius: 6,
   },
   toptext: {
     marginBottom: 5,
@@ -58,7 +61,7 @@ const styles = StyleSheet.create({
 
   text1: {
     marginHorizontal: 15,
-    color: "white",
+    color: "#F47A00",
     fontFamily: "Inter-Bold",
     fontSize: 14,
   },

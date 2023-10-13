@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   loadingtext: {
+    marginHorizontal: 10,
     fontFamily: "Inter-Regular",
     fontSize: 12,
     marginTop: 5,

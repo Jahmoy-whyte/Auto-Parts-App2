@@ -9,6 +9,8 @@ import GlobalStyles from "../../assets/styles/GlobalStyles";
 import styles from "./styles";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import useLanding from "./useLanding";
+import * as Linking from "expo-linking";
+import { PRIVACY_POLICY_URL } from "../../helper/privacy-policy-url";
 
 const LandingScreen = () => {
   const [isLoading, nav, continueAsGuest] = useLanding();
@@ -57,7 +59,12 @@ const LandingScreen = () => {
         <TouchableOpacity style={styles.bottomtextcontainer}>
           <Text style={styles.bottomtext}>
             Click Here To Read About Our
-            <Text style={styles.bottomtextbold}> Privacy Policy</Text>
+            <Text
+              style={styles.bottomtextbold}
+              onPress={() => Linking.openURL(PRIVACY_POLICY_URL)}
+            >
+              Privacy Policy
+            </Text>
           </Text>
         </TouchableOpacity>
       </SafeAreaView>

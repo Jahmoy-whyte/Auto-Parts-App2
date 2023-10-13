@@ -15,6 +15,7 @@ import {
 import ShowToast from "../helper/ShowToast";
 import { Text, View } from "react-native";
 import { getNewAccessToken } from "../services/refreshTokenFetch";
+import Loading from "../components/loading/Loading";
 export const UserAuthContext = createContext(null);
 const UserAuthContextWarpper = ({ children }) => {
   const [authData, setAuthData] = useState({
@@ -146,9 +147,11 @@ const UserAuthContextWarpper = ({ children }) => {
 
   if (authData.isLoading) {
     return (
-      <View>
-        <Text>LOADING</Text>
-      </View>
+      <Loading
+        text={
+          "Node sever hosted on the free tier on render.com, free instance will spin down with inactivity. so it may take a minute to connect to server. Please wait"
+        }
+      />
     );
   }
 

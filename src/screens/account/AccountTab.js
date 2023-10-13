@@ -30,6 +30,7 @@ import { useCallback } from "react";
 import { useUserInfoContext } from "../../context/UserInfoContextWarpper";
 import SignupCard from "../../components/signupCard/SignupCard";
 import * as Linking from "expo-linking";
+import { PRIVACY_POLICY_URL } from "../../helper/privacy-policy-url";
 const AccountTab = ({ navigation }) => {
   const { logout } = useAuthContext();
   const { userInfo } = useUserInfoContext();
@@ -75,11 +76,7 @@ const AccountTab = ({ navigation }) => {
               subtext={"Visa | Debit | Credit"}
               func={() => navigation.navigate("payment")}
             />
-            <Cards
-              image={bell}
-              title={"Notifications"}
-              func={() => navigation.navigate("notification")}
-            />
+
             <Cards
               image={blackstar}
               title={"Favorites"}
@@ -89,11 +86,7 @@ const AccountTab = ({ navigation }) => {
             <Cards
               image={web}
               title={"Privacy Policy"}
-              func={() =>
-                Linking.openURL(
-                  "https://docs.expo.dev/versions/latest/sdk/linking/#linkingopensettings"
-                )
-              }
+              func={() => Linking.openURL(PRIVACY_POLICY_URL)}
             />
             <Cards
               image={logoutImg}
@@ -109,3 +102,10 @@ const AccountTab = ({ navigation }) => {
 };
 
 export default AccountTab;
+{
+  /* <Cards
+image={bell}
+title={"Notifications"}
+func={() => navigation.navigate("notification")}
+/> */
+}

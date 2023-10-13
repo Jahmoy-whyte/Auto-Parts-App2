@@ -20,10 +20,14 @@ const useOrders = () => {
   useEffect(() => {
     if (socket.isLoading) return;
 
-    socket.socket.on("OrderUpdate-res", (arg) => {
+    socket.socket.on("OrderUpdate", (arg) => {
       if (arg.userId === userInfo.id) {
         getOrders();
       }
+    });
+
+    socket.socket.on("refresh", (arg) => {
+      getOrders();
     });
 
     getOrders();

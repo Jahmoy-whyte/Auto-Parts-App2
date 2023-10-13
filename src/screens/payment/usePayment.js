@@ -100,7 +100,7 @@ const usePayment = () => {
         total
       );
 
-      socket.socket.emit("OrderSent", "ordersent");
+      socket.socket.emit("OrderSent", userInfo.id);
       nav.navigate("receipt", {
         orderId: orderId,
       });

@@ -3,6 +3,7 @@ import ShowToast from "../../helper/ShowToast";
 import { useAuthContext } from "../../context/UserAuthContextWarpper";
 import { ACTIONS } from "./helper/reducerActions";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import isEmailFormat from "../../helper/isEmailFormat";
 const useLogin = () => {
   //   data
   const intitalState = {
@@ -54,11 +55,15 @@ const useLogin = () => {
   };
 
   const checkInputs = () => {
+    const emailFormat = isEmailFormat(state.email.trim());
     let bool = false;
     let message = "";
     if (state.email === "") {
       bool = true;
       message = "Please your enter email address";
+    } else if (!emailFormat.bool) {
+      bool = true;
+      message = emailFormat.message;
     } else if (state.password === "") {
       bool = true;
       message = "Please your enter password";
