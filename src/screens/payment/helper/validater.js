@@ -4,13 +4,13 @@ const validater = (userInfo, state) => {
   if (userInfo?.userStatus != "user") {
     bool = true;
     message = "Please Sign Up";
-  } else if (userInfo.firstName == "") {
+  } else if (!userInfo.firstName) {
     bool = true;
     message = "Please Enter Name";
-  } else if (userInfo.lastName == "") {
+  } else if (!userInfo.lastName) {
     bool = true;
     message = "Please Enter Name";
-  } else if (userInfo.phone == "") {
+  } else if (!userInfo.phone) {
     bool = true;
     message = "Please Enter Phone Number";
   } else if (userInfo.address == "" || !userInfo.address) {

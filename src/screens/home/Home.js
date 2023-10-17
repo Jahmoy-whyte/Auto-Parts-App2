@@ -132,7 +132,7 @@ const Home = ({ navigation }) => {
               showShowall={true}
               image={newstar}
               text={"New Arrival"}
-              subText={"Most select items"}
+              subText={"Recent items"}
             />
             <FlatList
               style={styles.flatlist}
@@ -157,7 +157,7 @@ const Home = ({ navigation }) => {
               func={navToShowAll}
               image={star}
               text={"Most Popular"}
-              subText={"Most Popular items"}
+              subText={"Most popular items"}
               showShowall={true}
             />
             <FlatList
