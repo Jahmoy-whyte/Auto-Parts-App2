@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: "#B3B3B3",
     marginHorizontal: 15,
-    marginTop: 10,
+    marginVertical: 10,
     gap: 10,
   },
 
@@ -126,6 +126,20 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 10,
     paddingVertical: 10,
+  },
+
+  socketErrorView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  socketErrorText: {
+    fontSize: 14,
+    fontFamily: "Inter-Bold",
+  },
+  socketErrorText1: {
+    fontSize: 14,
+    fontFamily: "Inter-Regular",
   },
 });
 export default styles;

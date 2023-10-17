@@ -120,6 +120,7 @@ const usePayment = () => {
     fnShowDelivery,
     subTotal,
     submit,
+    socket,
   ];
 };
 

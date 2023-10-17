@@ -28,6 +28,7 @@ const PaymentScreen = () => {
     fnShowDelivery,
     subTotal,
     submit,
+    socket,
   ] = usePayment();
 
   //let cardNumber = data.cardInfo?.cardNumber?.substring(
@@ -42,6 +43,13 @@ const PaymentScreen = () => {
         <BackButton text={"Delivery"} />
         {state.isLoading ? (
           <Loading />
+        ) : socket.error ? (
+          <View style={styles.socketErrorView}>
+            <Text style={styles.socketErrorText1}>
+              socket error please try again
+            </Text>
+            <Text style={styles.socketErrorText}>{socket?.error}</Text>
+          </View>
         ) : (
           <>
             <ScrollView style={styles}>
@@ -79,28 +87,6 @@ const PaymentScreen = () => {
                   <UserInfoRow
                     text={"Visa: "}
                     subtext={"Visa ending with: " + state.cardInfo}
-                  />
-                ) : null}
-              </View>
-
-              <View style={styles.section}>
-                <Heading
-                  img={instructions}
-                  title={"Delivery Instructions"}
-                  func={fnShowDelivery}
-                  editText={state.showDelivery ? "Delete" : null}
-                />
-                {state.showDelivery ? (
-                  <TextInput
-                    style={styles.textbox}
-                    numberOfLines={3}
-                    multiline={true}
-                    textAlignVertical="top"
-                    placeholder="Enter delivery indtructions"
-                    onChangeText={(value) =>
-                      dispatch({ type: ACTIONS.DELIVERYTEXT, payload: value })
-                    }
-                    value={state.deliveryText}
                   />
                 ) : null}
               </View>
@@ -157,3 +143,25 @@ const PaymentScreen = () => {
 };
 
 export default PaymentScreen;
+
+/* <View style={styles.section}>
+<Heading
+  img={instructions}
+  title={"Delivery Instructions"}
+  func={fnShowDelivery}
+  editText={state.showDelivery ? "Delete" : null}
+/>
+{state.showDelivery ? (
+  <TextInput
+    style={styles.textbox}
+    numberOfLines={3}
+    multiline={true}
+    textAlignVertical="top"
+    placeholder="Enter delivery indtructions"
+    onChangeText={(value) =>
+      dispatch({ type: ACTIONS.DELIVERYTEXT, payload: value })
+    }
+    value={state.deliveryText}
+  />
+) : null}
+</View> */
