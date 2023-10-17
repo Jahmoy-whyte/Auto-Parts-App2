@@ -42,6 +42,10 @@ const CartScreen = () => {
 
         {state.isLoading ? (
           <Loading />
+        ) : userInfo.cart.length < 1 ? (
+          <View style={styles.noItems}>
+            <Text style={styles.noItemsText}>No Items Found</Text>
+          </View>
         ) : (
           <FlatList
             keyExtractor={(item) => item.id}
@@ -61,7 +65,7 @@ const CartScreen = () => {
           />
         )}
 
-        {userInfo?.cart?.length > 0 ? (
+        {userInfo?.cart?.length > 0 && !state.isLoading ? (
           <View style={styles.checkoutview}>
             <View style={styles.checkouttextview}>
               <Text style={styles.checkouttitle}>SubTotal:</Text>

@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
   loadingtext: {
     marginHorizontal: 10,
-    fontFamily: "Inter-Regular",
+
     fontSize: 12,
     marginTop: 5,
     textAlign: "center",

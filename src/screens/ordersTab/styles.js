@@ -32,5 +32,15 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: "Inter-Bold",
   },
+
+  noOrdersText: {
+    fontSize: 12,
+    fontFamily: "Inter-Bold",
+  },
+  noOrders: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 export default styles;

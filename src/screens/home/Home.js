@@ -68,7 +68,7 @@ const Home = ({ navigation }) => {
     navToGetProductsByCategory,
   ] = useHome();
   console.log("======= render home");
-  console.log(userInfo);
+  // console.log(userInfo);
 
   return (
     <>
@@ -156,8 +156,8 @@ const Home = ({ navigation }) => {
             <Headings
               func={navToShowAll}
               image={star}
-              text={"Categories"}
-              subText={"Most select items"}
+              text={"Most Popular"}
+              subText={"Most Popular items"}
               showShowall={true}
             />
             <FlatList
@@ -182,7 +182,7 @@ const Home = ({ navigation }) => {
             <Headings
               image={star}
               text={"Categories"}
-              subText={"Most select items"}
+              subText={"Most search categories"}
             />
             <CategoriesCards func={navToGetProductsByCategory} />
           </ScrollView>

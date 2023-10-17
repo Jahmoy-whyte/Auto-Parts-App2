@@ -149,7 +149,6 @@ const useProducts = (navProductId, navActionType, navQuantity, navCartId) => {
         dbAddFavorites,
         navProductId
       );
-      ShowToast("customSuccessToast", message);
     } catch (error) {
       ShowToast("customErrorToast", "Cart Error", error.message);
       dispatch({ type: ACTIONS.SET_IS_FAVORITE, payload: false });
@@ -164,7 +163,6 @@ const useProducts = (navProductId, navActionType, navQuantity, navCartId) => {
         dbDeleteFavorites,
         productId
       );
-      ShowToast("customSuccessToast", message);
     } catch (error) {
       ShowToast("customErrorToast", "Cart Error", error.message);
       dispatch({ type: ACTIONS.SET_IS_FAVORITE, payload: true });

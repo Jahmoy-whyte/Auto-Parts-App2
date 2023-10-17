@@ -13,6 +13,7 @@ import {
   ActionResize,
 } from "expo-image-manipulator";
 import box from "../../../../assets/images/box.png";
+import * as Linking from "expo-linking";
 
 const Advert = ({ image, text, subtext }) => {
   /**
@@ -44,7 +45,16 @@ const Advert = ({ image, text, subtext }) => {
         <Text style={styles.subText}>
           The One Stop Shop For All Your Car Needs New offering delivery
         </Text>
-        <Text style={styles.subTextcolor}> Read More </Text>
+        <Text
+          style={styles.subTextcolor}
+          onPress={() =>
+            Linking.openURL(
+              "https://jahmoy-whyte.github.io/auto-parts-privacy-policy/readmore"
+            )
+          }
+        >
+          Read More
+        </Text>
       </View>
       <Image source={box} style={styles.image} resizeMode="contain" />
     </View>

@@ -46,25 +46,31 @@ const OrdersTab = () => {
               <Loading />
             ) : (
               <View style={styles.container}>
-                <FlatList
-                  data={
-                    orders.selected == "all"
-                      ? orders.data
-                      : orders?.data.filter(
-                          (data1) => data1.status == orders.selected
-                        )
-                  }
-                  keyExtractor={(item) => item.id}
-                  renderItem={({ item }) => (
-                    <OrderCards
-                      date={item.date}
-                      orderId={item.id}
-                      nav={nav}
-                      status={item.status}
-                      total={item.total}
-                    />
-                  )}
-                />
+                {orders.data.length < 1 ? (
+                  <View style={styles.noOrders}>
+                    <Text style={styles.noOrdersText}>No Orders Found</Text>
+                  </View>
+                ) : (
+                  <FlatList
+                    data={
+                      orders.selected == "all"
+                        ? orders.data
+                        : orders?.data.filter(
+                            (data1) => data1.status == orders.selected
+                          )
+                    }
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => (
+                      <OrderCards
+                        date={item.date}
+                        orderId={item.id}
+                        nav={nav}
+                        status={item.status}
+                        total={item.total}
+                      />
+                    )}
+                  />
+                )}
               </View>
             )}
           </>

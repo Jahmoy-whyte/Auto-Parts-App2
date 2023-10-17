@@ -132,7 +132,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  wdw: {},
-  wdw: {},
+  noItemsText: {
+    fontSize: 12,
+    fontFamily: "Inter-Bold",
+  },
+  noItems: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 export default styles;
