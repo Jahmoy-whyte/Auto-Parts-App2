@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:661004649785:android:7c4e9727c11f0e9d1b94e8",
+        "mobilesdk_app_id": "1:661004649785:android:0cd19c73143a99691b94e8",
         "android_client_info": {
-          "package_name": "com.auto.parts.app"
+          "package_name": "com.johnwata.AutoPartsApp"
         }
       },
       "oauth_client": [],
