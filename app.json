@@ -4,7 +4,7 @@
     "slug": "Auto-Parts-App",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon3.png",
+    "icon": "./assets/icon4.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash1.png",
